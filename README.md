@@ -1,5 +1,17 @@
-# capstone
-hey hey hey! this is capstone
+# Capstone Project
+
+Follow these guidelines for good commit messages when you push.
+https://chris.beams.io/posts/git-commit/
+
+
+This guide was followed to create dev environment (still need to couple with Docker later)
+
+Mac
+	1. `cd` into main capstone root dir
+	2. `pip install -r requirements.txt`
+	3. `cd capstone-server`
+	4. `python manage.py runserver`
+	5. Navigate to http://127.0.0.1:8000/
 
 # Technical Requirements
 Client:
