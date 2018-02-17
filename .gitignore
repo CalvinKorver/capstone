@@ -57,6 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# virtual environment
+.venv
+
 This is for the compiled pythong files
 *.pyc 
 
