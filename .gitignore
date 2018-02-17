@@ -60,3 +60,4 @@ typings/
 This is for the compiled pythong files
 *.pyc 
 
+env
