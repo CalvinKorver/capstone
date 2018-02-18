@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User, Group
+from tutorial.quickstart.models import Client
 from rest_framework import viewsets
-from tutorial.quickstart.serializers import UserSerializer, GroupSerializer
+from tutorial.quickstart.serializers import UserSerializer, GroupSerializer, ClientSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -17,3 +18,10 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+class ClientViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows clients to be viewed or edited.
+    """
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
