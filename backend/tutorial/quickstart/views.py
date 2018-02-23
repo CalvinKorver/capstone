@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from tutorial.quickstart.models import Client
-from rest_framework import viewsets, response, permissions
+from rest_framework import viewsets
 from tutorial.quickstart.serializers import UserSerializer, GroupSerializer, ClientSerializer
 
 
@@ -10,13 +10,6 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-
-    def retrieve(self, request, pk=None):
-        if pk == 'i':
-            return response.Response(UserSerializer(request.user,
-                context={'request':request}).data)
-        return super(UserViewSet, self).retrieve(request, pk)
 
 
 class GroupViewSet(viewsets.ModelViewSet):
