@@ -6,18 +6,24 @@ https://chris.beams.io/posts/git-commit/
 
 This guide was followed to create dev environment (still need to couple with Docker later)
 
+#### Pre Setup:
+Make sure that mysql is installed and configured properly. You want a root user account with 'admin' and 'password' for your system or whatever. Follow part of the guide below for that.
+
+https://www.digitalocean.com/community/tutorials/how-to-use-mysql-or-mariadb-with-your-django-application-on-ubuntu-14-04
+
 #### Setting up Dev Server Env for Mac:
 1. `cd` into main capstone root dir
 (note: requirements is currently in the `backend` folder)
-2. `pip install -r requirements.txt`
-3. start postgres with `$sudo -i -u postgres`
-4. access database with `$psql` (note: had to run with 'sudo')
-5. `cd capstone-server`
-6. `virtualenv env --python=python3.6`
-7. `python manage.py runserver` (note: psycopg2 should be added to requirements.txt)
+2. `virtualenv env --python=python3.6`
+3. `source env/bin/activate`
+4. `pip install -r requirements.txt`
+5. Log into root mysql with `mysql -u root -p` and password you set
+6. `python manage.py runserver` (note: psycopg2 should be added to requirements.txt)
 8. Navigate to http://127.0.0.1:8000/
 9. Append /admin to the end of the URL and 	you should be able to access the login screen to the admin interface
-10. Username is `admin` and Password is `capstone2018`
+10. Username is `admin` and Password is `password123`
+
+#### Setting up Dev Server Env for Ubuntu (KYLE Put your shit here man)
 
 #### Client Dev Setup
 1. `cd` into client folder
