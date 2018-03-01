@@ -11,7 +11,7 @@ Make sure that mysql is installed and configured properly. You want a root user 
 
 https://www.digitalocean.com/community/tutorials/how-to-use-mysql-or-mariadb-with-your-django-application-on-ubuntu-14-04
 
-#### Setting up Dev Server Env for Mac:
+#### Setting up Dev Server Env for UNIX:
 1. `cd` into main capstone root dir
 (note: requirements is currently in the `backend` folder)
 2. `virtualenv env --python=python3.6`
@@ -22,8 +22,6 @@ https://www.digitalocean.com/community/tutorials/how-to-use-mysql-or-mariadb-wit
 8. Navigate to http://127.0.0.1:8000/
 9. Append /admin to the end of the URL and 	you should be able to access the login screen to the admin interface
 10. Username is `admin` and Password is `password123`
-
-#### Setting up Dev Server Env for Ubuntu (KYLE Put your shit here man)
 
 #### Client Dev Setup
 1. `cd` into client folder
