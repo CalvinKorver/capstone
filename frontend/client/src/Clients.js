@@ -21,19 +21,24 @@ class Clients extends Component {
 //     this.setState({loginPage: loginPage})
 //   }
 componentDidMount() {
-    fetch('localhost:8000')
-        .then(function(response) {
-            return response.json();
-        })
-        .then(clientData => this.setState({
-            clients: clientData[0]
-        }));
+  // don't hardcode urls
+  fetch('http://localhost:8000/clients/', {mode: 'cors'})
+      .then(function(response) {
+        return response.json();
+      })
+      .then(clientData => this.setState({
+          clients: clientData
+      }));
 }
 
 render() {
+  if(!this.state.clients[0]) {
+    return <h1>Not updated</h1>;
+  }
   return (
     <div className="Clients">
-      {this.state.clients}
+      <h3>Name:{this.state.clients[1].name}</h3>
+      <h3>Age:{this.state.clients[1].age}</h3>
       {/* {this.state.gameScreen} */}
     </div>
 
