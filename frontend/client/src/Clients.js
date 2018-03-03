@@ -38,7 +38,6 @@ render() {
   return (
     <div className="Clients">
       <h3>Name:{this.state.clients[1].name}</h3>
-      <h3>Age:{this.state.clients[1].age}</h3>
       {/* {this.state.gameScreen} */}
     </div>
 
