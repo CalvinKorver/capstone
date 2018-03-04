@@ -1,41 +1,29 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { login } from './util/Auth.js'
+import {createNewUser} from './util/Auth.js'
 import './util/ApiClient.js'
+import LoginScreen from './components/LoginScreen';
 
 class App extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      loginPage: []
+    }
   }
 
-  handleLogin(e) {
-    e.preventDefault();
-    console.log("clicked");
-    login("calvin", "korver");
+  componentWillMount() {
+    var loginPage = [];
+    loginPage.push(<LoginScreen appContext={this} key={"loginScreen"}/>);
+    this.setState({loginPage: loginPage})
   }
-  
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        
-        <form>
-          First name:<br/>
-          <input type="text" name="firstname"/>
-            <br/>
-          Last name:<br/>
-          <input type="text" name="lastname"/>
-          <button onClick={e => this.handleLogin(e)}>submit</button>
-        </form>
-        
+        {this.state.loginPage}
       </div>
     );
   }
