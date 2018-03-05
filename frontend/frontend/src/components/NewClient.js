@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import 'semantic-ui-css/semantic.min.css';
+// import 'semantic-ui-css/semantic.min.css';
 // import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
 // onTouchTap http://stackoverflow.com/a/34015469/988941 injectTapEventPlugin();
 // import './App.css';
@@ -37,8 +37,7 @@ render() {
   }
   return (
     <div className="Clients">
-      <h3>Name:{this.state.clients[1].name}</h3>
-      {/* {this.state.gameScreen} */}
+      <h3>Name:{this.state.clients[0].first_name}</h3>
     </div>
 
   );
