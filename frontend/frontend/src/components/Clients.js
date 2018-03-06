@@ -33,12 +33,17 @@ componentDidMount() {
 }
 
 render() {
-  if(!this.state.clients[0]) {
-    return <h1>Not updated</h1>;
+  var clients;
+  if(this.state.clients[0]) {
+    clients = this.state.clients.map(client => 
+      <div key={client.id}>
+        <h1>{client.first_name} {client.last_name}</h1>
+      </div>
+    );
   }
   return (
     <div className="Clients">
-      <h3>Name:{this.state.clients[0].first_name}</h3>
+      {clients}
     </div>
 
   );
