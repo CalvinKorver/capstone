@@ -54,8 +54,8 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CaseSerializer(serializers.HyperlinkedModelSerializer):
-    client = ClientSerializer(read_only=True)
-    case_type = CaseTypeSerializer(read_only=True)
+    client = ClientSerializer()
+    case_type = CaseTypeSerializer()
 
     class Meta:
         model = Case
@@ -63,8 +63,8 @@ class CaseSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class AuthUserCaseSerializer(serializers.HyperlinkedModelSerializer):
-    user = UserSerializer(read_only=True)
-    case = CaseSerializer(read_only=True)
+    user = UserSerializer()
+    case = CaseSerializer()
 
     class Meta:
         model = Auth_User_Case
@@ -72,17 +72,16 @@ class AuthUserCaseSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
-    event_status = StatusSerializer(read_only=True)
-    event_type = EventTypeSerializer(read_only=True)
-
+    event_status = StatusSerializer()
+    event_type = EventTypeSerializer()
     class Meta:
         model = Event
         fields = ('name', 'start_date', 'end_date', 'event_status', 'event_type')
 
 
 class CaseEventSerializer(serializers.HyperlinkedModelSerializer):
-    case = CaseSerializer(read_only=True)
-    event = EventSerializer(read_only=True)
+    case = CaseSerializer()
+    event = EventSerializer()
 
     class Meta:
         model = Case_Event

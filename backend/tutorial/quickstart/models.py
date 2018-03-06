@@ -37,34 +37,34 @@ class Client(models.Model):
     zipcode = models.CharField(max_length = 10, default="DEFAULT")
     country = models.CharField(max_length = 50, default="DEFAULT")
     # foreign key for client type
-    client_type_id = models.ForeignKey(Client_Type, null=True, on_delete=models.CASCADE)
+    client_type = models.ForeignKey(Client_Type, null=True, on_delete=models.CASCADE)
 
 class Case(models.Model):
     name = models.CharField(max_length=50, default="DEFAULT")
     # foreign key for client id
-    client_id = models.ForeignKey(Client, null=True, on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, null=True, on_delete=models.CASCADE)
     # foreign key for case type id
-    case_type_id = models.ForeignKey(Case_Type, null=True, on_delete=models.CASCADE)
+    case_type = models.ForeignKey(Case_Type, null=True, on_delete=models.CASCADE)
 
 class Auth_User_Case(models.Model):
     # foreign key for user id
-    user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     # foreign key for case id
-    case_id = models.ForeignKey(Case, null=True, on_delete=models.CASCADE)
+    case = models.ForeignKey(Case, null=True, on_delete=models.CASCADE)
 
 class Event(models.Model):
     name = models.CharField(max_length=50, default="DEFAULT")
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     # foreign key event status id
-    event_status_id = models.ForeignKey(Status, null=True, on_delete=models.CASCADE)
+    event_status = models.ForeignKey(Status, null=True, on_delete=models.CASCADE)
     # foreign key for event type ID
-    event_type_id = models.ForeignKey(Event_Type, null=True, on_delete=models.CASCADE)
+    event_type = models.ForeignKey(Event_Type, null=True, on_delete=models.CASCADE)
 
 class Case_Event(models.Model):
     # foreign key for case id
-    case_id = models.ForeignKey(Case, null=True, on_delete=models.CASCADE)
+    case = models.ForeignKey(Case, null=True, on_delete=models.CASCADE)
     # foreign key for event id
-    event_id = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
 
  
