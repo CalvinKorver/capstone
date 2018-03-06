@@ -4,8 +4,9 @@ import Login from './Login';
 // import Game from './Game';
 // import { CONST } from './Constants/Constants';
 
-import { createNewUser } from '../util/Auth.js'
+import createNewUser from '../util/AuthService.js'
 import '../util/ApiClient.js'
+import SwitchButton from './SwitchButton';
 
 class Register extends Component {
   constructor(props) {
@@ -97,6 +98,7 @@ class Register extends Component {
             </Form>
           </Grid.Column>
         </Grid>
+        <SwitchButton message="Already registered? Log in." endpoint="login"/>
       </div>
     );
   }
