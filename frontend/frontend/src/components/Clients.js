@@ -36,14 +36,36 @@ render() {
   var clients;
   if(this.state.clients[0]) {
     clients = this.state.clients.map(client => 
-      <div key={client.id}>
-        <h1>{client.first_name} {client.last_name}</h1>
-      </div>
+      // <div key={client.id}>
+      //   <h1>{client.first_name} {client.last_name}</h1>
+      // </div>
+      <tr>
+        <th>{client.first_name}</th>
+        <th>{client.last_name}</th>
+        <th>{client.date_of_birth}</th>
+        <th>{client.street_address}</th>
+        <th>{client.city}</th>
+        <th>{client.state}</th>
+        <th>{client.zipcode}</th>
+        <th>{client.country}</th>
+      </tr>
     );
   }
   return (
     <div className="Clients">
-      {clients}
+      <table style={{width: '100%'}}>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Date of Birth</th>
+          <th>Street Address</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Zipcode</th>
+          <th>Country</th>
+        </tr>
+        {clients}
+      </table>
     </div>
 
   );
