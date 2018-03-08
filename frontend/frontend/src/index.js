@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import Clients from './components/Clients';
 import NewCase from './components/NewCase';
+import NewClient from './components/NewClient';
 import registerServiceWorker from './registerServiceWorker';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -18,6 +19,7 @@ ReactDOM.render(
       <Route exact path='/register' component={Register}/>
       <Route path='/clients' component={Clients}/>
       <Route path='/new_case' component={NewCase}/>
+      <Route path='/new_client' component={NewClient}/>
     </div>
   </BrowserRouter>,
   document.getElementById('root')

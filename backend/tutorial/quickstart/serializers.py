@@ -54,8 +54,8 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CaseSerializer(serializers.HyperlinkedModelSerializer):
-    client = ClientSerializer()
-    case_type = CaseTypeSerializer()
+    client = ClientSerializer(read_only=True)
+    case_type = CaseTypeSerializer(read_only=True)
 
     class Meta:
         model = Case
