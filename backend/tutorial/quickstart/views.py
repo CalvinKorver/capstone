@@ -25,6 +25,21 @@ class ClientViewSet(viewsets.ModelViewSet):
     """
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
+    
+    @detail_route(methods=['post'])
+    def client_type(self, request, pk=None):
+        """
+        Saves the client type with the client.
+        """
+        client_type = objects.get_or_create(request.data.client_type)
+        client = self.get_object()
+        client.client_type = client_type
+        client.save()
+        # return something?
+#         user = self.get_object()
+#         groups = user.groups.all()
+#         return Response([group.name for group in groups])
+        
 
 class EventTypeViewSet(viewsets.ModelViewSet):
     """
