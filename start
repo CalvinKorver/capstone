@@ -1,0 +1,4 @@
+#!/bin/bash
+source ./backend/.venv/bin/activate
+./backend/manage.py runserver
+gnome-terminal -e --noclose cd code/capstone/frontend/frontend & npm start
