@@ -4,7 +4,7 @@ import Login from './Login';
 // import Game from './Game';
 // import { CONST } from './Constants/Constants';
 
-import createNewUser from '../util/AuthService.js'
+import AuthService from '../util/AuthService.js'
 import '../util/ApiClient.js'
 import SwitchButton from './SwitchButton';
 
@@ -17,6 +17,7 @@ class Register extends Component {
       email: '',
       password: ''
     }
+    this.AuthService = new AuthService();
   }
   handleClick(event) {
     var self = this;
@@ -28,7 +29,7 @@ class Register extends Component {
       "password": this.state.password,
       "password2": this.state.confirm_password
     }
-    createNewUser(payload)
+    this.AuthService.createNewUser(payload)
   }
   render() {
     return (

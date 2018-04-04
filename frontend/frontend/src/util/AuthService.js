@@ -22,10 +22,10 @@ export default class AuthService {
     // this.setToken = this.setToken.bind(this);
   }
 
-  InvalidCredentialsException(message) {
-    this.message = message;
-    this.name = 'InvalidCredentialsException';
-  }
+  // InvalidCredentialsException(message) {
+  //   this.message = message;
+  //   this.name = 'InvalidCredentialsException';
+  // }
 
   createNewUser(userPayload) {
     var URL = "http://localhost:8000/rest-auth/";
@@ -45,7 +45,8 @@ export default class AuthService {
       .catch(function (error) {
         // raise different exception if due to invalid credentials
         if (_.get(error, 'response.status') === 400) {
-          throw new this.InvalidCredentialsException(error);
+          // throw new this.InvalidCredentialsException(error);
+          console.error(error);
         }
         throw error;
       });
@@ -120,7 +121,8 @@ export default class AuthService {
       .catch(function (error) {
         // raise different exception if due to invalid credentials
         if (_.get(error, 'response.status') === 400) {
-          throw new this.InvalidCredentialsException(error);
+          // throw new this.InvalidCredentialsException(error);
+          console.error(error);
         }
         throw error;
       });
