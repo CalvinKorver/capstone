@@ -7,6 +7,8 @@ from django.http import HttpResponse
 
 from django.contrib.auth.models import User
 from rest_framework import status, viewsets
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 
 # HELPFUL
@@ -70,20 +72,20 @@ class CaseTypeViewSet(viewsets.ModelViewSet):
     queryset = Case_Type.objects.all()
     serializer_class = CaseTypeSerializer
 
-class CaseViewSet(viewsets.ModelViewSet):
+class CaseViewSet(APIView):
     """
     API endpoint that allows clients to be viewed or edited.
     """
 
-    # def get(self, request, *args, **kwargs):
-    queryset = Case.objects.all()
-    serializer_class = CaseSerializer
-        # return HttpResponse(serializer_class.data)
+    def get(self, request, *args, **kwargs):
+        queryset = Case.objects.all()
+        serializer_class = CaseSerializer(queryset, many=True)
+        return Response(serializer_class.data)
 
-    def post(self, request):#, *args, **kwargs):
-        case_name = request.data.name
-        return Response(status=status.HTTP_204_NO_CONTENT)
-        # return Response({'Data': 'hi'})
+    def post(self, request, *args, **kwargs):
+        # case_name = request.data.name
+        return HttpResponse("Performed a post")
+        # return HttpResponse({'Data': 'hi'})
 # +       case_type = Case_Type.objects.get(name=request.data.case_type)
 # +       client = Client.objects.get(first_name=request.data.first_name, last_name=request.data.last_name)
 # +       case = self.get_object()
