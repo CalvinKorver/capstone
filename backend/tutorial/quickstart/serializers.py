@@ -59,7 +59,7 @@ class CaseSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Case
-        fields = ('name', 'client', 'case_type')
+        fields = ('name', 'client', 'case_type', 'case_type_name')
 
 
 class AuthUserCaseSerializer(serializers.HyperlinkedModelSerializer):
