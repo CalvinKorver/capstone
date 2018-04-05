@@ -84,15 +84,17 @@ class CaseViewSet(APIView):
 
     def post(self, request, *args, **kwargs):
         # case_name = request.data.name
-        return HttpResponse("Performed a post")
+        # return HttpResponse("Performed a post")
         # return HttpResponse({'Data': 'hi'})
-# +       case_type = Case_Type.objects.get(name=request.data.case_type)
-# +       client = Client.objects.get(first_name=request.data.first_name, last_name=request.data.last_name)
-# +       case = self.get_object()
-# +       case.case_type = case_type.id
-# +       case.client = client.id
-# +       case.save()
-        #return HttpResponse(request)
+        case_type = Case_Type.objects.get(name=request.data.get('case_type'))
+        client = Client.objects.get(first_name=request.data.get('first_name'), last_name=request.data.get('last_name'))
+        # case = self.get_object()
+        case = Case.objects.create(
+            name=request.data.get('name'),
+            case_type=case_type,
+            client=client)
+        case.save()
+        return Response(client.id)
 #       return HttpResponse({'status': 'request handled'})
         
 
