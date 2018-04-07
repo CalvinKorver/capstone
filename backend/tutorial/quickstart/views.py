@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
+
 # HELPFUL
 # http://www.django-rest-framework.org/tutorial/3-class-based-views/
 
@@ -83,21 +84,46 @@ class CaseViewSet(APIView):
         return Response(serializer_class.data)
 
     def post(self, request, *args, **kwargs):
-        # case_name = request.data.name
-        # return HttpResponse("Performed a post")
-        # return HttpResponse({'Data': 'hi'})
-        case_type = Case_Type.objects.get(name=request.data.get('case_type'))
+        
+        case_type = Case_Type.objects.get(name=request.data.get('case_type_name'))
         client = Client.objects.get(first_name=request.data.get('first_name'), last_name=request.data.get('last_name'))
-        # case = self.get_object()
+        name = request.data.get('name')
+
         case = Case.objects.create(
-            name=request.data.get('name'),
+            name=name,
             case_type=case_type,
             client=client)
         case.save()
-        return Response(client.id)
-#       return HttpResponse({'status': 'request handled'})
-        
+        return Response({'status': 'Case created'})
 
+    def delete(self, request):
+        case = Case.objects.get(name = request.data.get('name'))
+        case.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def patch(self, request):
+        case = Case.objects.filter(name = request.data.get('name'))
+        
+        if (request.data.get("new_name") is not None):
+            case.update(name = request.data.get("new_name"))
+
+        if (request.data.get("new_case_type") is not None):
+            try:
+                new_case_type = Case_Type.objects.get(name=request.data.get('new_case_type'))
+            except Exception as e:
+                return Response("Sorry could not find case type")
+            case.update(case_type_id = new_case_type.id)
+
+        if request.data.get("new_client_first_name") is not None and\
+        request.data.get("new_client_last_name") is not None:
+            try:
+                new_client = Client.objects.get(first_name=request.data.get('new_client_first_name'), 
+                last_name=request.data.get('new_client_last_name'))
+            except Exception as e:
+                return Response(400)
+            case.update(client_id = new_client.id)
+
+        return Response("Patched")
 
 class AuthUserCaseViewSet(viewsets.ModelViewSet):
     """

@@ -41,7 +41,6 @@ class Client(models.Model):
 
 class Case(models.Model):
     name = models.CharField(max_length=50, default="DEFAULT")
-    case_type_name = models.CharField(max_length=50, default="DEFAULT")
     # foreign key for client id
     client = models.ForeignKey(Client, null=True, on_delete=models.CASCADE)
     # foreign key for case type id
