@@ -14,7 +14,6 @@ router.register(r'event_types', views.EventTypeViewSet)
 router.register(r'client_types', views.ClientTypeViewSet)
 router.register(r'status', views.StatusViewSet)
 router.register(r'auth_user_types', views.AuthUserTypeViewSet)
-router.register(r'case_types', views.CaseTypeViewSet)
 # router.register(r'cases', views.CaseViewSet, base_name="cases")
 router.register(r'auth_user_cases', views.AuthUserCaseViewSet)
 router.register(r'events', views.EventViewSet)
@@ -29,5 +28,6 @@ urlpatterns = [
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^refresh-token/', refresh_jwt_token),
-    url(r'^cases/', views.CaseViewSet.as_view())
+    url(r'^cases/', views.CaseViewSet.as_view()),
+    url(r'^case-types/', views.CaseTypeViewSet.as_view())
 ]
