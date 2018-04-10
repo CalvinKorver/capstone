@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
 from tutorial.quickstart.models import Client, Event_Type, Client_Type, Status, Auth_User_Type, Case_Type, Case, Auth_User_Case, Event, Case_Event
 from rest_framework import status, viewsets, generics
-from rest_framework.decorators import detail_route, list_route, action
+from rest_framework.decorators import detail_route, list_route #action
 from tutorial.quickstart.serializers import UserSerializer, GroupSerializer, ClientSerializer, EventTypeSerializer, ClientTypeSerializer, StatusSerializer, AuthUserTypeSerializer, CaseTypeSerializer, CaseSerializer, AuthUserCaseSerializer, EventSerializer, CaseEventSerializer
 
 from django.contrib.auth.models import User
