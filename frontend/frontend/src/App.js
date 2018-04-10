@@ -6,6 +6,7 @@ import LoginScreen from './components/LoginScreen';
 
 import AuthService from './util/AuthService.js';
 import withAuth from './components/withAuth';
+import Layout from './components/Layout';
 
 class App extends Component {
 
@@ -22,9 +23,10 @@ class App extends Component {
   render() {
     return (
       <div className = "App" >
-        <div className="App-header">
+        <Layout/>
+        {/* <div className="App-header">
             <h2>Welcome {this.props.user.username}</h2>
-        </div>
+        </div> */}
           <button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Logout</button>
         </div>
     );
