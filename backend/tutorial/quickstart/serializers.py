@@ -54,8 +54,8 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CaseSerializer(serializers.HyperlinkedModelSerializer):
-    client = serializers.PrimaryKeyRelatedField(many=True, read_only=True)#ClientSerializer(read_only=True)
-    case_type = CaseTypeSerializer(read_only=True)
+    client = serializers.PrimaryKeyRelatedField(read_only=True)#ClientSerializer(read_only=True)
+    case_type = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Case
