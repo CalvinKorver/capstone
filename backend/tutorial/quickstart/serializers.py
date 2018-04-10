@@ -54,12 +54,12 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CaseSerializer(serializers.HyperlinkedModelSerializer):
-    client = ClientSerializer(read_only=True)
+    client = serializers.PrimaryKeyRelatedField(many=True, read_only=True)#ClientSerializer(read_only=True)
     case_type = CaseTypeSerializer(read_only=True)
 
     class Meta:
         model = Case
-        fields = ('name', 'client', 'case_type', 'case_type_name')
+        fields = ('name', 'client', 'case_type')
 
 
 class AuthUserCaseSerializer(serializers.HyperlinkedModelSerializer):
