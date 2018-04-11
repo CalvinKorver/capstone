@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from tutorial.quickstart.models import Client, Event_Type, Client_Type, Status, Auth_User_Type, Case_Type, Case, Auth_User_Case, Event, Case_Event
+from tutorial.quickstart.models import Client, Event_Type, Client_Type, Status, Auth_User_Type, Case_Type, Case, Auth_User_Case, Event, Case_Event, Court, Charge, Case_Charge
 from rest_framework import serializers
 
 
@@ -44,13 +44,23 @@ class CaseTypeSerializer(serializers.HyperlinkedModelSerializer):
         model = Case_Type
         fields = ('name', 'description')
 
+class CourtSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Court
+        fields = ('name', 'description')
+
+class ChargeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Charge
+        fields = ('name', 'description')
+
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
-    client_type = ClientTypeSerializer(read_only=True)
+    # client_type = ClientTypeSerializer(read_only=True)
 
     class Meta:
         model = Client
-        fields = ('first_name', 'last_name', 'date_of_birth', 'street_address', 'city', 'state', 'zipcode', 'country', 'client_type')
+        fields = ('first_name', 'last_name', 'date_of_birth', 'street_address', 'city', 'state', 'zipcode', 'country')#, 'client_type')
 
 
 class CaseSerializer(serializers.HyperlinkedModelSerializer):
@@ -86,3 +96,12 @@ class CaseEventSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Case_Event
         fields = ('case', 'event')
+
+
+class CaseChargeSerializer(serializers.HyperlinkedModelSerializer):
+    case = serializers.PrimaryKeyRelatedField(read_only=True)
+    charge = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = Case_Charge
+        fields = ('case', 'charge')
