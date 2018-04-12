@@ -18,8 +18,8 @@ ReactDOM.render(
       <Route exact path='/login' component={Login}/>
       <Route exact path='/register' component={Register}/>
       <Route path='/clients' component={Clients}/>
-      <Route path='/new_case' component={NewCase}/>
-      <Route path='/new_client' component={NewClient}/>
+      <Route path='/new-case' component={NewCase}/>
+      <Route path='/new-client' component={NewClient}/>
     </div>
   </BrowserRouter>,
   document.getElementById('root')
