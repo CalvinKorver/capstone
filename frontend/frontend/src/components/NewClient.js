@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Checkbox, Dropdown, Form } from 'semantic-ui-react'
 import axios from 'axios';
 
 // import 'semantic-ui-css/semantic.min.css';
@@ -60,6 +60,8 @@ class NewClient extends Component {
     }
 
     render() {
+
+        var stateOptions = [{text: "CA", value:"CA"}, {text: "WA", value:"WA"}]
         return (
             <div className="NewClient">
                 <Form onSubmit={this.handleSubmit}>
@@ -72,8 +74,8 @@ class NewClient extends Component {
                         <input type="text" name="last_name"/>
                     </Form.Field>
                     <Form.Field>
-                        <label>Date of birth (year-month-day):</label>
-                        <input type="text" name="date_of_birth"/>
+                        <label>Date of birth:</label>
+                        <input type="text" name="date_of_birth" placeholder="year-month-day"/>
                     </Form.Field>
                     <Form.Field>
                         <label>Street Address:</label>
@@ -84,8 +86,8 @@ class NewClient extends Component {
                         <input type="text" name="city"/>
                     </Form.Field>
                     <Form.Field>
-                        <label>State (2 letters):</label>
-                        <input type="text" name="state"/>
+                        <label>State:</label>
+                        <Dropdown placeholder='Select State:' fluid selection options={stateOptions} />
                     </Form.Field>
                     <Form.Field>
                         <label>Zipcode:</label>
