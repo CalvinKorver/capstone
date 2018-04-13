@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Form, Grid, Header, Image, Message, Segment, Icon } from 'semantic-ui-react'
-import Login from './Login';
-// import Game from './Game';
-// import { CONST } from './Constants/Constants';
 
 import AuthService from '../util/AuthService.js'
 import '../util/ApiClient.js'
