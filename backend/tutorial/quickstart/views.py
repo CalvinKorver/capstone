@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User, Group
-from tutorial.quickstart.models import Client, Event_Type, Client_Type, Status, Auth_User_Type, Case_Type, Case, Auth_User_Case, Event, Case_Event
+from tutorial.quickstart.models import Client, Event_Type, Client_Type, Status, Auth_User_Type, Case_Type, Case, Auth_User_Case, Event, Case_Event, Charge, Court, Case_Charge
 from rest_framework import status, viewsets, generics
 from rest_framework.decorators import detail_route, list_route #action
-from tutorial.quickstart.serializers import UserSerializer, GroupSerializer, ClientSerializer, EventTypeSerializer, ClientTypeSerializer, StatusSerializer, AuthUserTypeSerializer, CaseTypeSerializer, CaseSerializer, AuthUserCaseSerializer, EventSerializer, CaseEventSerializer
+from tutorial.quickstart.serializers import UserSerializer, GroupSerializer, ClientSerializer, EventTypeSerializer, ClientTypeSerializer, StatusSerializer, AuthUserTypeSerializer, CaseTypeSerializer, CaseSerializer, AuthUserCaseSerializer, EventSerializer, CaseEventSerializer, ChargeSerializer, CourtSerializer, CaseChargeSerializer
 
 from django.contrib.auth.models import User
 from rest_framework import status, viewsets
@@ -66,6 +66,20 @@ class AuthUserTypeViewSet(viewsets.ModelViewSet):
     queryset = Auth_User_Type.objects.all()
     serializer_class = AuthUserTypeSerializer
 
+class ChargeViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows clients to be viewed or edited.
+    """
+    queryset = Charge.objects.all()
+    serializer_class = ChargeSerializer
+
+class CourtViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows clients to be viewed or edited.
+    """
+    queryset = Court.objects.all()
+    serializer_class = CourtSerializer
+
 class CaseTypeViewSet(APIView):
     def get(self, request, *args, **kwargs):
         queryset = Case_Type.objects.all()
@@ -110,6 +124,16 @@ class CaseViewSet(APIView):
             case_type=case_type,
             client=client)
         case.save()
+
+        # do stuff to make a new case_charge
+        # get the reference to the charge object using the name of the charge in the request
+        charge = Charge.objects.get(name=request.data.get('charge_name'))
+        # get the reference to the case object
+        # create a new case_charge object using these ids
+        case_charge = Case_Charge.objects.create(
+            charge=charge,
+            case=case)
+        
         return Response({'status': 'Case created'})
 
     def delete(self, request):
@@ -161,3 +185,10 @@ class CaseEventViewSet(viewsets.ModelViewSet):
     """
     queryset = Case_Event.objects.all()
     serializer_class = CaseEventSerializer
+
+class CaseChargeViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows clients to be viewed or edited.
+    """
+    queryset = Case_Charge.objects.all()
+    serializer_class = CaseChargeSerializer

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Form from 'semantic-ui-react';
+import { Button, Checkbox, Dropdown, Form } from 'semantic-ui-react'
 import axios from 'axios';
 
 // import 'semantic-ui-css/semantic.min.css';
@@ -60,28 +60,45 @@ class NewClient extends Component {
     }
 
     render() {
+
+        var stateOptions = [{text: "CA", value:"CA"}, {text: "WA", value:"WA"}]
         return (
             <div className="NewClient">
-                <form onSubmit={this.handleSubmit}>
-                    First Name:<br/>
-                    <input type="text" name="first_name"/><br/>
-                    Last Name:<br/>
-                    <input type="text" name="last_name"/><br/>
-                    Date of birth (year-month-day):<br/>
-                    <input type="text" name="date_of_birth"/><br/>
-                    Street Address:<br/>
-                    <input type="text" name="street_address"/><br/>
-                    City:<br/>
-                    <input type="text" name="city"/><br/>
-                    State (2 letters):<br/>
-                    <input type="text" name="state"/><br/>
-                    Zipcode:<br/>
-                    <input type="text" name="zipcode"/><br/>
-                    Country:<br/>
-                    <input type="text" name="country"/><br/>
-                    {/* can put client type here, maybe as a dropdown */}
-                    <input type="submit" value="Submit"/>
-                </form> 
+                <Form onSubmit={this.handleSubmit}>
+                    <Form.Field>
+                        <label>First Name:</label>
+                        <input type="text" name="first_name"/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Last Name:</label>
+                        <input type="text" name="last_name"/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Date of birth:</label>
+                        <input type="text" name="date_of_birth" placeholder="year-month-day"/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Street Address:</label>
+                        <input type="text" name="street_address"/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>City:</label>
+                        <input type="text" name="city"/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>State:</label>
+                        <Dropdown placeholder='Select State:' fluid selection options={stateOptions} />
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Zipcode:</label>
+                        <input type="text" name="zipcode"/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Country:<br/></label>
+                        <input type="text" name="country"/>
+                    </Form.Field>
+                    <Button type="submit">Submit</Button>
+                </Form> 
             </div>
         );
     }
