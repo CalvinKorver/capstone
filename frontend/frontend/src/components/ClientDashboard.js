@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import NavMenu from './subs/NavMenu'
-import ClientDashboard from './ClientDashboard';
+import {
+    Button,
+  } from 'semantic-ui-react'
 
 class Layout extends Component {
     constructor(props) {
@@ -10,9 +11,7 @@ class Layout extends Component {
     render() {
         return (
             <div>
-                <NavMenu/>
-                <ClientDashboard/>
-                {/* Dashboard will go here */}
+                <Button> New Case </Button>
             </div>
         )
     }

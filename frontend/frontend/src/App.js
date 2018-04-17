@@ -24,6 +24,7 @@ class App extends Component {
     return (
       <div className = "App" >
         <Layout/>
+        <hr/>
         {/* <div className="App-header">
             <h2>Welcome {this.props.user.username}</h2>
         </div> */}
