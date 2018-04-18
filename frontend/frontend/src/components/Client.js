@@ -4,6 +4,10 @@ import React, {Component} from 'react';
 // onTouchTap http://stackoverflow.com/a/34015469/988941 injectTapEventPlugin();
 // import './App.css';
 // import Loginscreen from './loginScreen'
+import {
+    Button,
+    Container,
+  } from 'semantic-ui-react';
 
 class Client extends Component {
   constructor(props) {
@@ -32,10 +36,10 @@ render() {
   }
   clientInfo = this.state.client;
   return (
-    <div className="ClientContainer">
+    <Container className="ClientContainer">
         <h2>{clientInfo.first_name} {clientInfo.last_name}</h2>
-        <span><button>VineLink</button> <button>DCOR</button></span>
-    </div>
+        <span><Button>VineLink</Button> <Button>DCOR</Button></span>
+    </Container>
 
   );
 }
