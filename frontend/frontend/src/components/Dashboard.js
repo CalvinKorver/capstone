@@ -4,9 +4,8 @@ import {
   } from 'semantic-ui-react'
 import SearchClients from './forms/SearchClients';
 import Clients from './Clients';
-import Dashboard from './Dashboard';
 
-class ClientDashboard extends Component {
+class Dashboard extends Component {
     constructor(props) {
         super(props);
     }
@@ -14,12 +13,15 @@ class ClientDashboard extends Component {
     render() {
         return (
             <div>
-                <Button> New Case </Button>
-                
+                <Button> New Client </Button>
+                {/* This component needs a combination of two components, the client and the client search */}
+                <SearchClients/>
+                <hr/>
+                <Clients/>
             </div>
         )
     }
 
 }
 
-export default Layout;
+export default Dashboard;
