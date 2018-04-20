@@ -46,12 +46,11 @@ class Client(models.Model):
     # client_type = models.ForeignKey(Client_Type, null=True, on_delete=models.CASCADE)
 
 class Case(models.Model):
-    name = models.CharField(max_length=50, default="DEFAULT")
-    case_number = models.CharField(max_length=50, default="0000000000")
+    CaseNumber = models.CharField(max_length=50, default="0000000000")
     # foreign key for client id
-    client = models.ForeignKey(Client, null=True, on_delete=models.CASCADE)
+    ClientID = models.ForeignKey(Client, null=True, on_delete=models.CASCADE)
     # foreign key for case type id
-    case_type = models.ForeignKey(Case_Type, null=True, on_delete=models.CASCADE)
+    # case_type = models.ForeignKey(Case_Type, null=True, on_delete=models.CASCADE)
     # changed to many-to-many
     # foreign key for charges
     # charge = models.ForeignKey(Charge, null=True, on_delete=models.CASCADE)
@@ -82,6 +81,6 @@ class Case_Event(models.Model):
 
 class Case_Charge(models.Model):
     # foreign key for case id
-    case = models.ForeignKey(Case, null=True, on_delete=models.CASCADE)
+    CaseID = models.ForeignKey(Case, null=True, on_delete=models.CASCADE)
     # foreign key for charge id
-    charge = models.ForeignKey(Charge, null=True, on_delete=models.CASCADE)
+    ChargeID = models.ForeignKey(Charge, null=True, on_delete=models.CASCADE)

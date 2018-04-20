@@ -64,12 +64,12 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CaseSerializer(serializers.HyperlinkedModelSerializer):
-    client = serializers.PrimaryKeyRelatedField(read_only=True)#ClientSerializer(read_only=True)
-    case_type = serializers.PrimaryKeyRelatedField(read_only=True)
+    CaseNumber = serializers.PrimaryKeyRelatedField(read_only=True)#ClientSerializer(read_only=True)
+    ClientID = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Case
-        fields = ('name', 'client', 'case_type')
+        fields = ('CaseNumber', 'ClientID')
 
 
 class AuthUserCaseSerializer(serializers.HyperlinkedModelSerializer):
@@ -99,9 +99,9 @@ class CaseEventSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CaseChargeSerializer(serializers.HyperlinkedModelSerializer):
-    case = serializers.PrimaryKeyRelatedField(read_only=True)
-    charge = serializers.PrimaryKeyRelatedField(read_only=True)
+    CaseID = serializers.PrimaryKeyRelatedField(read_only=True)
+    ChargeID = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Case_Charge
-        fields = ('case', 'charge')
+        fields = ('CaseID', 'ChargeID')
