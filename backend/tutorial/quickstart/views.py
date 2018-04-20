@@ -115,25 +115,27 @@ class CaseViewSet(APIView):
 
     def post(self, request, *args, **kwargs):
         
-        case_type = Case_Type.objects.get(name=request.data.get('case_type_name'))
-        client = Client.objects.get(first_name=request.data.get('first_name'), last_name=request.data.get('last_name'))
-        name = request.data.get('name')
+        # case_type = Case_Type.objects.get(name=request.data.get('case_type_name'))
+        clientID = Client.objects.get(first_name=request.data.get('firstName'), last_name=request.data.get('lastName'))
+        caseNumber = request.data.get('caseNumber')
 
+        # Save the case
         case = Case.objects.create(
-            name=name,
-            case_type=case_type,
-            client=client)
+            CaseNumber=caseNumber,
+            # case_type=case_type,
+            ClientID=clientID)
         case.save()
 
-        # do stuff to make a new case_charge
-        # get the reference to the charge object using the name of the charge in the request
-        charge = Charge.objects.get(name=request.data.get('charge_name'))
-        # get the reference to the case object
-        # create a new case_charge object using these ids
-        case_charge = Case_Charge.objects.create(
-            charge=charge,
-            case=case)
-        
+        if(request.data.get('charge1') != None):
+            print("Here")
+            chargeID = Charge.objects.get(name=request.data.get('charge1'))
+            print(chargeID)
+            print(case)
+
+            case_charge = Case_Charge.objects.create(
+                ChargeID=chargeID,
+                CaseID=case)
+            case_charge.save()
         return Response({'status': 'Case created'})
 
     def delete(self, request):
