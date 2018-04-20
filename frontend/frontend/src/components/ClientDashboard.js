@@ -3,7 +3,7 @@ import {
     Button,
   } from 'semantic-ui-react'
 import SearchClients from './forms/SearchClients';
-import Clients from './Clients';
+import Client from './Client';
 import Dashboard from './Dashboard';
 
 class ClientDashboard extends Component {
@@ -12,14 +12,17 @@ class ClientDashboard extends Component {
     }
 
     render() {
+        console.log(this.props);
+        // gets value passed in from clients
+        const id = this.props.match.params.id;
         return (
             <div>
                 <Button> New Case </Button>
-                
+                <Client id={id}/>
             </div>
         )
     }
 
 }
 
-export default Layout;
+export default ClientDashboard;
