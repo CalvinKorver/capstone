@@ -8,6 +8,7 @@ import NewClient from './components/forms/NewClient';
 import registerServiceWorker from './registerServiceWorker';
 import Login from './components/Login';
 import Register from './components/Register';
+import ClientDashboard from './components/ClientDashboard';
 
 import { BrowserRouter, Route } from 'react-router-dom';
 
@@ -17,9 +18,10 @@ ReactDOM.render(
       <Route exact path='/' component={App}/>
       <Route exact path='/login' component={Login}/>
       <Route exact path='/register' component={Register}/>
-      <Route path='/clients' component={Clients}/>
       <Route path='/new-case' component={NewCase}/>
       <Route path='/new-client' component={NewClient}/>
+      <Route path="/client/:id" component={ClientDashboard}/>
+      <Route path='/clients' component={Clients}/>
     </div>
   </BrowserRouter>,
   document.getElementById('root')

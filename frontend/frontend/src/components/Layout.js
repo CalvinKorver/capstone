@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavMenu from './subs/NavMenu'
-import ClientDashboard from './ClientDashboard';
+import Dashboard from './Dashboard';
 
 class Layout extends Component {
     constructor(props) {
@@ -11,7 +11,7 @@ class Layout extends Component {
         return (
             <div>
                 <NavMenu/>
-                <ClientDashboard/>
+                <Dashboard/>
                 {/* Dashboard will go here */}
             </div>
         )
