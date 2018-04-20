@@ -23,7 +23,6 @@ class ClientDashboard extends Component {
         const id = this.props.match.params.id;
         return (
             <div>
-                <NewCase firstName={this.state.firstName} lastName={this.state.lastName}/>
                 <Button> New Case </Button>
                 <Client id={id}/>
             </div>
