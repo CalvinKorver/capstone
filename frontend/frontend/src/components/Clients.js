@@ -43,7 +43,7 @@ render() {
     console.log(this.state.clients[0].id);
     clients = this.state.clients.map(client => 
       // pass client id as prop to client component
-      <div>
+      <div key={client.id}>
         {/* <Link to={'/client'} params={{clientID: client.id}}>Link to client</Link> */}
         <Link to={'/client/'+client.id}>Link to Client</Link>
         <Client key={client.id} id={client.id}/>
