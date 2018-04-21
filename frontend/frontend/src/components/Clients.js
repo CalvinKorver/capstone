@@ -40,7 +40,6 @@ componentDidMount() {
 render() {
   var clients;
   if(this.state.clients[0]) {
-    console.log(this.state.clients[0].id);
     clients = this.state.clients.map(client => 
       // pass client id as prop to client component
       <div key={client.id}>

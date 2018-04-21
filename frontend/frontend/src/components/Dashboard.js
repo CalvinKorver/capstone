@@ -29,12 +29,21 @@ class Dashboard extends Component {
             .then(function(response) {
               return response.json();
             })
-            // .then(clientData => clientData.forEach(function(client){
-            //     client.title = client.first_name + client.last_name
-            // }))
+            .then(function(clientData){
+                clientData.forEach(function(client){
+                    console.log(client);
+                    client.title = client.first_name + " " +client.last_name
+                    console.log(clientData);
+                });
+                return clientData;
+            })
             .then(clientData => this.setState({
                 clients: clientData
             }))
+            
+            // .then(clientsInfo => this.setState({
+            //     clients: clientsInfo
+            // }));
     }
     
     componentWillMount() {
@@ -43,7 +52,7 @@ class Dashboard extends Component {
 
     resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
-    handleResultSelect = (e, { result }) => this.setState({ value: result.first_name + " " + result.last_name })
+    handleResultSelect = (e, { result }) => this.setState({ value: result.title })
 
     handleSearchChange = (e, { value }) => {
         this.setState({ isLoading: true, value })
@@ -52,7 +61,8 @@ class Dashboard extends Component {
         if (this.state.value.length < 1) return this.resetComponent()
 
         const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-        const isMatch = result => re.test(result.first_name + result.last_name);
+        const isMatch = result => {re.test(result.title)};
+        console.log(this.state.clients);
         this.setState({
             isLoading: false,
             results: _.filter(this.state.clients, isMatch),
@@ -64,16 +74,19 @@ class Dashboard extends Component {
 
 
 
-    render() {
-        const { isLoading, value, results } = this.state;
-        const resultRenderer = ({ first_name }) => <Label content={first_name} />
+    render() {            
+        const { isLoading, value, results, clients } = this.state;
+        // const resultRenderer = ({ first_name }) => <Label content={f} />
 
-        resultRenderer.propTypes = {
-            first_name: PropTypes.string,
-            last_name: PropTypes.string,
+        // resultRenderer.propTypes = {
+        //     first_name: PropTypes.string,
+        //     last_name: PropTypes.string,
         
+        // }
+        if(this.state.clients){
+            console.log(this.state);
         }
-         
+        console.log(clients);
         return (
             <div>
                 <Button href='/new-client'> New Client </Button>
@@ -81,13 +94,13 @@ class Dashboard extends Component {
                     loading={isLoading}
                     onResultSelect={this.handleResultSelect}
                     onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
-                    results={results}
+                    results={clients}
                     value={value}
                     {...this.props}
-                    resultRenderer={resultRenderer}
+                    // resultRenderer={resultRenderer}
                 />  
                 <hr/>
-                <Clients/>
+                {/* <Clients/> */}
             </div>
         )
     }
