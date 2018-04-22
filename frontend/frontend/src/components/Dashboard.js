@@ -19,7 +19,8 @@ class Dashboard extends Component {
             clients: [],
             results: [],
             value: '',
-            isLoading: false
+            isLoading: false,
+            searchResults: []
           }
     }
 
@@ -31,9 +32,9 @@ class Dashboard extends Component {
             })
             .then(function(clientData){
                 clientData.forEach(function(client){
-                    console.log(client);
+                    // console.log(client);
                     client.title = client.first_name + " " +client.last_name
-                    console.log(clientData);
+                    // console.log(clientData);
                 });
                 return clientData;
             })
@@ -52,7 +53,7 @@ class Dashboard extends Component {
 
     resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
-    handleResultSelect = (e, { result }) => this.setState({ value: result.title })
+    handleResultSelect = (e, { result }) => this.setState({ value: result.title, searchResults: result })
 
     handleSearchChange = (e, { value }) => {
         this.setState({ isLoading: true, value })
@@ -62,7 +63,7 @@ class Dashboard extends Component {
 
         const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
         const isMatch = result => {re.test(result.title)};
-        console.log(this.state.clients);
+        // console.log(this.state.clients);
         this.setState({
             isLoading: false,
             results: _.filter(this.state.clients, isMatch),
@@ -76,17 +77,17 @@ class Dashboard extends Component {
 
     render() {            
         const { isLoading, value, results, clients } = this.state;
-        // const resultRenderer = ({ first_name }) => <Label content={f} />
+        // const resultRenderer = ({ first_name }) => <Label content={title} />
 
         // resultRenderer.propTypes = {
         //     first_name: PropTypes.string,
         //     last_name: PropTypes.string,
         
         // }
-        if(this.state.clients){
-            console.log(this.state);
-        }
-        console.log(clients);
+        // if(this.state.clients){
+        //     console.log(this.state);
+        // }
+        // console.log(clients);
         return (
             <div>
                 <Button href='/new-client'> New Client </Button>
@@ -100,7 +101,7 @@ class Dashboard extends Component {
                     // resultRenderer={resultRenderer}
                 />  
                 <hr/>
-                {/* <Clients/> */}
+                <Clients clients={this.state.searchResults}/>
             </div>
         )
     }
