@@ -53,8 +53,6 @@ class Client(models.Model):
     state = models.CharField(max_length = 2, default="WA")
     zipcode = models.CharField(max_length = 10, default="DEFAULT")
     country = models.CharField(max_length = 50, default="DEFAULT")
-    # foreign key for client type
-    # client_type = models.ForeignKey(Client_Type, null=True, on_delete=models.CASCADE)
 
 class Case(models.Model):
     CaseNumber = models.CharField(max_length=50, default="0000000000")
@@ -80,23 +78,16 @@ class Event(models.Model):
     time = models.DateField(null=True, blank=True) # I assume time is a version of a date field
     motions = models.CharField(max_length=10, null=True, blank=True) # separate with a comma on input, saves us a table
     case_outcome = models.CharField(max_length=50, null=True, blank=True)
-
-    # information for jail time
-    jail_time_suspended = models.IntegerField(null=True, blank=True)
     credit = models.IntegerField(null=True, blank=True) # these two with next two
     due_date = models.DateField(null=True, blank=True)
 
-    # information for work crew
-    # credit_work_crew = models.IntegerField(null=True, blank=True) # may be able to simplify here
-    # due_date_work_crew = models.DateField(null=True, blank=True)
+    # jail specific
+    jail_time_suspended = models.IntegerField(null=True, blank=True)
+
+    # jurisdiction specific
     jurisdiction_work_crew = models.CharField(max_length=100, null=True, blank=True) # not sure what options are for this
 
-    # community service information
-    # credit_community_service = models.IntegerField(null=True, blank=True)
-    # due_date_community_service = models.DateField(null=True, blank=True)
-
-    
-
+    # sentencing specific
     treatment_ordered = models.CharField(max_length=400, null=True, blank=True)
 
     # foreign key event status id

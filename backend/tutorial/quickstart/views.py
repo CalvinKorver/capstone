@@ -140,6 +140,7 @@ class CaseViewSet(APIView):
             ClientID=clientID)
         case.save()
 
+        # @Calvin Korver what is this hack?
         if(request.data.get('charge1') != None):
             print("Here")
             chargeID = Charge.objects.get(name=request.data.get('charge1'))
@@ -200,16 +201,15 @@ class EventViewSet(APIView):
     def post(self, request, *args, **kwargs):
         event_type = Event_Type.objects.get(name=request.data.get('event_type_name'))
         status = request.data.get('sentencing_status')
-        
+        status_obj = None
         # maybe set status_obj to null up here?
         if(status):
             status_obj = Status.objects.get(name=request.data.get('sentencing_status'))
 
-        # Save the case
+        # Save the event
         # in theory if these fields are null, they won't go into the database
-
-        # also need to link this to the case still
         event = Event.objects.create(
+            StatusID=status_obj,
             event_type=event_type,
             name=request.data.get('name'),
             start_date=request.data.get('start_date'),
@@ -223,6 +223,13 @@ class EventViewSet(APIView):
             )
         event.save()
 
+        # also need to link this to the case still
+        case = Case.objects.filter(CaseNumber=request.data.get('case_number')).first() #change back to .get when case is fixed
+        case_event = Case_Event.objects.create(
+            case = case,
+            event = event
+        )
+        case_event.save()
         return Response({'status': 'Event created'})
 
     def delete(self, request):
