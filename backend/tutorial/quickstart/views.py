@@ -197,12 +197,18 @@ class EventViewSet(APIView):
         queryset = Event.objects.all()
         serializer_class = EventSerializer(queryset, many=True)
         return Response(serializer_class.data)
+    
+    # want to create a different option for a detail view. need to also put in case. look into generics more
+    # def get_object(self, request, *args, **kwargs):
+    #     print(request.data)
+    #     queryset = Event.objects.get(id=request.data.id)
+    #     serializer_class = EventSerializer(queryset)
+    #     return Response(serializer_class.data)
 
     def post(self, request, *args, **kwargs):
         event_type = Event_Type.objects.get(name=request.data.get('event_type_name'))
         status = request.data.get('sentencing_status')
         status_obj = None
-        # maybe set status_obj to null up here?
         if(status):
             status_obj = Status.objects.get(name=request.data.get('sentencing_status'))
 
