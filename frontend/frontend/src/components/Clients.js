@@ -49,7 +49,7 @@ render() {
         <Divider/>
       </div>
   }
-  else {// (this.state.clients[0]) {
+  else {
     clients = this.state.clients.map(client => 
       // pass client id as prop to client component
       <div key={client.id}>

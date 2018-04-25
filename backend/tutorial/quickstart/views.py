@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User, Group
-from tutorial.quickstart.models import Client, Event_Type, Client_Type, Status, Auth_User_Type, Case_Type, Case, Auth_User_Case, Event, Case_Event, Charge, Court, Case_Charge
+from tutorial.quickstart.models import Client, Event_Type, Client_Type, Status, Auth_User_Type, Case_Type, Case, Auth_User_Case, Event, Case_Event, Charge, Court, Case_Charge, Fine, SentenceCompliance
 from rest_framework import status, viewsets, generics
 from rest_framework.decorators import detail_route, list_route #action
-from tutorial.quickstart.serializers import UserSerializer, GroupSerializer, ClientSerializer, EventTypeSerializer, ClientTypeSerializer, StatusSerializer, AuthUserTypeSerializer, CaseTypeSerializer, CaseSerializer, AuthUserCaseSerializer, EventSerializer, CaseEventSerializer, ChargeSerializer, CourtSerializer, CaseChargeSerializer
+from tutorial.quickstart.serializers import UserSerializer, GroupSerializer, ClientSerializer, EventTypeSerializer, ClientTypeSerializer, StatusSerializer, AuthUserTypeSerializer, CaseTypeSerializer, CaseSerializer, AuthUserCaseSerializer, EventSerializer, CaseEventSerializer, ChargeSerializer, CourtSerializer, CaseChargeSerializer, FineSerializer, SentenceComplianceSerializer
 
 from django.contrib.auth.models import User
 from rest_framework import status, viewsets
@@ -79,6 +79,20 @@ class CourtViewSet(viewsets.ModelViewSet):
     """
     queryset = Court.objects.all()
     serializer_class = CourtSerializer
+
+class FineViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows clients to be viewed or edited.
+    """
+    queryset = Fine.objects.all()
+    serializer_class = FineSerializer
+
+class SentenceComplianceViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows clients to be viewed or edited.
+    """
+    queryset = SentenceCompliance.objects.all()
+    serializer_class = SentenceComplianceSerializer
 
 class CaseTypeViewSet(APIView):
     def get(self, request, *args, **kwargs):
@@ -174,12 +188,47 @@ class AuthUserCaseViewSet(viewsets.ModelViewSet):
     queryset = Auth_User_Case.objects.all()
     serializer_class = AuthUserCaseSerializer
 
-class EventViewSet(viewsets.ModelViewSet):
+class EventViewSet(APIView):
     """
     API endpoint that allows clients to be viewed or edited.
     """
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
+    def get(self, request, *args, **kwargs):
+        queryset = Event.objects.all()
+        serializer_class = EventSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+
+    def post(self, request, *args, **kwargs):
+        event_type = Event_Type.objects.get(name=request.data.get('event_type_name'))
+        status = request.data.get('sentencing_status')
+        
+        # maybe set status_obj to null up here?
+        if(status):
+            status_obj = Status.objects.get(name=request.data.get('sentencing_status'))
+
+        # Save the case
+        # in theory if these fields are null, they won't go into the database
+
+        # also need to link this to the case still
+        event = Event.objects.create(
+            event_type=event_type,
+            name=request.data.get('name'),
+            start_date=request.data.get('start_date'),
+            due_date=request.data.get('due_date'),
+            time=request.data.get('time'),
+            motions=request.data.get('motions'),
+            case_outcome=request.data.get('case_outcome'),
+            credit=request.data.get('credit'),
+            jail_time_suspended=request.data.get('jail_time_suspended'),
+            jurisdiction_work_crew=request.data.get('jurisdiction_work_crew')
+            )
+        event.save()
+
+        return Response({'status': 'Event created'})
+
+    def delete(self, request):
+        event = Event.objects.get(name = request.data.get('name'))
+        event.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class CaseEventViewSet(viewsets.ModelViewSet):
     """

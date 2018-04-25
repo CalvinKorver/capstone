@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from tutorial.quickstart.models import Client, Event_Type, Client_Type, Status, Auth_User_Type, Case_Type, Case, Auth_User_Case, Event, Case_Event, Court, Charge, Case_Charge
+from tutorial.quickstart.models import Client, Event_Type, Client_Type, Status, Auth_User_Type, Case_Type, Case, Auth_User_Case, Event, Case_Event, Court, Charge, Case_Charge, Fine, SentenceCompliance
 from rest_framework import serializers
 
 
@@ -62,6 +62,16 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
         model = Client
         fields = ('id', 'first_name', 'last_name', 'date_of_birth', 'street_address', 'city', 'state', 'zipcode', 'country')#, 'client_type')
 
+class FineSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Fine
+        fields = ('fines_imposed', 'fines_suspended', 'fine_payment_work', 'fine_payment_service')
+
+class SentenceComplianceSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = SentenceCompliance
+        fields = ('alleged_violation', 'admit', 'reserve')
+
 
 class CaseSerializer(serializers.HyperlinkedModelSerializer):
     CaseNumber = serializers.PrimaryKeyRelatedField(read_only=True)#ClientSerializer(read_only=True)
@@ -82,11 +92,11 @@ class AuthUserCaseSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
-    event_status = StatusSerializer()
+    StatusID = serializers.PrimaryKeyRelatedField(read_only=True, allow_null=True)
     event_type = EventTypeSerializer()
     class Meta:
         model = Event
-        fields = ('name', 'start_date', 'end_date', 'event_status', 'event_type')
+        fields = ('name', 'start_date', 'due_date', 'StatusID', 'event_type', 'case_outcome')
 
 
 class CaseEventSerializer(serializers.HyperlinkedModelSerializer):

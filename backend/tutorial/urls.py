@@ -16,11 +16,12 @@ router.register(r'status', views.StatusViewSet)
 router.register(r'auth-user-types', views.AuthUserTypeViewSet)
 # router.register(r'cases', views.CaseViewSet, base_name="cases")
 router.register(r'auth-user-cases', views.AuthUserCaseViewSet)
-router.register(r'events', views.EventViewSet)
 router.register(r'case-events', views.CaseEventViewSet)
 router.register(r'case-charges', views.CaseChargeViewSet)
 router.register(r'charges', views.ChargeViewSet)
 router.register(r'courts', views.CourtViewSet)
+router.register(r'fines', views.FineViewSet)
+router.register(r'sentence-compliance', views.SentenceComplianceViewSet)
 # router.register(r'cases', views.CaseViewSet)
 
 # Wire up our API using automatic URL routing.
@@ -33,5 +34,6 @@ urlpatterns = [
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^refresh-token/', refresh_jwt_token),
     url(r'^cases/', views.CaseViewSet.as_view()),
+    url(r'^events/', views.EventViewSet.as_view()),
     url(r'^case-types/', views.CaseTypeViewSet.as_view())
 ]

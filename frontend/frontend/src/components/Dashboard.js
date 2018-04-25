@@ -32,9 +32,7 @@ class Dashboard extends Component {
             })
             .then(function(clientData){
                 clientData.forEach(function(client){
-                    // console.log(client);
                     client.title = client.first_name + " " +client.last_name
-                    // console.log(clientData);
                 });
                 return clientData;
             })
