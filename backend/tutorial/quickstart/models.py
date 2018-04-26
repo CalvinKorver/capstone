@@ -56,6 +56,7 @@ class Client(models.Model):
 
 class Case(models.Model):
     CaseNumber = models.CharField(max_length=50, default="0000000000")
+    CaseClosed = models.BooleanField(default=False)
     # foreign key for client id
     ClientID = models.ForeignKey(Client, null=True, on_delete=models.CASCADE)
     FineID = models.ForeignKey(Fine, null=True, on_delete=models.CASCADE)

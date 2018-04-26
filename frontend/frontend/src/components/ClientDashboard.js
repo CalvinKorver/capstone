@@ -8,6 +8,7 @@ import Client from './Client';
 import Dashboard from './Dashboard';
 import NewCase from './forms/NewCase';
 import PreTrial from './forms/PreTrial';
+import SentencingCompliance from './forms/SentencingCompliance';
 
 class ClientDashboard extends Component {
     constructor(props) {
@@ -26,6 +27,7 @@ class ClientDashboard extends Component {
             <div>
                 <NewCase firstName={this.state.firstName} lastName={this.state.lastName}/>
                 <PreTrial />
+                <SentencingCompliance />
                 <Button> New Case </Button>
                 <Client id={id}/>
             </div>
