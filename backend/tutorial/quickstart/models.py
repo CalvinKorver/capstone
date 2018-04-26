@@ -12,7 +12,6 @@ class Client_Type(models.Model):
 
 class Status(models.Model):
     name = models.CharField(max_length=50, default="DEFAULT")
-    description = models.CharField(max_length=500, default="DEFAULT")
 
 class Auth_User_Type(models.Model):
     name = models.CharField(max_length=50, default="DEFAULT")
@@ -30,6 +29,18 @@ class Court(models.Model):
     name = models.CharField(max_length=50, default="DEFAULT")
     description = models.CharField(max_length=500, default="DEFAULT")
 
+class Fine(models.Model):
+    # fine information
+    fines_imposed = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    fines_suspended = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    fine_payment_work = models.NullBooleanField()
+    fine_payment_service = models.NullBooleanField()
+
+class SentenceCompliance(models.Model):
+    alleged_violation = models.CharField(max_length=50, default="DEFAULT")
+    admit = models.BooleanField() # other option is deny
+    reserve = models.BooleanField() # other option is impose
+
 
 # foreign key relationships
 # order matters below for dependencies on foreign keys
@@ -42,13 +53,13 @@ class Client(models.Model):
     state = models.CharField(max_length = 2, default="WA")
     zipcode = models.CharField(max_length = 10, default="DEFAULT")
     country = models.CharField(max_length = 50, default="DEFAULT")
-    # foreign key for client type
-    # client_type = models.ForeignKey(Client_Type, null=True, on_delete=models.CASCADE)
 
 class Case(models.Model):
     CaseNumber = models.CharField(max_length=50, default="0000000000")
     # foreign key for client id
     ClientID = models.ForeignKey(Client, null=True, on_delete=models.CASCADE)
+    FineID = models.ForeignKey(Fine, null=True, on_delete=models.CASCADE)
+    SentenceComplianceID = models.ForeignKey(SentenceCompliance, null=True, on_delete=models.CASCADE)
     # foreign key for case type id
     # case_type = models.ForeignKey(Case_Type, null=True, on_delete=models.CASCADE)
     # changed to many-to-many
@@ -64,9 +75,23 @@ class Auth_User_Case(models.Model):
 class Event(models.Model):
     name = models.CharField(max_length=50, default="DEFAULT")
     start_date = models.DateField(null=True, blank=True)
-    end_date = models.DateField(null=True, blank=True)
+    time = models.DateField(null=True, blank=True) # I assume time is a version of a date field
+    motions = models.CharField(max_length=10, null=True, blank=True) # separate with a comma on input, saves us a table
+    case_outcome = models.CharField(max_length=50, null=True, blank=True)
+    credit = models.IntegerField(null=True, blank=True) # these two with next two
+    due_date = models.DateField(null=True, blank=True)
+
+    # jail specific
+    jail_time_suspended = models.IntegerField(null=True, blank=True)
+
+    # jurisdiction specific
+    jurisdiction_work_crew = models.CharField(max_length=100, null=True, blank=True) # not sure what options are for this
+
+    # sentencing specific
+    treatment_ordered = models.CharField(max_length=400, null=True, blank=True)
+
     # foreign key event status id
-    event_status = models.ForeignKey(Status, null=True, on_delete=models.CASCADE)
+    StatusID = models.ForeignKey(Status, null=True, blank=True, on_delete=models.CASCADE)
     # foreign key for event type ID
     event_type = models.ForeignKey(Event_Type, null=True, on_delete=models.CASCADE)
     # foreign key for court ID

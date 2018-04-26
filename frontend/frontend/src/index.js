@@ -21,7 +21,6 @@ ReactDOM.render(
       <Route path='/new-case' component={NewCase}/>
       <Route path='/new-client' component={NewClient}/>
       <Route path="/client/:id" component={ClientDashboard}/>
-      <Route path='/clients' component={Clients}/>
     </div>
   </BrowserRouter>,
   document.getElementById('root')

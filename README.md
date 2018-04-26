@@ -49,3 +49,4 @@ Authentication:
 Database:
 	Postgres (psql)
 
+Example query for events in current state: http POST http://localhost:8000/events/ name=jurisdiction1 start_date=2013-03-05 due_date=2014-03-05 sentencing_status=guilty event_type_name=Pre-trial case_number=0000000000

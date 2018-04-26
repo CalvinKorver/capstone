@@ -39,12 +39,20 @@ componentDidMount() {
 
 render() {
   var clients;
-  if(this.state.clients[0]) {
-    console.log(this.state.clients[0].id);
+  if(this.props.clients.id){ //way to check for properties, basically a null check
+    console.log(this.props.clients);
+    const client = this.props.clients;
+    clients = 
+      <div key={client.id}>
+        <Link to={'/client/'+client.id}>Link to Client</Link>
+        <Client key={client.id} id={client.id}/>
+        <Divider/>
+      </div>
+  }
+  else {
     clients = this.state.clients.map(client => 
       // pass client id as prop to client component
-      <div>
-        {/* <Link to={'/client'} params={{clientID: client.id}}>Link to client</Link> */}
+      <div key={client.id}>
         <Link to={'/client/'+client.id}>Link to Client</Link>
         <Client key={client.id} id={client.id}/>
         <Divider/>
