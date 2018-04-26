@@ -4,10 +4,11 @@ import axios from 'axios';
 import $ from 'jquery'; 
 
 
+
 // import 'semantic-ui-css/semantic.min.css';
 // import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
 // onTouchTap http://stackoverflow.com/a/34015469/988941 injectTapEventPlugin();
-// import './App.css';
+import '../App.css';
 // import Loginscreen from './loginScreen'
 
 const courtOptions = [
@@ -45,8 +46,8 @@ class NewCase extends Component {
             dateFailureToAppear:"02/4/1995",
             dateOfOffense:"02/14/1995",
             endTimeCustody1:"02/11/1995",
-            firstName:"Jim",
-            lastName:"Jack",
+            firstName:"Bob",
+            lastName:"Jones",
             startTimeCustody1:"02/10/1995"
         }
         // this.handleChange = this.handleChange.bind(this);

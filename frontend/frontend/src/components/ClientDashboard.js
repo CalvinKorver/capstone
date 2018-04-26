@@ -7,6 +7,7 @@ import SearchClients from './forms/SearchClients';
 import Client from './Client';
 import Dashboard from './Dashboard';
 import NewCase from './forms/NewCase';
+import PreTrial from './forms/PreTrial';
 
 class ClientDashboard extends Component {
     constructor(props) {
@@ -24,6 +25,7 @@ class ClientDashboard extends Component {
         return (
             <div>
                 <NewCase firstName={this.state.firstName} lastName={this.state.lastName}/>
+                <PreTrial />
                 <Button> New Case </Button>
                 <Client id={id}/>
             </div>
