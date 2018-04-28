@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Grid, Header, Image, Message, Segment, Icon } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Segment, Icon } from 'semantic-ui-react'
 
 import AuthService from '../util/AuthService.js'
 import '../util/ApiClient.js'
@@ -17,7 +17,6 @@ class Register extends Component {
     this.AuthService = new AuthService();
   }
   handleClick(event) {
-    var self = this;
     var payload = {
       // "firstName": this.state.first_name,
       // "lastName": this.state.last_name,

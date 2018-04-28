@@ -9,10 +9,14 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
+    "react-visjs-timeline": "^1.5.0",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.9.1",
-    "semantic-ui-react": "^0.79.1"
+    "semantic-ui-react": "^0.79.1",
+    "vis": "^4.21.0",
+    "moment": "^2.18.1",
+    "prop-types": "^15.5.10"
   },
   "scripts": {
     "start": "react-scripts start",

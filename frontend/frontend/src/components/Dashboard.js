@@ -1,14 +1,9 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-import PropTypes from 'prop-types'
 import {
     Button,
     Search,
-    Grid,
-    Header,
-    Label
   } from 'semantic-ui-react'
-import SearchClients from './forms/SearchClients';
 import Clients from './Clients';
 
 
@@ -74,7 +69,7 @@ class Dashboard extends Component {
 
 
     render() {            
-        const { isLoading, value, results, clients } = this.state;
+        const { isLoading, value, clients } = this.state;
         // const resultRenderer = ({ first_name }) => <Label content={title} />
 
         // resultRenderer.propTypes = {

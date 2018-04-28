@@ -1,15 +1,10 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import {
-  Container,
   Button,
   Form,
   Grid,
   Header,
-  Image,
-  Message,
   Segment,
-  Icon
 } from 'semantic-ui-react'
 
 import SwitchButton from './SwitchButton';
@@ -34,7 +29,6 @@ class Login extends Component {
   }
 
   handleClick(event) {
-    var self = this;
     var payload = {
       "username": this.state.username,
       "password": this.state.password

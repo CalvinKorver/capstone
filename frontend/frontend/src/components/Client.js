@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
-// import 'semantic-ui-css/semantic.min.css';
-// import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
-// onTouchTap http://stackoverflow.com/a/34015469/988941 injectTapEventPlugin();
-// import './App.css';
-// import Loginscreen from './loginScreen'
 import {
-    Button,
     Container,
   } from 'semantic-ui-react';
 
@@ -37,7 +31,7 @@ componentDidMount() {
       .then(function(caseData) {
         var casesMatch = [];
         caseData.forEach(function(singleCase){
-          if(singleCase.ClientID == id){
+          if(singleCase.ClientID === id){
             casesMatch.push(singleCase);
           }
         });
@@ -61,8 +55,6 @@ render() {
   return (
     <Container className="ClientContainer">
         <h2>{clientInfo.first_name} {clientInfo.last_name}</h2>
-        {/* need to retrieve the information for the cases linked to this client */}
-        {/* <span><Button>VineLink</Button> <Button>DCOR</Button></span> */}
         Cases: {casesString}
     </Container>
 

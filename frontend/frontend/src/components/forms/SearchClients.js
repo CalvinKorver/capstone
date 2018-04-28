@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Checkbox, Dropdown, Form, Input } from 'semantic-ui-react'
+import {Input } from 'semantic-ui-react'
 import axios from 'axios';
 
 class SearchClients extends Component {

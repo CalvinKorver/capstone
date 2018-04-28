@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Icon, Form, Container, Header, Button, Modal} from 'semantic-ui-react';
+import { Icon, Form, Button, Modal} from 'semantic-ui-react';
 import axios from 'axios';
 import $ from 'jquery'; 
 
@@ -8,7 +8,7 @@ import $ from 'jquery';
 // import 'semantic-ui-css/semantic.min.css';
 // import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
 // onTouchTap http://stackoverflow.com/a/34015469/988941 injectTapEventPlugin();
-import '../App.css';
+import '../../react_styles/App.css';
 // import Loginscreen from './loginScreen'
 
 const courtOptions = [
@@ -119,7 +119,7 @@ class NewCase extends Component {
             startTimeCustody1, endTimeCustody1,dateFailureToAppear, benchWarrantAmount } = this.state
 
         return (
-            <Modal trigger={<Button>New Offense</Button>}>
+            <Modal trigger={<Button floated="right">New Offense</Button>}>
             <Modal.Header> New Offense </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>
@@ -132,10 +132,14 @@ class NewCase extends Component {
                         <Form.Group id="charge-form-group">
                             <Form.Select fluid label="Charges" name="charge1" options={chargeOptions} value={charge1} onChange={this.handleChange}  placeholder='Select an option'/>
                         </Form.Group>
-                        <Button content='Submit' value='charges' onClick={e => this.addMoreFields(e)}>
-                            <Icon name="plus"/>
-                            Add more charges
-                        </Button>
+
+                        <Form.Field>
+                            <Button content='Submit' value='charges' onClick={e => this.addMoreFields(e)}>
+                                <Icon name="plus"/>
+                                Add more charges
+                            </Button>
+                        </Form.Field>
+
 
 
                         {/* Time in Custody */}
@@ -162,11 +166,12 @@ class NewCase extends Component {
                                 onChange={this.handleChange}/>
                             </Form.Group>
                         
-                        <Form.Button content='Submit' >
-                            <Icon name="plus"/>
-                            Add additional date of time in custody
-                        </Form.Button>
-                        
+                            <Form.Field>
+                                <Form.Button content='Submit' >
+                                    <Icon name="plus"/>
+                                    Add additional date of time in custody
+                                </Form.Button>
+                            </Form.Field>
                         </div>
 
 

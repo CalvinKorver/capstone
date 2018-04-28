@@ -1,0 +1,13 @@
+.hidden {
+    display: none;
+}
+
+.ribbon-container {
+    width: 90% !important;
+    padding-top: 20px;
+}
+
+.wide {
+    padding: 2em 0em 2em 0em;
+    width: 95% !important;
+}

@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom'
 // import 'semantic-ui-css/semantic.min.css';
 // import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
 // onTouchTap http://stackoverflow.com/a/34015469/988941 injectTapEventPlugin();
-// import './App.css';
 import {
-  Button,
   Divider,
 } from 'semantic-ui-react';
 import Client from './Client';
@@ -44,7 +42,7 @@ render() {
     const client = this.props.clients;
     clients = 
       <div key={client.id}>
-        <Link to={'/client/'+client.id}>Link to Client</Link>
+        <Link to={'/client/'+client.id}>Review Cases</Link>
         <Client key={client.id} id={client.id}/>
         <Divider/>
       </div>
@@ -53,7 +51,7 @@ render() {
     clients = this.state.clients.map(client => 
       // pass client id as prop to client component
       <div key={client.id}>
-        <Link to={'/client/'+client.id}>Link to Client</Link>
+        <Link to={'/client/'+client.id}>Review Cases</Link>
         <Client key={client.id} id={client.id}/>
         <Divider/>
       </div>

@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './react_styles/App.css';
 import './util/ApiClient.js'
-import LoginScreen from './components/LoginScreen';
 
 import AuthService from './util/AuthService.js';
 import withAuth from './components/withAuth';

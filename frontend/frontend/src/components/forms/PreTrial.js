@@ -31,7 +31,9 @@ class NewClient extends Component {
             waiverOfTimeForTrialEndDate: "",
             nextCourtDate: "",
             reset: "",
-            benchWarrant: ""
+            benchWarrant: "",
+            jailTimeImposed: false,
+            workCrewInLieu: false
         }
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -115,6 +117,8 @@ class NewClient extends Component {
 
     }
 
+    handleFormChange = (e, { name, value }) => {$("#" + value).toggleClass("hidden");}
+
     render() {
 
         const {
@@ -137,7 +141,9 @@ class NewClient extends Component {
             waiverOfTimeForTrialEndDate,
             nextCourtDate,
             reset,
-            benchWarrant
+            benchWarrant,
+            jailTimeImposed,
+            workCrewInLieu
 
         } = this.state
 
@@ -161,7 +167,7 @@ class NewClient extends Component {
         
         return (
             <Modal trigger={<Button>Pre-Trial Modal</Button>}>
-            <Modal.Header> New Offense </Modal.Header>
+            <Modal.Header> Pre Trial </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Select fluid label="Pre-Trial Status" name="preTrialStatus" options={preTrialOptions} placeholder='Select an option' onChange={this.handleChange}/>
@@ -251,56 +257,74 @@ class NewClient extends Component {
 
                             <Form.Input fluid label="Jail Time Suspended" name="jailTimeSuspended"  placeholder=""  value={jailTimeSuspended} onChange={this.handleChange} />
 
+                            <Form.Checkbox
+                                label="Jail Time Imposed?"
+                                name="jailTimeImposed"
+                                value="jail-time-imposed-form"
+                                onChange={this.handleFormChange}/>
+
+                            <div className="hidden" id="jail-time-imposed-form">
                             <Form.Group  widths="equal">
                                 <Form.Input fluid label="Credit for Days Served" name="creditForDaysServed"  placeholder=""  value={creditForDaysServed} onChange={this.handleChange} />
                                 
                                 <Form.Input fluid label="Due Date for Time Served" name="dueDateForTimeServed"  placeholder=""  value={dueDateForTimeServed} onChange={this.handleChange} />
                             </Form.Group>
+                            </div>
 
-                            <Form.Group  widths="equal">
-                                <Form.Input fluid label="Credit for Work Crew" name="creditForWorkCrew"  placeholder="0"  value={creditForWorkCrew} onChange={this.handleChange} />
-
-                                <Form.Input fluid label="Due Date for Work Crew" name="dueDateForWorkCrew"  placeholder="MM/DD/YYYY"
-                                  value={dueDateForWorkCrew} onChange={this.handleChange} />
-                                 </Form.Group>
-
-                            <Form.Select fluid label="Jurisdiction of Work Crew" name="jurisdictionOfWorkCrew" options={jurisdictionOfWorkCrewOptions} placeholder='Select an option' onChange={this.handleChange} />
-
-                             <Form.Group widths='equal'>
-                                <Form.Input 
-                                fluid 
-                                label="Community Service Days" 
-                                placeholder="0"
-                                name="communityServiceDays"
-                                value={communityServiceDays}
-                                onChange={this.handleChange}/>
-                                <Form.Input
-                                fluid
-                                label="CommunityServiceDueDate"
-                                placeholder="MM/DD/YYYY"
-                                name="communityServiceDueDate"
-                                value={communityServiceDueDate}
-                                onChange={this.handleChange}/>
-                            </Form.Group>
+                            <Form.Checkbox
+                                label="Authorized work crew in lieu of jail?"
+                                name="workCrewInLieu"
+                                value="work-crew-form"
+                                onChange={this.handleFormChange}/>
 
 
-                             <Form.Group widths='equal'>
-                                <Form.Input 
-                                fluid 
-                                label="Fines Imposed" 
-                                placeholder="$0.00"
-                                name="finesImposed"
-                                value={finesImposed}
-                                onChange={this.handleChange}/>
-                                <Form.Input
-                                fluid
-                                label="Fines Suspended"
-                                placeholder="$0.00"
-                                name="finesSuspended"
-                                value={finesSuspended}
-                                onChange={this.handleChange}/>
-                            </Form.Group>
-                        </div>
+
+                            <div id="work-crew-form" className="hidden">
+                                <Form.Group  widths="equal" >
+                                    <Form.Input fluid label="Credit for Work Crew" name="creditForWorkCrew"  placeholder="0"  value={creditForWorkCrew} onChange={this.handleChange} />
+
+                                    <Form.Input fluid label="Due Date for Work Crew" name="dueDateForWorkCrew"  placeholder="MM/DD/YYYY"
+                                    value={dueDateForWorkCrew} onChange={this.handleChange} />
+                                    </Form.Group>
+
+                                <Form.Select fluid label="Jurisdiction of Work Crew" name="jurisdictionOfWorkCrew" options={jurisdictionOfWorkCrewOptions} placeholder='Select an option' onChange={this.handleChange} />
+
+                                <Form.Group widths='equal'>
+                                    <Form.Input 
+                                    fluid 
+                                    label="Community Service Days" 
+                                    placeholder="0"
+                                    name="communityServiceDays"
+                                    value={communityServiceDays}
+                                    onChange={this.handleChange}/>
+                                    <Form.Input
+                                    fluid
+                                    label="CommunityServiceDueDate"
+                                    placeholder="MM/DD/YYYY"
+                                    name="communityServiceDueDate"
+                                    value={communityServiceDueDate}
+                                    onChange={this.handleChange}/>
+                                </Form.Group>
+
+
+                                <Form.Group widths='equal'>
+                                    <Form.Input 
+                                    fluid 
+                                    label="Fines Imposed" 
+                                    placeholder="$0.00"
+                                    name="finesImposed"
+                                    value={finesImposed}
+                                    onChange={this.handleChange}/>
+                                    <Form.Input
+                                    fluid
+                                    label="Fines Suspended"
+                                    placeholder="$0.00"
+                                    name="finesSuspended"
+                                    value={finesSuspended}
+                                    onChange={this.handleChange}/>
+                                </Form.Group>
+                            </div>
+                            </div>
                             <Form.Button  fluid type="submit">Save and Continue</Form.Button>
                     </Form>
                 </Modal.Content>

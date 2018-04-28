@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button,  Grid } from 'semantic-ui-react'
 import Login from './Login';
 import Register from './Register';
 

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 import {
     Menu,
-    Button,
     Icon
   } from 'semantic-ui-react'
 

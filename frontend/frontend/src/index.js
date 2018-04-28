@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Clients from './components/Clients';
 import NewCase from './components/forms/NewCase';
 import NewClient from './components/forms/NewClient';
 import registerServiceWorker from './registerServiceWorker';

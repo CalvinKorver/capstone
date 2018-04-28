@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import { Button, Checkbox, Dropdown, Form } from 'semantic-ui-react'
+import { Button, Dropdown, Form } from 'semantic-ui-react'
 import axios from 'axios';
 
 // import 'semantic-ui-css/semantic.min.css';
 // import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
 // onTouchTap http://stackoverflow.com/a/34015469/988941 injectTapEventPlugin();
-// import './App.css';
+// import '../react_styles/App.css';
 // import Loginscreen from './loginScreen'
 
 class NewClient extends Component {
