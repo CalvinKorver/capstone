@@ -24,80 +24,80 @@ class AuthUserTypeSerializer(serializers.HyperlinkedModelSerializer):
 class CourtSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Court
-        fields = ('CourtName')
+        fields = ('courtName')
 
 
 class ChargeTypeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ChargeType
-        fields = ('ChargeTypeName')
+        fields = ('chargeTypeName')
 
 
 class ProbationTypeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ProbationType
-        fields = ('ProbationTypeName')
+        fields = ('probationTypeName')
 
 
 class PunishmentTypeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PunishmentType
-        fields = ('PunishmentTypeName')
+        fields = ('punishmentTypeName')
 
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Client
-        fields = ('id', 'FirstName', 'LastName', 'DateOfBirth', 'StreetAddress', 'City', 'State', 'Zipcode', 'Country')
+        fields = ('id', 'firstName', 'lastName', 'dateOfBirth', 'streetAddress', 'city', 'state', 'zipcode', 'country')
 
 
 class FineSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Fine
-        fields = ('FinesImposed', 'FinesSuspended')
+        fields = ('finesImposed', 'finesSuspended')
 
 
 class PreTrialStatusSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PreTrialStatus
-        fields = ('PreTrialStatusName')
+        fields = ('preTrialStatusName')
 
 
 class CaseOutcomeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CaseOutcome
-        fields = ('CaseOutcomeName')
+        fields = ('caseOutcomeName')
 
 
 class SentencingStatusSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = SentencingStatus
-        fields = ('SentencingStatusName')
+        fields = ('sentencingStatusName')
 
 
 class ViolationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Violation
-        fields = ('ViolationName')
+        fields = ('violationName')
 
 class SentenceComplianceSerializer(serializers.HyperlinkedModelSerializer):
-    CaseID = serializers.PrimaryKeyRelatedField(read_only=True)
-    ViolationID = serializers.PrimaryKeyRelatedField(read_only=True)
+    caseID = serializers.PrimaryKeyRelatedField(read_only=True)
+    violationID = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = SentenceCompliance
-        fields = ('CaseID,' 'Admit', 'Reserve', 'ViolationID')
+        fields = ('caseID,' 'admit', 'reserve', 'violationID')
 
 
 class CaseSerializer(serializers.HyperlinkedModelSerializer):
-    ClientID = serializers.PrimaryKeyRelatedField(read_only=True)
-    PreTrialStatusID = serializers.PrimaryKeyRelatedField(read_only=True)
-    SentencingStatusID = serializers.PrimaryKeyRelatedField(read_only=True)
-    CaseOutcomeID = serializers.PrimaryKeyRelatedField(read_only=True)
+    clientID = serializers.PrimaryKeyRelatedField(read_only=True)
+    preTrialStatusID = serializers.PrimaryKeyRelatedField(read_only=True)
+    sentencingStatusID = serializers.PrimaryKeyRelatedField(read_only=True)
+    caseOutcomeID = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Case
-        fields = ('CaseNumber', 'ClientID', 'PreTrialStatusID', 'SentencingStatusID', 'CaseOutcomeID', 'SentenceStart', 'SentenceEnd', 'JailTimeSuspended', 'PayWorkCrew', 'PayCommunityService', 'DomesticViolence', 'BenchWarrant', 'CaseClosed')
+        fields = ('caseNumber', 'clientID', 'preTrialStatusID', 'sentencingStatusID', 'caseOutcomeID', 'sentenceStart', 'SentenceEnd', 'JailTimeSuspended', 'PayWorkCrew', 'PayCommunityService', 'DomesticViolence', 'BenchWarrant', 'CaseClosed')
 
 
 class AuthUserCaseSerializer(serializers.HyperlinkedModelSerializer):
@@ -110,43 +110,43 @@ class AuthUserCaseSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class PunishmentSerializer(serializers.HyperlinkedModelSerializer):
-    PunishmentTypeID = serializers.PrimaryKeyRelatedField(read_only=True)
-    CaseID = serializers.PrimaryKeyRelatedField(read_only=True)
+    punishmentTypeID = serializers.PrimaryKeyRelatedField(read_only=True)
+    caseID = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Punishment
-        fields = ('PunishmentTypeID', 'CaseID', 'Credit', 'DueDate', 'Jurisdiction')
+        fields = ('punishmentTypeID', 'caseID', 'credit', 'dueDate', 'jurisdiction')
 
 
 class ProbationSerializer(serializers.HyperlinkedModelSerializer):
-    ProbationTypeID = serializers.PrimaryKeyRelatedField(read_only=True)
-    CaseID = serializers.PrimaryKeyRelatedField(read_only=True)
+    probationTypeID = serializers.PrimaryKeyRelatedField(read_only=True)
+    caseID = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Punishment
-        fields = ('PunishmentTypeID', 'CaseID', 'ProbationStart', 'ProbationEnd')
+        fields = ('punishmentTypeID', 'caseID', 'probationStart', 'probationEnd')
 
 
 class OffenseSerializer(serializers.HyperlinkedModelSerializer):
-    ChargeTypeID = serializers.PrimaryKeyRelatedField(read_only=True)
-    CaseID = serializers.PrimaryKeyRelatedField(read_only=True)
+    chargeTypeID = serializers.PrimaryKeyRelatedField(read_only=True)
+    caseID = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Punishment
-        fields = ('ChargeTypeID', 'CaseID', 'OffenseDate')
+        fields = ('chargeTypeID', 'caseID', 'offenseDate')
 
 
 class TrialSerializer(serializers.HyperlinkedModelSerializer):
-    CaseID = serializers.PrimaryKeyRelatedField(read_only=True)
+    caseID = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Punishment
-        fields = ('CaseID', 'TrialDate', 'TrialTime', 'Motion35', 'Motion36')
+        fields = ('caseID', 'trialDate', 'trialTime', 'motion35', 'motion36')
 
 
 class FailToAppearSerializer(serializers.HyperlinkedModelSerializer):
-    CaseID = serializers.PrimaryKeyRelatedField(read_only=True)
+    caseID = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Punishment
-        fields = ('CaseID', 'FailToAppearDate')
+        fields = ('caseID', 'failToAppearDate')
