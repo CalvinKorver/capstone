@@ -85,7 +85,9 @@ class ClientDashboard extends Component {
 
                 {/* <NewCase firstName={this.state.first_name} lastName={this.state.lastName}/>
                 <PreTrial />
-                <Button> New Case </Button> */}
+                <SentencingCompliance />
+                <Button> New Case </Button>
+                <Client id={id}/> */}
             </div>
         )
     }
