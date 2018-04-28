@@ -27,7 +27,7 @@ class Dashboard extends Component {
             })
             .then(function(clientData){
                 clientData.forEach(function(client){
-                    client.title = client.first_name + " " +client.last_name
+                    client.title = client.FirstName + " " +client.LastName
                 });
                 return clientData;
             })
@@ -52,15 +52,15 @@ class Dashboard extends Component {
         this.setState({ isLoading: true, value })
 
         setTimeout(() => {
-        if (this.state.value.length < 1) return this.resetComponent()
+            if (this.state.value.length < 1) return this.resetComponent()
 
-        const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-        const isMatch = result => {re.test(result.title)};
-        // console.log(this.state.clients);
-        this.setState({
-            isLoading: false,
-            results: _.filter(this.state.clients, isMatch),
-        })
+            const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
+            const isMatch = result => {re.test(result.title)};
+            // console.log(this.state.clients);
+            this.setState({
+                isLoading: false,
+                results: _.filter(this.state.clients, isMatch),
+            })
         }, 300)
     }
 
@@ -94,7 +94,7 @@ class Dashboard extends Component {
                     // resultRenderer={resultRenderer}
                 />  
                 <hr/>
-                <Clients clients={this.state.searchResults}/>
+                {/* <Clients clients={this.state.searchResults}/> */}
             </div>
         )
     }

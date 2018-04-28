@@ -172,12 +172,12 @@ class CaseViewSet(APIView):
     """
     API endpoint that allows clients to be viewed or edited.
     """
-    queryset = Case.objects.all()
-    serializer_class = CaseSerializer
-    # def get(self, request, *args, **kwargs):
-    #     queryset = Case.objects.all()
-    #     serializer_class = CaseSerializer(queryset, many=True)
-    #     return Response(serializer_class.data)
+    # queryset = Case.objects.all()
+    # serializer_class = CaseSerializer
+    def get(self, request, *args, **kwargs):
+        queryset = Case.objects.all()
+        serializer_class = CaseSerializer(queryset, many=True)
+        return Response(serializer_class.data)
 
     # def post(self, request, *args, **kwargs):
         

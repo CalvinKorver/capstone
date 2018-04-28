@@ -74,7 +74,7 @@ class ClientDashboard extends Component {
             <div>
                 <NavMenu/>
                 <Container className="ribbon-container">
-                    <Header as='h1'>{client.first_name + " " + client.last_name}
+                    <Header as='h1'>{client.FirstName + " " + client.LastName}
                     </Header>
                     <RibbonMenu onChange={this.ribbonChange}/>
                 </Container>
@@ -83,7 +83,7 @@ class ClientDashboard extends Component {
                     {this.state.clientView}
                 </Container>
 
-                {/* <NewCase firstName={this.state.first_name} lastName={this.state.lastName}/>
+                {/* <NewCase firstName={this.state.FirstName} lastName={this.state.LastName}/>
                 <PreTrial />
                 <SentencingCompliance />
                 <Button> New Case </Button>
