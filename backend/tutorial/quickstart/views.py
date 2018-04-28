@@ -172,38 +172,70 @@ class CaseViewSet(APIView):
     """
     API endpoint that allows clients to be viewed or edited.
     """
-    queryset = Case.objects.all()
-    serializer_class = CaseSerializer
-    # def get(self, request, *args, **kwargs):
-    #     queryset = Case.objects.all()
-    #     serializer_class = CaseSerializer(queryset, many=True)
-    #     return Response(serializer_class.data)
+    # queryset = Case.objects.all()
+    # serializer_class = CaseSerializer
+    def get(self, request, *args, **kwargs):
+        queryset = Case.objects.all()
+        serializer_class = CaseSerializer(queryset, many=True)
+        return Response(serializer_class.data)
 
-    # def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         
-    #     # case_type = Case_Type.objects.get(name=request.data.get('case_type_name'))
-    #     clientID = Client.objects.get(first_name=request.data.get('firstName'), last_name=request.data.get('lastName'))
-    #     caseNumber = request.data.get('caseNumber')
+        # case_type = Case_Type.objects.get(name=request.data.get('case_type_name'))
+        ClientID = Client.objects.get(FirstName=request.data.get('ClientFirstName'), LastName=request.data.get('ClientLastName'))
+        # CaseNumber = request.data.get('CaseNumber')
+        # DateOfOffense = 
+        # ChargeType
 
-    #     # Save the case
-    #     case = Case.objects.create(
-    #         CaseNumber=caseNumber,
-    #         # case_type=case_type,
-    #         ClientID=clientID)
-    #     case.save()
+        preTrialStatusName = request.data.get('PreTrialStatusName')
+        preTrialStatus = None
+        if preTrialStatusName:
+            preTrialStatus = PreTrialStatus.objects.getOrCreate(
+                PreTrialStatusName = preTrialStatusName
+            )
+        
 
-    #     # @Calvin Korver what is this hack?
-    #     if(request.data.get('charge1') != None):
-    #         print("Here")
-    #         chargeID = Charge.objects.get(name=request.data.get('charge1'))
-    #         print(chargeID)
-    #         print(case)
 
-    #         case_charge = Case_Charge.objects.create(
-    #             ChargeID=chargeID,
-    #             CaseID=case)
-    #         case_charge.save()
-    #     return Response({'status': 'Case created'})
+        
+
+        # Save the case
+        case = Case.objects.create(
+            CaseNumber=request.data.get('CaseNumber'),
+            SentenceStart=request.data.get('SentenceStart'),
+            SentenceEnd=request.data.get('SentenceEnd'),
+            JailTimeSuspended=request.data.get('JailTimeSuspeded'),
+            PayWorkCrew=request.data.get('PayWorkCrew'),
+            PayCommunityService=request.data.get('PayCommunityService'),
+            DomesticViolence=request.data.get('DomesticViolence'),
+            BenchWarrant=request.data.get('BenchWarrant'),
+            CaseClosed=request.data.get('CaseClosed'),
+            ClientID=ClientID,
+            PreTrialStatusID=preTrialStatus,
+            )
+
+
+        offenseDate = request.data.get('OffenseDate')
+        if (offenseDate):
+            # first make the charge type
+            chargeType = ChargeType.objects.get_or_create(
+                ChargeTypeName = request.data.get('ChargeTypeName')
+            )
+            chargeType.save()
+            offense = Offense.objects.create(
+                OffenseDate = request.data.get('OffenseDate'),
+                ChargeTypeID = chargeType.id,
+                CaseID = case.id
+            )
+            offense.save()
+        case.save()
+
+        # @Calvin Korver what is this hack?
+        # if(request.data.get('charge1') != None):
+        #     print("Here")
+        #     chargeID = Charge.objects.get(name=request.data.get('charge1'))
+        #     print(chargeID)
+        #     print(case)
+        return Response({'status': 'Case created'})
 
     # def delete(self, request):
     #     case = Case.objects.get(name = request.data.get('name'))

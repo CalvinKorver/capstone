@@ -41,7 +41,7 @@ class Violation(models.Model):
 
 class Case(models.Model):
     CaseNumber = models.CharField(max_length=50, default="0000000000")
-    CaseClosed = models.BooleanField(default=False)
+    CaseClosed = models.BooleanField(default=False, blank=True)
     ClientID = models.ForeignKey(Client, null=True, on_delete=models.CASCADE)
     PreTrialStatusID = models.ForeignKey(PreTrialStatus, null=True, on_delete=models.CASCADE)
     SentencingStatusID = models.ForeignKey(SentencingStatus, null=True, on_delete=models.CASCADE)
@@ -49,11 +49,11 @@ class Case(models.Model):
     SentenceStart = models.DateField(default="2000-10-10")
     SentenceEnd = models.DateField(null=True, blank=True)
     JailTimeSuspended = models.IntegerField(null=True, blank=True)
-    PayWorkCrew = models.BooleanField(default=False)
-    PayCommunityService = models.BooleanField(default=False)
-    DomesticViolence = models.BooleanField(default=False)
+    PayWorkCrew = models.BooleanField(default=False, blank=True)
+    PayCommunityService = models.BooleanField(default=False, blank=True)
+    DomesticViolence = models.BooleanField(default=False, blank=True)
     BenchWarrant = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    CaseClosed = models.BooleanField(default=False)
+    CaseClosed = models.BooleanField(default=False, blank=True)
 
 class Offense(models.Model):
     ChargeTypeID = models.ForeignKey(Court, on_delete=models.CASCADE)

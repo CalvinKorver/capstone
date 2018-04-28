@@ -49,4 +49,5 @@ urlpatterns = [
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^refresh-token/', refresh_jwt_token),
     url(r'^cases/', views.CaseViewSet.as_view())
+    # url(r'^(?P<uuid>[^/]+)/$', views.GroupDetail.as_view()),
 ]

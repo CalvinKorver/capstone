@@ -27,17 +27,13 @@ class Dashboard extends Component {
             })
             .then(function(clientData){
                 clientData.forEach(function(client){
-                    client.title = client.first_name + " " +client.last_name
+                    client.title = client.FirstName + " " +client.LastName
                 });
                 return clientData;
             })
             .then(clientData => this.setState({
                 clients: clientData
             }))
-            
-            // .then(clientsInfo => this.setState({
-            //     clients: clientsInfo
-            // }));
     }
     
     componentWillMount() {
