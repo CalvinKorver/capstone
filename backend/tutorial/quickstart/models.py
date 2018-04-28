@@ -1,112 +1,100 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# no foreign key relationships
-class Event_Type(models.Model):
-    name = models.CharField(max_length=50, default="DEFAULT")
-    description = models.CharField(max_length=500, default="DEFAULT")
-
-class Client_Type(models.Model):
-    name = models.CharField(max_length=50, default="DEFAULT")
-    description = models.CharField(max_length=500, default="DEFAULT")
-
-class Status(models.Model):
-    name = models.CharField(max_length=50, default="DEFAULT")
-
 class Auth_User_Type(models.Model):
     name = models.CharField(max_length=50, default="DEFAULT")
     description = models.CharField(max_length=500, default="DEFAULT")
 
-class Case_Type(models.Model):
-    name = models.CharField(max_length=50, default="DEFAULT")
-    description = models.CharField(max_length=500, default="DEFAULT")
-
-class Charge(models.Model):
-    name = models.CharField(max_length=50, default="DEFAULT")
-    description = models.CharField(max_length=500, default="DEFAULT")
-
 class Court(models.Model):
-    name = models.CharField(max_length=50, default="DEFAULT")
-    description = models.CharField(max_length=500, default="DEFAULT")
+    CourtName = models.CharField(max_length=50, default="DEFAULT")
 
-class Fine(models.Model):
-    # fine information
-    fines_imposed = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    fines_suspended = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    fine_payment_work = models.NullBooleanField()
-    fine_payment_service = models.NullBooleanField()
-
-class SentenceCompliance(models.Model):
-    alleged_violation = models.CharField(max_length=50, default="DEFAULT")
-    admit = models.BooleanField() # other option is deny
-    reserve = models.BooleanField() # other option is impose
-
-
-# foreign key relationships
-# order matters below for dependencies on foreign keys
 class Client(models.Model):
-    first_name = models.CharField(max_length=50, default="DEFAULT")
-    last_name = models.CharField(max_length=50, default="DEFAULT")
-    date_of_birth = models.DateField(null=True, blank=True)
-    street_address = models.CharField(max_length=50, default="DEFAULT")
-    city = models.CharField(max_length = 50, default="DEFAULT")
-    state = models.CharField(max_length = 2, default="WA")
-    zipcode = models.CharField(max_length = 10, default="DEFAULT")
-    country = models.CharField(max_length = 50, default="DEFAULT")
+    FirstName = models.CharField(max_length=50, default="DEFAULT")
+    LastName = models.CharField(max_length=50, default="DEFAULT")
+    DateOfBirth = models.DateField(null=True, blank=True)
+    StreetAddress = models.CharField(max_length=50, default="DEFAULT")
+    City = models.CharField(max_length = 50, default="DEFAULT")
+    State = models.CharField(max_length = 2, default="WA")
+    Zipcode = models.CharField(max_length = 10, default="DEFAULT")
+    Country = models.CharField(max_length = 50, default="DEFAULT")
+
+class PreTrialStatus(models.Model):
+    PreTrialStatusName = models.CharField(max_length=50, default="DEFAULT")
+
+class SentencingStatus(models.Model):
+    SentencingStatusName = models.CharField(max_length=50, default="DEFAULT")
+
+class CaseOutcome(models.Model):
+    CaseOutcomeName = models.CharField(max_length=50, default="DEFAULT")
+
+class ProbationType(models.Model):
+    ProbationTypeName = models.CharField(max_length=50, default="DEFAULT")
+
+class ChargeType(models.Model):
+    ChargeTypeName = models.CharField(max_length=50, default="DEFAULT")
+
+class PunishmentType(models.Model):
+    PunishmentTypeName = models.CharField(max_length=50, default="DEFAULT")
+
+class Violation(models.Model):
+    ViolationName = models.CharField(max_length=50, default="DEFAULT")
 
 class Case(models.Model):
     CaseNumber = models.CharField(max_length=50, default="0000000000")
     CaseClosed = models.BooleanField(default=False)
-    # foreign key for client id
     ClientID = models.ForeignKey(Client, null=True, on_delete=models.CASCADE)
-    FineID = models.ForeignKey(Fine, null=True, on_delete=models.CASCADE)
-    SentenceComplianceID = models.ForeignKey(SentenceCompliance, null=True, on_delete=models.CASCADE)
-    # foreign key for case type id
-    # case_type = models.ForeignKey(Case_Type, null=True, on_delete=models.CASCADE)
-    # changed to many-to-many
-    # foreign key for charges
-    # charge = models.ForeignKey(Charge, null=True, on_delete=models.CASCADE)
+    PreTrialStatusID = models.ForeignKey(PreTrialStatus, null=True, on_delete=models.CASCADE)
+    SentencingStatusID = models.ForeignKey(SentencingStatus, null=True, on_delete=models.CASCADE)
+    CaseOutcomeID = models.ForeignKey(CaseOutcome, null=True, on_delete=models.CASCADE)
+    SentenceStart = models.DateField(default="2000-10-10")
+    SentenceEnd = models.DateField(null=True, blank=True)
+    JailTimeSuspended = models.IntegerField(null=True, blank=True)
+    PayWorkCrew = models.BooleanField(default=False)
+    PayCommunityService = models.BooleanField(default=False)
+    DomesticViolence = models.BooleanField(default=False)
+    BenchWarrant = models.DecimalField(default=0, max_digits=10, decimal_places=2)
+    CaseClosed = models.BooleanField(default=False)
+
+class Offense(models.Model):
+    ChargeTypeID = models.ForeignKey(Court, on_delete=models.CASCADE)
+    CaseID = models.ForeignKey(Case, on_delete=models.CASCADE)
+    OffenseDate = models.DateField(default="2000-10-10")
+
+class Trial(models.Model):
+    TrialDate = models.DateField(default="2000-10-10")
+    TrialTime = models.TimeField(null=True, blank=True)
+    Motion36 = models.BooleanField(default=False)
+    Motion35 = models.BooleanField(default=False)
+    CaseID = models.ForeignKey(Case, on_delete=models.CASCADE)
+
+class Fine(models.Model):
+    FinesImposed = models.DecimalField(default=0, max_digits=10, decimal_places=2)
+    FinesSuspended = models.DecimalField(default=0, max_digits=10, decimal_places=2)
+    CaseID = models.ForeignKey(Case, on_delete=models.CASCADE)
+
+class FailToAppear(models.Model):
+    FailToAppearDate = models.DateField(default="2000-10-10")
+    CaseID = models.ForeignKey(Case, on_delete=models.CASCADE)
 
 class Auth_User_Case(models.Model):
-    # foreign key for user id
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-    # foreign key for case id
     case = models.ForeignKey(Case, null=True, on_delete=models.CASCADE)
 
-class Event(models.Model):
-    name = models.CharField(max_length=50, default="DEFAULT")
-    start_date = models.DateField(null=True, blank=True)
-    time = models.DateField(null=True, blank=True) # I assume time is a version of a date field
-    motions = models.CharField(max_length=10, null=True, blank=True) # separate with a comma on input, saves us a table
-    case_outcome = models.CharField(max_length=50, null=True, blank=True)
-    credit = models.IntegerField(null=True, blank=True) # these two with next two
-    due_date = models.DateField(null=True, blank=True)
+class Probation(models.Model):
+    ProbationStart = models.DateField(default="2000-10-10")
+    ProbationEnd = models.DateField(default="2000-10-10")
+    ProbationTypeID = models.ForeignKey(ProbationType, on_delete=models.CASCADE)
+    CaseID = models.ForeignKey(Case, on_delete=models.CASCADE)
 
-    # jail specific
-    jail_time_suspended = models.IntegerField(null=True, blank=True)
+class Punishment(models.Model):
+    PunishmentTypeID = models.ForeignKey(ProbationType, on_delete=models.CASCADE)
+    CaseID = models.ForeignKey(Case, on_delete=models.CASCADE)
+    Credit = models.IntegerField(default=0)
+    DueDate = models.DateField(default="2000-10-10")
+    Jurisdiction = models.CharField(max_length=100, null=True, blank=True)
 
-    # jurisdiction specific
-    jurisdiction_work_crew = models.CharField(max_length=100, null=True, blank=True) # not sure what options are for this
-
-    # sentencing specific
-    treatment_ordered = models.CharField(max_length=400, null=True, blank=True)
-
-    # foreign key event status id
-    StatusID = models.ForeignKey(Status, null=True, blank=True, on_delete=models.CASCADE)
-    # foreign key for event type ID
-    event_type = models.ForeignKey(Event_Type, null=True, on_delete=models.CASCADE)
-    # foreign key for court ID
-    court = models.ForeignKey(Court, null=True, on_delete=models.CASCADE)
-
-
-class Case_Event(models.Model):
-    # foreign key for case id
-    case = models.ForeignKey(Case, null=True, on_delete=models.CASCADE)
-    # foreign key for event id
-    event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
-
-class Case_Charge(models.Model):
-    # foreign key for case id
-    CaseID = models.ForeignKey(Case, null=True, on_delete=models.CASCADE)
-    # foreign key for charge id
-    ChargeID = models.ForeignKey(Charge, null=True, on_delete=models.CASCADE)
+class SentenceCompliance(models.Model):
+    ViolationID = models.ForeignKey(ProbationType, on_delete=models.CASCADE)
+    CaseID = models.ForeignKey(Case, on_delete=models.CASCADE)
+    Admit = models.BooleanField(default=False)
+    Reserve = models.BooleanField(default=False)
