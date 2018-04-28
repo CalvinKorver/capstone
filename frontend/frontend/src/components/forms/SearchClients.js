@@ -26,7 +26,7 @@ class SearchClients extends Component {
         var clientData = this.state.clients;
         var clientOptions;
         if(clientData) {
-            var clientOptions = clientData.map(client => <option>{client.first_name} {client.last_name}</option>)
+            var clientOptions = clientData.map(client => <option>{client.FirstName} {client.LastName}</option>)
         }
         return (
             <div className="SearchClients">

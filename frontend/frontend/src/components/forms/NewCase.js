@@ -25,31 +25,31 @@ const chargeOptions = [
 class NewCase extends Component {
     constructor(props) {
         super(props);
-        // this.state = {
-        //     court: "",
-        //     dateOfOffense: "", //02/14/1995
-        //     caseNumber: "",
-        //     charge1: "",
-        //     startTimeCustody1: "",
-        //     endTimeCustody1: "",
-        //     dateFailureToAppear: "", 
-        //     benchWarrantAmount: ""
-        // }
+        this.state = {
+            court: "",
+            dateOfOffense: "", //02/14/1995
+            caseNumber: "",
+            charge1: "",
+            startTimeCustody1: "",
+            endTimeCustody1: "",
+            dateFailureToAppear: "", 
+            benchWarrantAmount: ""
+        }
 
 
         // FOR TESTING
 
-        this.state = {
-            caseNumber:"blood",
-            charge1:"Felony",
-            court:"Federal Way Municipal Court",
-            dateFailureToAppear:"02/4/1995",
-            dateOfOffense:"02/14/1995",
-            endTimeCustody1:"02/11/1995",
-            firstName:"Bob",
-            lastName:"Jones",
-            startTimeCustody1:"02/10/1995"
-        }
+        // this.state = {
+        //     caseNumber:"blood",
+        //     charge1:"Felony",
+        //     court:"Federal Way Municipal Court",
+        //     dateFailureToAppear:"02/4/1995",
+        //     dateOfOffense:"02/14/1995",
+        //     endTimeCustody1:"02/11/1995",
+        //     firstName:"Bob",
+        //     lastName:"Jones",
+        //     startTimeCustody1:"02/10/1995"
+        // }
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
      }
