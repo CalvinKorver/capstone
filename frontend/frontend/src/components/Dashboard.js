@@ -27,7 +27,7 @@ class Dashboard extends Component {
             })
             .then(function(clientData){
                 clientData.forEach(function(client){
-                    client.title = client.FirstName + " " +client.LastName
+                    client.title = client.first_name + " " + client.last_name;
                 });
                 return clientData;
             })
@@ -49,14 +49,13 @@ class Dashboard extends Component {
 
         setTimeout(() => {
             if (this.state.value.length < 1) return this.resetComponent()
-
             const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-            const isMatch = result => {re.test(result.title)};
-            // console.log(this.state.clients);
+            const isMatch = result => {console.log("Result: " + result.title); let test = re.test(result.title); console.log("test: " + test); return test;};
             this.setState({
                 isLoading: false,
                 results: _.filter(this.state.clients, isMatch),
             })
+            // console.log(this.state.clients)
         }, 300)
     }
 
@@ -65,7 +64,8 @@ class Dashboard extends Component {
 
 
     render() {            
-        const { isLoading, value, clients } = this.state;
+        const { isLoading, value, clients, results } = this.state;
+        // console.log(value);
         // const resultRenderer = ({ first_name }) => <Label content={title} />
 
         // resultRenderer.propTypes = {
@@ -76,7 +76,7 @@ class Dashboard extends Component {
         // if(this.state.clients){
         //     console.log(this.state);
         // }
-        // console.log(clients);
+        console.log(results);
         return (
             <div>
                 <Button href='/new-client'> New Client </Button>
@@ -84,7 +84,7 @@ class Dashboard extends Component {
                     loading={isLoading}
                     onResultSelect={this.handleResultSelect}
                     onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
-                    results={clients}
+                    results={results}
                     value={value}
                     {...this.props}
                     // resultRenderer={resultRenderer}

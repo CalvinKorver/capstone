@@ -9,10 +9,10 @@ class Court(models.Model):
     courtName = models.CharField(max_length=50, default="DEFAULT")
 
 class Client(models.Model):
-    firstName = models.CharField(max_length=50, default="DEFAULT")
-    lastName = models.CharField(max_length=50, default="DEFAULT")
-    dateOfBirth = models.DateField(null=True, blank=True)
-    streetAddress = models.CharField(max_length=50, default="DEFAULT")
+    first_name = models.CharField(max_length=50, default="DEFAULT")
+    last_name = models.CharField(max_length=50, default="DEFAULT")
+    date_of_birth = models.DateField(null=True, blank=True)
+    street_address = models.CharField(max_length=50, default="DEFAULT")
     city = models.CharField(max_length = 50, default="DEFAULT")
     state = models.CharField(max_length = 2, default="WA")
     zipcode = models.CharField(max_length = 10, default="DEFAULT")

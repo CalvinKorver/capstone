@@ -55,7 +55,7 @@ render() {
   return (
     <Container className="ClientContainer">
         <h2>{clientInfo.first_name} {clientInfo.last_name}</h2>
-        Cases: {casesString}
+        {/* Cases: {casesString} */}
     </Container>
 
   );

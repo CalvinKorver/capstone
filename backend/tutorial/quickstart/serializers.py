@@ -48,7 +48,7 @@ class PunishmentTypeSerializer(serializers.HyperlinkedModelSerializer):
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Client
-        fields = ('id', 'firstName', 'lastName', 'dateOfBirth', 'streetAddress', 'city', 'state', 'zipcode', 'country')
+        fields = ('id', 'first_name', 'last_name', 'date_of_birth', 'street_address', 'city', 'state', 'zipcode', 'country')
 
 
 class FineSerializer(serializers.HyperlinkedModelSerializer):
