@@ -9,25 +9,28 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: ''
+      first_name: 'Joseph',
+      last_name: 'Reimer',
+      username: 'jremis',
+      email: 'j@gmail.com',
+      password1: 'password1',
+      password2: 'password'
     }
     this.AuthService = new AuthService();
   }
   handleClick(event) {
-    var payload = {
-      // "firstName": this.state.first_name,
-      // "lastName": this.state.last_name,
-      "username": this.state.user_name,
-      "email": this.state.email,
-      "password": this.state.password,
-      "password2": this.state.confirm_password
-    }
+    var payload = this.state;
+    console.log(payload);
     this.AuthService.createNewUser(payload)
   }
+
+
+  handleChange = (e, { name, value }) => { 
+    this.setState({ [name]: value })
+  }
+
   render() {
+    const {first_name, last_name, email, username, password1, password2} = this.state;
     return (
       <div>
         <Grid
@@ -36,57 +39,56 @@ class Register extends Component {
           verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
             <Header as='h2' color='teal' textAlign='center'>
-              <Icon fitted name='game' />
               Register
         </Header>
             <Form size='large'>
               <Segment stacked>
-                {/* <Form.Group widths='equal'>
-                  <Form.Input
-                    fluid
-                    icon='user'
-                    iconPosition='left'
-                    placeholder='first Name'
-                    onChange={(event, newValue) => this.setState({ first_name: newValue.value })}
-                  />
-                  <Form.Input
-                    fluid
-                    icon='user'
-                    iconPosition='left'
-                    placeholder='Last Name'
-                    onChange={(event, newValue) => this.setState({ last_name: newValue.value })}
-                  />
-                </Form.Group>
-                */}
-                <Form.Input
+              <Form.Input
+                  name="first_name"
+                  value={first_name}
                   fluid
-                  icon='mail'
-                  iconPosition='left'
-                  placeholder='Email'
-                  onChange={(event, newValue) => this.setState({ email: newValue.value })}
-                /> 
-                <Form.Input
-                  fluid
-                  icon='user'
-                  iconPosition='left'
-                  placeholder='Username'
-                  onChange={(event, newValue) => this.setState({ user_name: newValue.value })}
+                  placeholder='First Name'
+                  onChange={this.handleChange}
                 />
                 <Form.Input
+                  name="last_name"
+                  value={last_name}
                   fluid
-                  icon='lock'
-                  iconPosition='left'
+                  
+                  
+                  placeholder='Last Name'
+                  onChange={this.handleChange}
+                />
+                <Form.Input
+                  name="email"
+                  value={email}
+                  fluid
+                  placeholder='Email'
+                  onChange={this.handleChange}
+                /> 
+                
+                <Form.Input
+                  name="username"
+                  value={username}
+                  fluid
+                  placeholder='Username'
+                  onChange={this.handleChange}
+                />
+                <Form.Input
+                  name="password1"
+                  value={password1}
+                  fluid
                   placeholder='Password'
                   type='password'
-                  onChange={(event, newValue) => this.setState({ password: newValue.value })}
+                  onChange={this.handleChange}
                 />
                 <Form.Input
+                  name="password2"
+                  value={password2}
                   fluid
-                  icon='lock'
-                  iconPosition='left'
                   placeholder='Confirm Password'
                   type='password'
-                  onChange={(event, newValue) => this.setState({ confirm_password: newValue.value })}
+                  onChange={this.handleChange}
                 />
 
                 <br />

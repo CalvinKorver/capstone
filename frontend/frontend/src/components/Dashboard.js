@@ -6,6 +6,9 @@ import {
     Button,
     Search,
     Divider,
+    Grid,
+    Container,
+    Header
   } from 'semantic-ui-react'
 import Client from './Client';
 import NewCase from './forms/NewCase';
@@ -64,10 +67,6 @@ class Dashboard extends Component {
         }, 300)
     }
 
-    
-
-
-
     render() {            
         const { isLoading, value, clients, results } = this.state;
         var renderResults;
@@ -88,27 +87,38 @@ class Dashboard extends Component {
                 // can pass case information through here too
                 <div key={client.id}>
                 <Link to={'/client/'+client.id}>Review Cases</Link>
-                <Client key={client.id} data={client}/>
+                <Client key={client.id} data={client} />
                 <Divider/>
                 </div>
             );
         }
         return (
-            <div>
-                <Button href='/new-client'> New Client </Button>
-                <Search
-                    loading={isLoading}
-                    onResultSelect={this.handleResultSelect}
-                    onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
-                    results={results}
-                    value={value}
-                    {...this.props}
-                    // resultRenderer={resultRenderer}
-                />  
-                <hr/>
-                {/* <Clients clients={this.state.searchResults}/> */}
-                {renderResults}
-            </div>
+            <Container className="wide">
+                <Grid>
+                    <Grid.Column width={14}>
+                        <Header as="h4"  floated="left" style={{marginTop: "8px", marginRight: "2em"}}> Client Search </Header>
+                        <Search
+                            className="main-search"
+                            loading={isLoading}
+                            onResultSelect={this.handleResultSelect}
+                            onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
+                            results={results}
+                            value={value}
+                            placeholder="Name or case number"
+                            {...this.props}
+                            // resultRenderer={resultRenderer}
+                        /> 
+                    </Grid.Column>
+
+                    <Grid.Column width={2}>
+                        <Button href='/new-client'> New Client </Button>
+                    </Grid.Column>
+                    {/* <Clients clients={this.state.searchResults}/> */}
+                    <Grid.Column width={16}>
+                    {renderResults}
+                    </Grid.Column>
+                </Grid>
+            </Container>
         )
     }
 
