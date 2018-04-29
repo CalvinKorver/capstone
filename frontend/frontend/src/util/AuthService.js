@@ -33,7 +33,7 @@ export default class AuthService {
     return axios
       .post(URL + LOGIN, {
         username: userPayload.username,
-        password1: userPayload.password,
+        password1: userPayload.password1,
         password2: userPayload.password2,
         email: userPayload.email
       })

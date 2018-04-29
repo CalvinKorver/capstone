@@ -14,7 +14,6 @@ import '../react_styles/ClientDashboard.css';
 class ClientDashboard extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props);
         this.state = {
             clientView: [
                 // <CasesView client={null} key="1"/>,
@@ -23,6 +22,7 @@ class ClientDashboard extends Component {
             client: {},
             cases: {}
         }
+        console.log(this.state.cases);
     }
 
     componentWillMount() {
@@ -44,7 +44,7 @@ class ClientDashboard extends Component {
             .then(function(caseData) {
               var casesMatch = [];
               caseData.forEach(function(singleCase){
-                if(singleCase.ClientID === id){
+                if(singleCase.clientID == id){
                   casesMatch.push(singleCase);
                 }
               });
