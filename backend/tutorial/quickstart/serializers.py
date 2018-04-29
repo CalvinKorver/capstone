@@ -86,7 +86,7 @@ class SentenceComplianceSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = SentenceCompliance
-        fields = ('id', 'caseID,' 'admit', 'reserve', 'violationID')
+        fields = ('id', 'caseID', 'admit', 'reserve', 'violationID')
 
 
 class CaseSerializer(serializers.HyperlinkedModelSerializer):

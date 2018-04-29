@@ -66,12 +66,34 @@ class FineViewSet(viewsets.ModelViewSet):
     queryset = Fine.objects.all()
     serializer_class = FineSerializer
 
-class SentenceComplianceViewSet(viewsets.ModelViewSet):
+class SentenceComplianceViewSet(APIView):
     """
     API endpoint that allows clients to be viewed or edited.
     """
-    queryset = SentenceCompliance.objects.all()
-    serializer_class = SentenceComplianceSerializer
+    def get(self, request, *args, **kwargs):
+        queryset = SentenceCompliance.objects.all()
+        serializer_class = SentenceComplianceSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+
+    def post(self, request, *args, **kwargs):
+        case = Case.objects.get(caseNumber=request.data.get('caseNumber'))
+
+        # this could be factored out into a patch request if desired
+        case.caseClosed = request.data.get('caseClosed')
+        case.save()
+
+        violation, created = Violation.objects.get_or_create(
+            violationName = request.data.get('violationName')
+        )
+
+        sentenceCompliance = SentenceCompliance.objects.create(
+            admit = request.data.get('admit'),
+            reserve = request.data.get('reserve'),
+            violationID = violation,
+            caseID = case
+        )
+
+        return Response({'status': 'Case created'})
 
 
 class PreTrialStatusViewSet(viewsets.ModelViewSet):
@@ -263,10 +285,10 @@ class CaseViewSet(APIView):
         #     print(case)
         return Response({'status': 'Case created'})
 
-    # def delete(self, request):
-    #     case = Case.objects.get(name = request.data.get('name'))
-    #     case.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
+    def delete(self, request):
+        case = Case.objects.get(id = request.data.get('id'))
+        case.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     # def patch(self, request):
     #     case = Case.objects.filter(name = request.data.get('name'))

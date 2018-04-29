@@ -227,7 +227,7 @@ class NewCase extends Component {
                         <Button type="submit">Submit</Button>
                     </Form>
                 </Modal.Content>
-            </Modal>
+             </Modal>
         );
     }
 }

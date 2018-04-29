@@ -40,7 +40,7 @@ class Violation(models.Model):
     violationName = models.CharField(max_length=50, default="DEFAULT")
 
 class Case(models.Model):
-    caseNumber = models.CharField(max_length=50, default="0000000000")
+    caseNumber = models.CharField(max_length=50, default="0000000000", unique=True)
     caseClosed = models.BooleanField(default=False, blank=True)
     clientID = models.ForeignKey(Client, null=True, on_delete=models.CASCADE)
     preTrialStatusID = models.ForeignKey(PreTrialStatus, null=True, on_delete=models.CASCADE)
@@ -95,7 +95,7 @@ class Punishment(models.Model):
     jurisdiction = models.CharField(max_length=100, null=True, blank=True)
 
 class SentenceCompliance(models.Model):
-    violationID = models.ForeignKey(ProbationType, on_delete=models.CASCADE)
+    violationID = models.ForeignKey(Violation, on_delete=models.CASCADE)
     caseID = models.ForeignKey(Case, on_delete=models.CASCADE)
     admit = models.BooleanField(default=False)
     reserve = models.BooleanField(default=False)
