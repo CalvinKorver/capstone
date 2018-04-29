@@ -84,10 +84,10 @@ class Dashboard extends Component {
         
         if (this.state.results) {
             renderResults = this.state.results.map(client => 
-                // pass client id as prop to client component
+                // can pass case information through here too
                 <div key={client.id}>
                 <Link to={'/client/'+client.id}>Review Cases</Link>
-                <Client key={client.id} id={client.id}/>
+                <Client key={client.id} data={client}/>
                 <Divider/>
                 </div>
             );

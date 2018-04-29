@@ -13,16 +13,10 @@ class Client extends Component {
   }
 
 componentDidMount() {
-  // don't hardcode urls
-  // console.log(this.props.id);
   var id = this.props.id;
-  fetch('http://localhost:8000/clients/' + this.props.id +'/', {mode: 'cors'})
-      .then(function(response) {
-        return response.json();
-      })
-      .then(clientData => this.setState({
-          client: clientData
-      }));
+  this.setState({
+    client: this.props.data
+  })
   // this grabs all the cases to check which are linked to our client
   fetch('http://localhost:8000/cases/', {mode: 'cors'})
       .then(function(response) {
