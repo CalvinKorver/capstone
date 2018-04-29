@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
+import { Link } from 'react-router-dom'
+
 import {
     Button,
     Search,
+    Divider,
   } from 'semantic-ui-react'
-import Clients from './Clients';
+import Client from './Client';
 
 
 class Dashboard extends Component {
@@ -32,7 +35,8 @@ class Dashboard extends Component {
                 return clientData;
             })
             .then(clientData => this.setState({
-                clients: clientData
+                clients: clientData,
+                results: clientData
             }))
     }
     
@@ -40,7 +44,7 @@ class Dashboard extends Component {
         this.resetComponent()
     }
 
-    resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
+    resetComponent = () => this.setState({ isLoading: false, results: this.state.clients, value: '' })
 
     handleResultSelect = (e, { result }) => this.setState({ value: result.title, searchResults: result })
 
@@ -65,6 +69,7 @@ class Dashboard extends Component {
 
     render() {            
         const { isLoading, value, clients, results } = this.state;
+        var renderResults;
         // console.log(value);
         // const resultRenderer = ({ first_name }) => <Label content={title} />
 
@@ -76,7 +81,17 @@ class Dashboard extends Component {
         // if(this.state.clients){
         //     console.log(this.state);
         // }
-        console.log(results);
+        
+        if (this.state.results) {
+            renderResults = this.state.results.map(client => 
+                // pass client id as prop to client component
+                <div key={client.id}>
+                <Link to={'/client/'+client.id}>Review Cases</Link>
+                <Client key={client.id} id={client.id}/>
+                <Divider/>
+                </div>
+            );
+        }
         return (
             <div>
                 <Button href='/new-client'> New Client </Button>
@@ -91,6 +106,7 @@ class Dashboard extends Component {
                 />  
                 <hr/>
                 {/* <Clients clients={this.state.searchResults}/> */}
+                {renderResults}
             </div>
         )
     }

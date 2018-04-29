@@ -50,7 +50,6 @@ render() {
   }
   cases = this.state.cases;
   var casesString = JSON.stringify(cases);
-  console.log(cases);
   clientInfo = this.state.client;
   return (
     <Container className="ClientContainer">
