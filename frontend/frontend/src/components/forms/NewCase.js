@@ -94,7 +94,9 @@ class NewCase extends Component {
                 payWorkCrew: false,
                 payCommunityService: false,
                 domesticViolence: false,
-                caseClosed: false
+                caseClosed: false,
+                benchWarrant: this.state.benchWarrantAmount,
+                failToAppearDate: this.state.dateFailureToAppear
 
             })
             .then(function (response) {
@@ -169,13 +171,13 @@ class NewCase extends Component {
                                 <Form.Input 
                                 fluid 
                                 label="Beginning of time in custody" 
-                                placeholder="MM/DD/YYYY"
+                                placeholder="YYYY-MM-DD"
                                 name="startTimeCustody1"
                                 value={startTimeCustody1}
                                 onChange={this.handleChange}/>
                                 <Form.Input
                                 fluid
-                                label="End of time in custody" placeholder="MM/DD/YYYY"
+                                label="End of time in custody" placeholder="YYYY-MM-DD"
                                 name="endTimeCustody1"
                                 value={endTimeCustody1}
                                 onChange={this.handleChange}/>

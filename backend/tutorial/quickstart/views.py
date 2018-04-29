@@ -241,12 +241,19 @@ class CaseViewSet(APIView):
             )
             chargeType.save()
             offense = Offense.objects.create(
-                offenseDate = request.data.get('offenseDate'),
+                offenseDate = offenseDate,
                 chargeTypeID = chargeType,
                 caseID = case
             )
             offense.save()
         case.save()
+
+        failToAppearDate = request.data.get('failToAppearDate')
+        if (failToAppearDate):
+            failToAppear = FailToAppear.objects.create(
+                failToAppearDate = failToAppearDate,
+                caseID = case
+            )
 
         # @Calvin Korver what is this hack?
         # if(request.data.get('charge1') != None):

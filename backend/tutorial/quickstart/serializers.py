@@ -98,7 +98,7 @@ class CaseSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Case
-        fields = ('caseNumber', 'clientID', 'courtID', 'preTrialStatusID', 'sentencingStatusID', 'caseOutcomeID', 'sentenceStart', 'sentenceEnd', 'jailTimeSuspended', 'payWorkCrew', 'payCommunityService', 'domesticViolence', 'benchWarrant', 'caseClosed')
+        fields = ('id', 'caseNumber', 'clientID', 'courtID', 'preTrialStatusID', 'sentencingStatusID', 'caseOutcomeID', 'sentenceStart', 'sentenceEnd', 'jailTimeSuspended', 'payWorkCrew', 'payCommunityService', 'domesticViolence', 'benchWarrant', 'caseClosed')
 
 
 class AuthUserCaseSerializer(serializers.HyperlinkedModelSerializer):
