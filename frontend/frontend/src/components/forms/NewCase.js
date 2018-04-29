@@ -82,9 +82,24 @@ class NewCase extends Component {
         console.log("Next, we perform AXIOS call, which can be commented out");
         console.log(data);
         return axios
-            .post(URL + endpoint, this.state)
+        // this handles the most basic form entry
+            .post(URL + endpoint, {
+                caseNumber: this.state.caseNumber,
+                offenseDate: this.state.dateOfOffense,
+                chargeTypeName: this.state.charge1,
+                clientFirstName: this.props.firstName,
+                clientLastName: this.props.lastName,
+                jailTimeSuspended: 0,
+                benchWarrant: 0,
+                payWorkCrew: false,
+                payCommunityService: false,
+                domesticViolence: false,
+                caseClosed: false
+
+            })
             .then(function (response) {
                 console.log(response);
+                alert("submitted");
             })
             .catch(function (error) {
               // raise different exception if due to invalid credentials
@@ -125,7 +140,7 @@ class NewCase extends Component {
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Select fluid label="Court" name="court" options={courtOptions} placeholder='Select an option'  value={court} onChange={this.handleChange} />
                         
-                        <Form.Input fluid label="Date of Offense" name="dateOfOffense" placeholder="MM/DD/YYYY"  value={dateOfOffense} onChange={this.handleChange} />
+                        <Form.Input fluid label="Date of Offense" name="dateOfOffense" placeholder="YYYY-MM-DD"  value={dateOfOffense} onChange={this.handleChange} />
 
                         <Form.Input fluid label="Case Number" name="caseNumber"  placeholder=""  value={caseNumber} onChange={this.handleChange} />
 

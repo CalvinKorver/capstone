@@ -180,51 +180,70 @@ class CaseViewSet(APIView):
         return Response(serializer_class.data)
 
     def post(self, request, *args, **kwargs):
+        clientID = Client.objects.get(first_name=request.data.get('clientFirstName'), last_name=request.data.get('clientLastName'))
         
-        # case_type = Case_Type.objects.get(name=request.data.get('case_type_name'))
-        ClientID = Client.objects.get(FirstName=request.data.get('ClientFirstName'), LastName=request.data.get('ClientLastName'))
-        # CaseNumber = request.data.get('CaseNumber')
-        # DateOfOffense = 
-        # ChargeType
 
-        preTrialStatusName = request.data.get('PreTrialStatusName')
+        preTrialStatusName = request.data.get('preTrialStatusName')
         preTrialStatus = None
         if preTrialStatusName:
-            preTrialStatus = PreTrialStatus.objects.getOrCreate(
-                PreTrialStatusName = preTrialStatusName
+            preTrialStatus, created = PreTrialStatus.objects.get_or_create(
+                preTrialStatusName = preTrialStatusName
             )
         
+        sentencingStatusName = request.data.get('sentencingStatusName')
+        sentencingStatus = None
+        if sentencingStatusName:
+            sentencingStatus, created = sentencingStatus.objects.get_or_create(
+                sentencingStatusName = sentencingStatusName
+            )
+        
+        caseOutcomeName = request.data.get('caseOutcomeName')
+        caseOutcome = None
+        if caseOutcomeName:
+            caseOutcome, created = caseOutcome.objects.get_or_create(
+                caseOutcomeName = caseOutcomeName
+            )
+        
+        courtName = request.data.get('courtName')
+        court = None
+        if courtName:
+            court, created = court.objects.get_or_create(
+                courtName = courtName
+            )
 
 
         
 
         # Save the case
         case = Case.objects.create(
-            CaseNumber=request.data.get('CaseNumber'),
-            SentenceStart=request.data.get('SentenceStart'),
-            SentenceEnd=request.data.get('SentenceEnd'),
-            JailTimeSuspended=request.data.get('JailTimeSuspeded'),
-            PayWorkCrew=request.data.get('PayWorkCrew'),
-            PayCommunityService=request.data.get('PayCommunityService'),
-            DomesticViolence=request.data.get('DomesticViolence'),
-            BenchWarrant=request.data.get('BenchWarrant'),
-            CaseClosed=request.data.get('CaseClosed'),
-            ClientID=ClientID,
-            PreTrialStatusID=preTrialStatus,
+            caseNumber=request.data.get('caseNumber'),
+            sentenceStart=request.data.get('sentenceStart'),
+            sentenceEnd=request.data.get('sentenceEnd'),
+            jailTimeSuspended=request.data.get('jailTimeSuspeded'),
+            payWorkCrew=request.data.get('payWorkCrew'),
+            payCommunityService=request.data.get('payCommunityService'),
+            domesticViolence=request.data.get('domesticViolence'),
+            benchWarrant=request.data.get('benchWarrant'),
+            caseClosed=request.data.get('caseClosed'),
+            clientID=clientID,
+            preTrialStatusID=preTrialStatus,
+            sentencingStatusID=sentencingStatus,
+            caseOutcomeID=caseOutcome,
+            courtID=court,
             )
 
 
-        offenseDate = request.data.get('OffenseDate')
+        offenseDate = request.data.get('offenseDate')
         if (offenseDate):
             # first make the charge type
-            chargeType = ChargeType.objects.get_or_create(
-                ChargeTypeName = request.data.get('ChargeTypeName')
+            chargeType, created = ChargeType.objects.get_or_create(
+                chargeTypeName = request.data.get('chargeTypeName')
             )
             chargeType.save()
             offense = Offense.objects.create(
-                OffenseDate = request.data.get('OffenseDate'),
-                ChargeTypeID = chargeType.id,
-                CaseID = case.id
+                offenseDate = request.data.get('offenseDate'),
+                chargeTypeID = chargeType,
+                caseID = case
             )
             offense.save()
         case.save()

@@ -45,8 +45,9 @@ class Case(models.Model):
     clientID = models.ForeignKey(Client, null=True, on_delete=models.CASCADE)
     preTrialStatusID = models.ForeignKey(PreTrialStatus, null=True, on_delete=models.CASCADE)
     sentencingStatusID = models.ForeignKey(SentencingStatus, null=True, on_delete=models.CASCADE)
+    courtID = models.ForeignKey(Court, null=True, on_delete=models.CASCADE)
     caseOutcomeID = models.ForeignKey(CaseOutcome, null=True, on_delete=models.CASCADE)
-    sentenceStart = models.DateField(default="2000-10-10")
+    sentenceStart = models.DateField(null=True, blank=True)
     sentenceEnd = models.DateField(null=True, blank=True)
     jailTimeSuspended = models.IntegerField(null=True, blank=True)
     payWorkCrew = models.BooleanField(default=False, blank=True)
@@ -56,7 +57,7 @@ class Case(models.Model):
     caseClosed = models.BooleanField(default=False, blank=True)
 
 class Offense(models.Model):
-    chargeTypeID = models.ForeignKey(Court, on_delete=models.CASCADE)
+    chargeTypeID = models.ForeignKey(ChargeType, on_delete=models.CASCADE)
     caseID = models.ForeignKey(Case, on_delete=models.CASCADE)
     offenseDate = models.DateField(default="2000-10-10")
 
@@ -87,7 +88,7 @@ class Probation(models.Model):
     caseID = models.ForeignKey(Case, on_delete=models.CASCADE)
 
 class Punishment(models.Model):
-    punishmentTypeID = models.ForeignKey(ProbationType, on_delete=models.CASCADE)
+    punishmentTypeID = models.ForeignKey(PunishmentType, on_delete=models.CASCADE)
     caseID = models.ForeignKey(Case, on_delete=models.CASCADE)
     credit = models.IntegerField(default=0)
     dueDate = models.DateField(default="2000-10-10")

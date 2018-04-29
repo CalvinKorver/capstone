@@ -7,6 +7,7 @@ import NavMenu from './subs/NavMenu';
 import RibbonMenu from './subs/RibbonMenu';
 import CasesView from './subs/CasesView';
 import InformationView from './subs/InformationView';
+import NewCase from './forms/NewCase';
 import '../react_styles/ClientDashboard.css';
 
 
@@ -74,17 +75,18 @@ class ClientDashboard extends Component {
             <div>
                 <NavMenu/>
                 <Container className="ribbon-container">
-                    <Header as='h1'>{client.FirstName + " " + client.LastName}
+                    <Header as='h1'>{client.first_name + " " + client.last_name}
                     </Header>
                     <RibbonMenu onChange={this.ribbonChange}/>
                 </Container>
 
                 <Container className = "wide">
+                    <NewCase firstName={this.state.client.first_name} lastName={this.state.client.last_name}/>
                     {this.state.clientView}
                 </Container>
 
-                {/* <NewCase firstName={this.state.FirstName} lastName={this.state.LastName}/>
-                <PreTrial />
+                {/* <NewCase firstName={this.state.FirstName} lastName={this.state.LastName}/> */}
+                {/* <PreTrial />
                 <SentencingCompliance />
                 <Button> New Case </Button>
                 <Client id={id}/> */}

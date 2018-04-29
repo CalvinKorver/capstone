@@ -8,6 +8,7 @@ import {
     Divider,
   } from 'semantic-ui-react'
 import Client from './Client';
+import NewCase from './forms/NewCase';
 
 
 class Dashboard extends Component {
