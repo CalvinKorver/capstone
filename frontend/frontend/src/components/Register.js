@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Form, Grid, Header, Segment, Icon } from 'semantic-ui-react'
-
+import { Button, Form, Grid, Header, Segment, Icon, Message } from 'semantic-ui-react'
+import $ from 'jquery'; 
+import * as utils from '../util/Functions';
+import ErrorMessage from './subs/ErrorMessage';
 import AuthService from '../util/AuthService.js'
 import '../util/ApiClient.js'
 import SwitchButton from './SwitchButton';
@@ -14,19 +16,43 @@ class Register extends Component {
       username: 'jremis',
       email: 'j@gmail.com',
       password1: 'password1',
-      password2: 'password'
+      password2: 'password',
+      isInError: false,
+      errorMessage: ""
     }
     this.AuthService = new AuthService();
   }
+  
+  
   handleClick(event) {
     var payload = this.state;
-    console.log(payload);
-    this.AuthService.createNewUser(payload)
+    if (utils.isEmpty(payload.first_name) || utils.isEmpty(payload.last_name) || utils.isEmpty(payload.password1) || utils.isEmpty(payload.password2) || utils.isEmpty(payload.email)) {
+      this.setState({
+        isInError: true,
+        errorMessage: "Sorry, please fill out all form fields prior to logging in."
+      });
+    } else {
+      console.log(payload);
+      this.AuthService.createNewUser(payload)
+        .then(res =>{
+          this.props.history.replace('/');
+        })
+        .catch(err => {
+            this.setState({
+              errorMessage: err.response.status + ": " + err.response.statusText,
+              isInError: true
+            });
+        })
+    }
   }
 
 
   handleChange = (e, { name, value }) => { 
     this.setState({ [name]: value })
+  }
+
+  handleErrorClose() {
+    this.setState({isInError: false });
   }
 
   render() {
@@ -41,9 +67,11 @@ class Register extends Component {
             <Header as='h2' color='teal' textAlign='center'>
               Register
         </Header>
-            <Form size='large'>
+            <Form size='large' id="registration-form">
               <Segment stacked>
+              
               <Form.Input
+                  id="first_name"
                   name="first_name"
                   value={first_name}
                   fluid
@@ -54,8 +82,6 @@ class Register extends Component {
                   name="last_name"
                   value={last_name}
                   fluid
-                  
-                  
                   placeholder='Last Name'
                   onChange={this.handleChange}
                 />
@@ -90,7 +116,10 @@ class Register extends Component {
                   type='password'
                   onChange={this.handleChange}
                 />
-
+                <ErrorMessage
+                    display={this.state.isInError} 
+                    message={this.state.errorMessage}
+                    dismissed={this.handleErrorClose.bind(this)}/>
                 <br />
                 <Button color='teal' fluid size='large' onClick={(event) => this.handleClick(event)}>Register</Button>
               </Segment>
