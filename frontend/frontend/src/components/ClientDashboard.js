@@ -87,9 +87,9 @@ class ClientDashboard extends Component {
                 </Container>
 
                 <Container className = "wide">
-                    <NewCase firstName={this.state.client.first_name} lastName={this.state.client.last_name}/>
+                    {/* <NewCase firstName={this.state.client.first_name} lastName={this.state.client.last_name}/> */}
                     {/* <SentencingCompliance caseNumber={this.state.cases[0].caseNumber} /> */}
-                    {sentenceCompliance}
+                    {/* {sentenceCompliance} */}
                     {this.state.clientView}
                 </Container>
 

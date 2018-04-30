@@ -50,11 +50,10 @@ class Case(models.Model):
     sentenceStart = models.DateField(null=True, blank=True)
     sentenceEnd = models.DateField(null=True, blank=True)
     jailTimeSuspended = models.IntegerField(null=True, blank=True)
-    payWorkCrew = models.BooleanField(default=False, blank=True)
-    payCommunityService = models.BooleanField(default=False, blank=True)
     domesticViolence = models.BooleanField(default=False, blank=True)
     benchWarrant = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     caseClosed = models.BooleanField(default=False, blank=True)
+    treatmentOrdered = models.CharField(max_length=500, default="No treatment required")
 
 class Offense(models.Model):
     chargeTypeID = models.ForeignKey(ChargeType, on_delete=models.CASCADE)
@@ -72,6 +71,8 @@ class Fine(models.Model):
     finesImposed = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     finesSuspended = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     caseID = models.ForeignKey(Case, on_delete=models.CASCADE)
+    payWorkCrew = models.BooleanField(default=False, blank=True)
+    payCommunityService = models.BooleanField(default=False, blank=True)
 
 class FailToAppear(models.Model):
     failToAppearDate = models.DateField(default="2000-10-10")

@@ -215,14 +215,14 @@ class CaseViewSet(APIView):
         sentencingStatusName = request.data.get('sentencingStatusName')
         sentencingStatus = None
         if sentencingStatusName:
-            sentencingStatus, created = sentencingStatus.objects.get_or_create(
+            sentencingStatus, created = SentencingStatus.objects.get_or_create(
                 sentencingStatusName = sentencingStatusName
             )
         
         caseOutcomeName = request.data.get('caseOutcomeName')
         caseOutcome = None
         if caseOutcomeName:
-            caseOutcome, created = caseOutcome.objects.get_or_create(
+            caseOutcome, created = CaseOutcome.objects.get_or_create(
                 caseOutcomeName = caseOutcomeName
             )
         
@@ -241,7 +241,7 @@ class CaseViewSet(APIView):
             caseNumber=request.data.get('caseNumber'),
             sentenceStart=request.data.get('sentenceStart'),
             sentenceEnd=request.data.get('sentenceEnd'),
-            jailTimeSuspended=request.data.get('jailTimeSuspeded'),
+            jailTimeSuspended=request.data.get('jailTimeSuspended'),
             payWorkCrew=request.data.get('payWorkCrew'),
             payCommunityService=request.data.get('payCommunityService'),
             domesticViolence=request.data.get('domesticViolence'),
@@ -313,6 +313,106 @@ class CaseViewSet(APIView):
     #         case.update(client_id = new_client.id)
 
     #     return Response("Patched")
+
+    def put(self, request):
+        case = Case.objects.get(caseNumber=request.data.get('caseNumber'))
+
+        preTrialStatusName = request.data.get('preTrialStatusName')
+        preTrialStatus = None
+        if preTrialStatusName:
+            preTrialStatus, created = PreTrialStatus.objects.get_or_create(
+                preTrialStatusName = preTrialStatusName
+            )
+            case.preTrialStatusID = preTrialStatus
+        sentencingStatusName = request.data.get('sentencingStatusName')
+        sentencingStatus = None
+        if sentencingStatusName:
+            sentencingStatus, created = SentencingStatus.objects.get_or_create(
+                sentencingStatusName = sentencingStatusName
+            )
+            case.sentencingStatusID=sentencingStatus
+        
+        caseOutcomeName = request.data.get('caseOutcomeName')
+        caseOutcome = None
+        if caseOutcomeName:
+            caseOutcome, created = CaseOutcome.objects.get_or_create(
+                caseOutcomeName = caseOutcomeName
+            )
+            case.caseOutcomeID=caseOutcome
+
+        # handle different types of punishments
+        communityServiceDays = request.data.get('communityServiceDays')
+        communityService = None
+        if communityServiceDays:
+            punishmentType, created = PunishmentType.objects.get_or_create(
+                punishmentTypeName = 'Community Service'
+            )
+
+            communityService= Punishment.objects.create(
+                caseID = case,
+                punishmentTypeID = punishmentType,
+                credit = communityServiceDays,
+                dueDate = request.data.get('communityServiceDueDate')
+            )
+
+        workCrewDays = request.data.get('creditForWorkCrew')
+        workCrew = None
+        if workCrewDays:
+            punishmentType, created = PunishmentType.objects.get_or_create(
+                punishmentTypeName = 'Work Crew'
+            )
+
+            workCrew = Punishment.objects.create(
+                caseID = case,
+                punishmentTypeID = punishmentType,
+                credit = creditForWorkCrew,
+                dueDate = request.data.get('dueDateForWorkCrew'),
+                jurisdiction = request.data.get('jurisdictionOfWorkCrew')
+            )
+        
+        jailTimeDays = request.data.get('creditForTimeServed')
+        jailTime = None
+        if jailTimeDays:
+            punishmentType, created = PunishmentType.objects.get_or_create(
+                punishmentTypeName = 'Jail Time'
+            )
+
+            communityService= Punishment.objects.create(
+                caseID = case,
+                punishmentTypeID = punishmentType,
+                credit = jailTimeDays,
+                dueDate = request.data.get('dueDateForTimeServed')
+            )
+        
+        fines = request.data.get('finesImposed')
+        fine = None
+        if fines:
+            fine = Fine.objects.create(
+                caseID = case,
+                finesImposed = fines,
+                finesSuspended = request.data.get('finesSuspended'),
+                payCommunityService = request.data.get('payCommunityService'),
+                payWorkCrew = request.data.get('payWorkCrew')
+            )
+
+        # update the fields in case 
+        case.sentenceStart=request.data.get('startSentence')
+        case.sentenceEnd=request.data.get('endSentence')
+        case.jailTimeSuspended=request.data.get('jailTimeSuspended')
+        if(request.data.get('domesticViolence')):
+            case.domesticViolence=request.data.get('domesticViolence')
+        if(request.data.get('benchWarrant')):
+            case.benchWarrant=request.data.get('benchWarrant')
+        if(request.data.get('caseClosed')):
+            case.caseClosed=request.data.get('caseClosed')
+        if(request.data.get('treatmentOrdered')):
+            case.treatmentOrdered=request.data.get('treatmentOrdered')
+        case.preTrialStatusID=preTrialStatus
+        case.sentencingStatusID=sentencingStatus
+        case.caseOutcomeID=caseOutcome
+        case.save()
+        return Response("PUT succeeded")
+
 
 class AuthUserCaseViewSet(viewsets.ModelViewSet):
     """

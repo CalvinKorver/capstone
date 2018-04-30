@@ -6,10 +6,13 @@ import {
     Search,
     Header,
     Segment,
-    Table
+    Table,
+    Dropdown
   } from 'semantic-ui-react';
 
 import NewCase from '../forms/NewCase';
+import SentencingCompliance from '../forms/SentencingCompliance';
+import PreTrial from '../forms/PreTrial';
 
 class CasesView extends Component {
 
@@ -24,11 +27,20 @@ class CasesView extends Component {
         var caseTable = []
         this.props.cases.forEach(element => {
             console.log(element);
+            const forms = [
+                <NewCase first_name={this.props.client.first_name} last_name={this.props.client.last_name}/>,
+                <PreTrial caseNumber={element.caseNumber}/>,
+                <SentencingCompliance caseNumer={element.caseNumber}/>
+            ];
+
             caseTable.push(
                 <Table.Row>
                     <Table.Cell>{element.caseNumber}</Table.Cell>
                     <Table.Cell>{element.sentenceStart}</Table.Cell>
-                    <Table.Cell>{element.sentenceEnd}</Table.Cell>    
+                    <Table.Cell>{element.sentenceEnd}</Table.Cell> 
+                    <Table.Cell >
+                        <Dropdown placeholder='Edit' fluid selection options={forms} />
+                    </Table.Cell>   
                 </Table.Row>
             )
         });
@@ -47,9 +59,9 @@ class CasesView extends Component {
                     <Search className="main-search" size="small"/>
                 </Grid.Column>
 
-                <Grid.Column width={4}>
+                {/* <Grid.Column width={4}>
                     <NewCase/>
-                </Grid.Column>
+                </Grid.Column> */}
 
                 <Grid.Column width={16}>
                     <TimelineShell client={this.props.client}/>
