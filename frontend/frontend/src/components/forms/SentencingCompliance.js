@@ -13,7 +13,7 @@ class SentencingCompliance extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            caseNumber: "",
+            caseNumber: this.props.caseNumber,
             sentencingComplianceStatus: "",
             admitOrDeny: false,
             reserveOrImpose: false,
@@ -30,16 +30,6 @@ class SentencingCompliance extends Component {
 //     loginPage.push(<Loginscreen appContext={this} key={"loginScreen"}/>);
 //     this.setState({loginPage: loginPage})
 //   }
-// componentDidMount() {
-//   // don't hardcode urls
-//   fetch('http://localhost:8000/clients/', {mode: 'cors'})
-//       .then(function(response) {
-//         return response.json();
-//       })
-//       .then(clientData => this.setState({
-//           clients: clientData
-//       }));
-// }
 
     handleSubmit(event) {
         event.preventDefault();
@@ -48,13 +38,15 @@ class SentencingCompliance extends Component {
         // console.log(event.target);
         // const data = new FormData(event.target);
         // console.log(data);
-        if (this.state.caseClosed) {
-            // post request to case to set closed to true
-        }
+        // if (this.state.caseClosed) {
+             // post request to case to set closed to true
+        // }
         var data = {
-            alleged_violation: this.state.sentencingComplianceStatus,
+            violationName: this.state.sentencingComplianceStatus,
             admit: this.state.admitOrDeny,
-            reserve: this.state.reserveOrImpose
+            reserve: this.state.reserveOrImpose,
+            caseClosed: this.state.caseClosed,
+            caseNumber: this.state.caseNumber
         }
         return axios
             .post(URL + endpoint, data)

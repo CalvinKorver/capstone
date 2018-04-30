@@ -9,6 +9,7 @@ import CasesView from './subs/CasesView';
 import InformationView from './subs/InformationView';
 import NewCase from './forms/NewCase';
 import '../react_styles/ClientDashboard.css';
+import SentencingCompliance from './forms/SentencingCompliance';
 
 
 class ClientDashboard extends Component {
@@ -71,6 +72,11 @@ class ClientDashboard extends Component {
 
     render() {
         var client = this.state.client;
+        console.log("first case: " + this.state.cases[0]);
+        var sentenceCompliance;
+        if (this.state.cases[0]){
+            sentenceCompliance = <SentencingCompliance caseNumber={this.state.cases[0].caseNumber}/>
+        }
         return (
             <div>
                 <NavMenu/>
@@ -81,7 +87,9 @@ class ClientDashboard extends Component {
                 </Container>
 
                 <Container className = "wide">
-                    <NewCase firstName={this.state.client.first_name} lastName={this.state.client.last_name}/>
+                    {/* <NewCase firstName={this.state.client.first_name} lastName={this.state.client.last_name}/> */}
+                    {/* <SentencingCompliance caseNumber={this.state.cases[0].caseNumber} /> */}
+                    {/* {sentenceCompliance} */}
                     {this.state.clientView}
                 </Container>
 

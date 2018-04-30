@@ -40,7 +40,7 @@ class Violation(models.Model):
     violationName = models.CharField(max_length=50, default="DEFAULT")
 
 class Case(models.Model):
-    caseNumber = models.CharField(max_length=50, default="0000000000")
+    caseNumber = models.CharField(max_length=50, default="0000000000", unique=True)
     caseClosed = models.BooleanField(default=False, blank=True)
     clientID = models.ForeignKey(Client, null=True, on_delete=models.CASCADE)
     preTrialStatusID = models.ForeignKey(PreTrialStatus, null=True, on_delete=models.CASCADE)
@@ -50,11 +50,10 @@ class Case(models.Model):
     sentenceStart = models.DateField(null=True, blank=True)
     sentenceEnd = models.DateField(null=True, blank=True)
     jailTimeSuspended = models.IntegerField(null=True, blank=True)
-    payWorkCrew = models.BooleanField(default=False, blank=True)
-    payCommunityService = models.BooleanField(default=False, blank=True)
     domesticViolence = models.BooleanField(default=False, blank=True)
     benchWarrant = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     caseClosed = models.BooleanField(default=False, blank=True)
+    treatmentOrdered = models.CharField(max_length=500, default="No treatment required")
 
 class Offense(models.Model):
     chargeTypeID = models.ForeignKey(ChargeType, on_delete=models.CASCADE)
@@ -72,6 +71,8 @@ class Fine(models.Model):
     finesImposed = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     finesSuspended = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     caseID = models.ForeignKey(Case, on_delete=models.CASCADE)
+    payWorkCrew = models.BooleanField(default=False, blank=True)
+    payCommunityService = models.BooleanField(default=False, blank=True)
 
 class FailToAppear(models.Model):
     failToAppearDate = models.DateField(default="2000-10-10")
@@ -95,7 +96,7 @@ class Punishment(models.Model):
     jurisdiction = models.CharField(max_length=100, null=True, blank=True)
 
 class SentenceCompliance(models.Model):
-    violationID = models.ForeignKey(ProbationType, on_delete=models.CASCADE)
+    violationID = models.ForeignKey(Violation, on_delete=models.CASCADE)
     caseID = models.ForeignKey(Case, on_delete=models.CASCADE)
     admit = models.BooleanField(default=False)
     reserve = models.BooleanField(default=False)

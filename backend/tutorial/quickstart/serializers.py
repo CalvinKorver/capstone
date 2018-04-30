@@ -54,7 +54,7 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 class FineSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Fine
-        fields = ('finesImposed', 'finesSuspended')
+        fields = ('finesImposed', 'finesSuspended', 'payWorkCrew', 'payCommunityService',)
 
 
 class PreTrialStatusSerializer(serializers.HyperlinkedModelSerializer):
@@ -86,7 +86,7 @@ class SentenceComplianceSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = SentenceCompliance
-        fields = ('id', 'caseID,' 'admit', 'reserve', 'violationID')
+        fields = ('id', 'caseID', 'admit', 'reserve', 'violationID')
 
 
 class CaseSerializer(serializers.HyperlinkedModelSerializer):
@@ -98,7 +98,7 @@ class CaseSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Case
-        fields = ('caseNumber', 'clientID', 'courtID', 'preTrialStatusID', 'sentencingStatusID', 'caseOutcomeID', 'sentenceStart', 'sentenceEnd', 'jailTimeSuspended', 'payWorkCrew', 'payCommunityService', 'domesticViolence', 'benchWarrant', 'caseClosed')
+        fields = ('id', 'caseNumber', 'clientID', 'courtID', 'preTrialStatusID', 'sentencingStatusID', 'caseOutcomeID', 'sentenceStart', 'sentenceEnd', 'jailTimeSuspended', 'domesticViolence', 'benchWarrant', 'caseClosed', 'treatmentOrdered')
 
 
 class AuthUserCaseSerializer(serializers.HyperlinkedModelSerializer):

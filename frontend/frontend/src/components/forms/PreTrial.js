@@ -12,7 +12,10 @@ import $ from 'jquery';
 class NewClient extends Component {
     constructor(props) {
         super(props);
-        this.state = { trialDate: "",
+        console.log("Case number: " + this.props.caseNumber);
+        this.state = { 
+            caseNumber: this.props.caseNumber,
+            trialDate: "",
             trialStartDate: "",
             threePointFiveMotion: "",
             threePointSixMotion: "",
@@ -33,7 +36,11 @@ class NewClient extends Component {
             reset: "",
             benchWarrant: "",
             jailTimeImposed: false,
-            workCrewInLieu: false
+            workCrewInLieu: false,
+            payWorkCrew: false,
+            payCommunityService: false,
+            treatmentOrdered: "",
+            caseOutcome: ""
         }
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -60,12 +67,14 @@ class NewClient extends Component {
     handleSubmit(event) {
         event.preventDefault();
         var URL = "http://localhost:8000/";
-        var endpoint = "clients/"
-        console.log(event.target);
-        const data = new FormData(event.target);
-        console.log(data);
+        var endpoint = "cases/"
+        // console.log(event.target);
+        // const data = new FormData(event.target);
+        // console.log(data);
+        const data = this.state;
+        console.log("data: " + data);
         return axios
-            .post(URL + endpoint, data)
+            .put(URL + endpoint, data)
             .then(function (response) {
                 console.log(response);
             // window.localStorage.setItem('token', response);
@@ -82,7 +91,9 @@ class NewClient extends Component {
 
     handleChange = (e, { name, value }) => { 
         this.setState({ [name]: value })
-        console.log(name, value);
+        // console.log(name, value);
+
+        // this code should all be moved into render, values need to be changed to match their actual values
         if (name == "preTrialStatus") {
             if (value == "sft") {
                 $("#sft-form").removeClass("hidden");
@@ -102,13 +113,6 @@ class NewClient extends Component {
                 $("#rc-form-a").addClass("hidden");
             }
         }
-
-        if (value == "epb") {
-            $("#rc-form-b").removeClass("hidden");
-        } else {
-            $("#rc-form-b").addClass("hidden");
-        }
-
         if (value == "fta") {
             $("#fta-form").removeClass("hidden");
         } else {
@@ -143,9 +147,19 @@ class NewClient extends Component {
             reset,
             benchWarrant,
             jailTimeImposed,
-            workCrewInLieu
+            workCrewInLieu,
+            payWorkCrew,
+            payCommunityService,
+            treatmentOrdered,
+            caseOutcome
 
         } = this.state
+        
+        if (caseOutcome == "Entered Plea Bargain"){// || name == "startSentence" || name == "endSentence" || name == "") {
+            $("#rc-form-b").removeClass("hidden");
+        } else {
+            $("#rc-form-b").addClass("hidden");
+        }
 
         var preTrialOptions = [ 
             {text: "Pre-Trial Continuance", value:"ptc"},
@@ -155,13 +169,13 @@ class NewClient extends Component {
 
         var caseOutcomeOptions = [  
             {text: "Dismissed", value:"d"},
-            {text: "Entered Plea Bargain", value:"epb"},
+            {text: "Entered Plea Bargain", value:"Entered Plea Bargain"},
             {text: "Compromise of Misdemeanor", value: "com"},
             {text: "Stipulated Order of Continuance", value: "sooc"}];
 
         var jurisdictionOfWorkCrewOptions = [
             {text: "Dismissed", value:"d"},
-            {text: "Entered Plea Bargain", value:"epb"},
+            {text: "Entered Plea Bargain", value:"Entered Plea Bargain"},
             {text: "Compromise of Misdemeanor", value: "com"},
             {text: "Stipulated Order of Continuance", value: "sooc"}];
         
@@ -233,7 +247,7 @@ class NewClient extends Component {
                         </div>
 
                             <Form.Field id="rc-form-a" className = "hidden">
-                                <Form.Select fluid label="Case Outcome" name="outcome" options={caseOutcomeOptions} placeholder='Select an option' onChange={this.handleChange} />
+                                <Form.Select fluid label="Case Outcome" name="caseOutcome" options={caseOutcomeOptions} placeholder='Select an option' onChange={this.handleChange} />
                             </Form.Field>
 
                         <div id="rc-form-b" className = "hidden">
@@ -323,6 +337,23 @@ class NewClient extends Component {
                                     value={finesSuspended}
                                     onChange={this.handleChange}/>
                                 </Form.Group>
+                                <Form.Checkbox
+                                    label="Can fine pay through work crew?"
+                                    name="payWorkCrew"
+                                    value={payWorkCrew}
+                                    onChange={this.handleChange}/>
+                                <Form.Checkbox
+                                    label="Can fine pay through community service?"
+                                    name="payCommunityService"
+                                    value={payCommunityService}
+                                    onChange={this.handleChange}/>
+                                <Form.Input
+                                    fluid
+                                    label="Treatment Ordered"
+                                    name="treatmentOrdered"
+                                    value={treatmentOrdered}
+                                    onChange={this.handleChange}
+                                />
                             </div>
                             </div>
                             <Form.Button  fluid type="submit">Save and Continue</Form.Button>
