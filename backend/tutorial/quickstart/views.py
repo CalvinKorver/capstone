@@ -324,6 +324,7 @@ class CaseViewSet(APIView):
                 preTrialStatusName = preTrialStatusName
             )
             case.preTrialStatusID = preTrialStatus
+
         sentencingStatusName = request.data.get('sentencingStatusName')
         sentencingStatus = None
         if sentencingStatusName:
@@ -365,7 +366,7 @@ class CaseViewSet(APIView):
             workCrew = Punishment.objects.create(
                 caseID = case,
                 punishmentTypeID = punishmentType,
-                credit = creditForWorkCrew,
+                credit = workCrewDays,
                 dueDate = request.data.get('dueDateForWorkCrew'),
                 jurisdiction = request.data.get('jurisdictionOfWorkCrew')
             )
@@ -396,9 +397,12 @@ class CaseViewSet(APIView):
             )
 
         # update the fields in case 
-        case.sentenceStart=request.data.get('startSentence')
-        case.sentenceEnd=request.data.get('endSentence')
-        case.jailTimeSuspended=request.data.get('jailTimeSuspended')
+        if(request.data.get('startSentence')):
+            case.sentenceStart=request.data.get('startSentence')
+        if(request.data.get('endSentence')):
+            case.sentenceEnd=request.data.get('endSentence')
+        if(request.data.get('jailTimeSuspended')):
+            case.jailTimeSuspended=request.data.get('jailTimeSuspended')
         if(request.data.get('domesticViolence')):
             case.domesticViolence=request.data.get('domesticViolence')
         if(request.data.get('benchWarrant')):
@@ -407,9 +411,9 @@ class CaseViewSet(APIView):
             case.caseClosed=request.data.get('caseClosed')
         if(request.data.get('treatmentOrdered')):
             case.treatmentOrdered=request.data.get('treatmentOrdered')
-        case.preTrialStatusID=preTrialStatus
-        case.sentencingStatusID=sentencingStatus
-        case.caseOutcomeID=caseOutcome
+        # case.preTrialStatusID=preTrialStatus
+        # case.sentencingStatusID=sentencingStatus
+        # case.caseOutcomeID=caseOutcome
         case.save()
         return Response("PUT succeeded")
 
