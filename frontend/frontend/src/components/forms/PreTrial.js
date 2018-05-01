@@ -16,7 +16,7 @@ class PreTrial extends Component {
         this.state = { 
             caseNumber: this.props.caseNumber,
             trialDate: "",
-            trialStartDate: "",
+            trialStartTime: "",
             threePointFiveMotion: "",
             threePointSixMotion: "",
             startSentence: "",
@@ -44,7 +44,9 @@ class PreTrial extends Component {
             isPreTrial: this.props.isPreTrial,
             preTrialStatusName: null,
             sentencingStatusName: null,
-            caseClosed: false
+            caseClosed: false,
+            motion36: false,
+            motion35: false
         }
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -94,35 +96,12 @@ class PreTrial extends Component {
     }
 
     handleChange = (e, { name, value }) => { 
+        var checkboxes = ["motion35", "motion36", "caseClosed", "reset", "benchWarrant", 
+            "jailTimeImposed", "workCrewInLieu", "payWorkCrew", "payCommunityService"]
+        if (checkboxes.includes(name)){
+            value = !value;
+        }
         this.setState({ [name]: value })
-        // console.log(name, value);
-
-        // this code should all be moved into render, values need to be changed to match their actual values
-        if (name == "preTrialStatus") {
-            if (value == "Set for Trial") {
-                $("#sft-form").removeClass("hidden");
-            } else {
-                $("#sft-form").addClass("hidden");
-            }
-            
-            if (value == "Pre-Trial Continuance") {
-                $("#ptc-form").removeClass("hidden");
-            } else {
-                $("#ptc-form").addClass("hidden");
-            }
-
-            if (value == "Resolved Case") {
-                $("#rc-form-a").removeClass("hidden");
-            } else {
-                $("#rc-form-a").addClass("hidden");
-            }
-        }
-        if (value == "Failed to Appear") {
-            $("#fta-form").removeClass("hidden");
-        } else {
-            $("#fta-form").addClass("hidden");
-        }
-
     }
 
     handleFormChange = (e, { name, value }) => {$("#" + value).toggleClass("hidden");}
@@ -131,9 +110,7 @@ class PreTrial extends Component {
 
         const {
             trialDate,
-            trialStartDate,
-            threePointFiveMotion,
-            threePointSixMotion,
+            trialStartTime,
             startSentence,
             endSentence,
             finesImposed,
@@ -158,7 +135,9 @@ class PreTrial extends Component {
             caseOutcome,
             preTrialStatusName,
             sentencingStatusName,
-            caseClosed
+            caseClosed,
+            motion36,
+            motion35
 
         } = this.state
         
@@ -253,19 +232,19 @@ class PreTrial extends Component {
                         <div id="sft-form" className="hidden">
                             <Form.Input fluid label="Trial Date" name="trialDate" placeholder="MM/DD/YYYY"  value={trialDate} onChange={this.handleChange}/>    
 
-                            <Form.Input fluid label="Trial Start Date" name="trialStartDate" placeholder="MM/DD/YYYY"  value={trialStartDate} onChange={this.handleChange}/> 
+                            <Form.Input fluid label="Trial Start Time" name="trialStartTime" placeholder="hh:mm"  value={trialStartTime} onChange={this.handleChange}/> 
 
                             <Form.Group widths="equal">
                                 <Form.Checkbox
                                 label="3.5 Motion"
-                                name="threePointFiveMotion"
-                                value={threePointFiveMotion}
+                                name="motion35"
+                                value={motion35}
                                 onChange={this.handleChange}/>
 
                                 <Form.Checkbox
                                 label="3.6 Motion"
-                                name="threePointSixMotion"
-                                value={threePointSixMotion}
+                                name="motion36"
+                                value={motion36}
                                 onChange={this.handleChange}/>
                             </Form.Group>
                         </div>
@@ -294,7 +273,7 @@ class PreTrial extends Component {
 
                                 <Form.Group widths="equal">
 
-                                    <Form.Checkbox
+                                <Form.Checkbox
                                 label="Reset"
                                 name="reset"
                                 value={reset}
