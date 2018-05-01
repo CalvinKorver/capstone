@@ -9,13 +9,13 @@ import $ from 'jquery';
 // import './App.css';
 // import Loginscreen from './loginScreen'
 
-class NewClient extends Component {
+class PreTrial extends Component {
     constructor(props) {
         super(props);
         this.state = { 
             caseNumber: this.props.caseNumber,
             trialDate: "",
-            trialStartDate: "",
+            trialStartTime: "",
             threePointFiveMotion: "",
             threePointSixMotion: "",
             startSentence: "",
@@ -39,7 +39,13 @@ class NewClient extends Component {
             payWorkCrew: false,
             payCommunityService: false,
             treatmentOrdered: "",
-            caseOutcome: ""
+            caseOutcome: "",
+            isPreTrial: this.props.isPreTrial,
+            preTrialStatusName: null,
+            sentencingStatusName: null,
+            caseClosed: false,
+            motion36: false,
+            motion35: false
         }
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -71,6 +77,7 @@ class NewClient extends Component {
         // const data = new FormData(event.target);
         // console.log(data);
         const data = this.state;
+        // console.log("data: " + data);
         return axios
             .put(URL + endpoint, data)
             .then(function (response) {
@@ -88,35 +95,12 @@ class NewClient extends Component {
     }
 
     handleChange = (e, { name, value }) => { 
+        var checkboxes = ["motion35", "motion36", "caseClosed", "reset", "benchWarrant", 
+            "jailTimeImposed", "workCrewInLieu", "payWorkCrew", "payCommunityService"]
+        if (checkboxes.includes(name)){
+            value = !value;
+        }
         this.setState({ [name]: value })
-        // console.log(name, value);
-
-        // this code should all be moved into render, values need to be changed to match their actual values
-        if (name == "preTrialStatus") {
-            if (value == "sft") {
-                $("#sft-form").removeClass("hidden");
-            } else {
-                $("#sft-form").addClass("hidden");
-            }
-            
-            if (value == "ptc") {
-                $("#ptc-form").removeClass("hidden");
-            } else {
-                $("#ptc-form").addClass("hidden");
-            }
-
-            if (value == "rc") {
-                $("#rc-form-a").removeClass("hidden");
-            } else {
-                $("#rc-form-a").addClass("hidden");
-            }
-        }
-        if (value == "fta") {
-            $("#fta-form").removeClass("hidden");
-        } else {
-            $("#fta-form").addClass("hidden");
-        }
-
     }
 
     handleFormChange = (e, { name, value }) => {$("#" + value).toggleClass("hidden");}
@@ -125,9 +109,7 @@ class NewClient extends Component {
 
         const {
             trialDate,
-            trialStartDate,
-            threePointFiveMotion,
-            threePointSixMotion,
+            trialStartTime,
             startSentence,
             endSentence,
             finesImposed,
@@ -149,57 +131,119 @@ class NewClient extends Component {
             payWorkCrew,
             payCommunityService,
             treatmentOrdered,
-            caseOutcome
+            caseOutcome,
+            preTrialStatusName,
+            sentencingStatusName,
+            caseClosed,
+            motion36,
+            motion35
 
         } = this.state
         
-        if (caseOutcome == "Entered Plea Bargain"){// || name == "startSentence" || name == "endSentence" || name == "") {
+        if (caseOutcome == "Entered Plea Bargain" 
+            || sentencingStatusName == "Found Guilty of Lesser-Included Offense" 
+            || sentencingStatusName == "Found Guilty as Charged"){
             $("#rc-form-b").removeClass("hidden");
         } else {
             $("#rc-form-b").addClass("hidden");
         }
 
+        if (preTrialStatusName == "Set for Trial") {
+            $("#sft-form").removeClass("hidden");
+        } else {
+            $("#sft-form").addClass("hidden");
+        }
+
+        if (preTrialStatusName == "Pre-Trial Continuance") {
+            $("#ptc-form").removeClass("hidden");
+        } else {
+            $("#ptc-form").addClass("hidden");
+        }
+
+        if (preTrialStatusName == "Resolved Case") {
+            $("#rc-form-a").removeClass("hidden");
+        } else {
+            $("#rc-form-a").addClass("hidden");
+        }
+
+        if (preTrialStatusName == "Failed to Appear") {
+            $("#fta-form").removeClass("hidden");
+        } else {
+            $("#fta-form").addClass("hidden");
+        }
+
+
         var preTrialOptions = [ 
-            {text: "Pre-Trial Continuance", value:"ptc"},
-            {text: "Resolved Case", value:"rc"},
-            {text: "Failed to Appear", value: "fta"},
-            {text: "Set for Trial", value: "sft"}];
+            {text: "Pre-Trial Continuance", value:"Pre-Trial Continuance"},
+            {text: "Resolved Case", value:"Resolved Case"},
+            {text: "Failed to Appear", value: "Failed to Appear"},
+            {text: "Set for Trial", value: "Set for Trial"}];
+        
+        var sentencingOptions = [
+            {text: "Found Not Guilty", value:"Found Not Guilty"},
+            {text: "Found Guilty of Lesser-Included Offense", value:"Found Guilty of Lesser-Included Offense"},
+            {text: "Found Guilty as Charged", value:"Found Guilty as Charged"}
+        ]
 
         var caseOutcomeOptions = [  
-            {text: "Dismissed", value:"d"},
+            {text: "Dismissed", value:"Dismissed"},
             {text: "Entered Plea Bargain", value:"Entered Plea Bargain"},
-            {text: "Compromise of Misdemeanor", value: "com"},
-            {text: "Stipulated Order of Continuance", value: "sooc"}];
+            {text: "Compromise of Misdemeanor", value: "Compromise of Misdemeanor"},
+            {text: "Stipulated Order of Continuance", value: "Stipulated Order of Continuance"}];
 
         var jurisdictionOfWorkCrewOptions = [
-            {text: "Dismissed", value:"d"},
+            {text: "Dismissed", value:"Dismissed"},
             {text: "Entered Plea Bargain", value:"Entered Plea Bargain"},
-            {text: "Compromise of Misdemeanor", value: "com"},
-            {text: "Stipulated Order of Continuance", value: "sooc"}];
+            {text: "Compromise of Misdemeanor", value: "Compromise of Misdemeanor"},
+            {text: "Stipulated Order of Continuance", value: "Stipulated Order of Continuance"}];
+
+        var title;
+        var fieldName;
+        var options;
+        var outcomeOrClosed;
+        if(this.state.isPreTrial){
+            title = "PreTrial";
+            fieldName = "preTrialStatusName";
+            options = preTrialOptions;
+            outcomeOrClosed = 
+            <Form.Field id="rc-form-a" className = "hidden">
+                <Form.Select fluid label="Case Outcome" name="caseOutcome" options={caseOutcomeOptions} placeholder='Select an option' onChange={this.handleChange} />
+            </Form.Field>;
+        } else {
+            title = "Sentencing";
+            fieldName = "sentencingStatusName";
+            options = sentencingOptions;
+            outcomeOrClosed =
+                <Form.Checkbox
+                    label="Has the case been closed?"
+                    name="caseClosed"
+                    value={caseClosed}
+                    onChange={this.handleChange}/>;
+        }
         
         return (
-            <Modal trigger={<Button>Pre-Trial Modal</Button>}>
-            <Modal.Header> Pre Trial </Modal.Header>
+            <Modal trigger={<Button>{title + " Modal"}</Button>}>
+            <Modal.Header> {title} </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>
-                        <Form.Select fluid label="Pre-Trial Status" name="preTrialStatus" options={preTrialOptions} placeholder='Select an option' onChange={this.handleChange}/>
+                        <Form.Select fluid label={title +" Status"} name={fieldName} options={options} placeholder='Select an option' onChange={this.handleChange}/>
 
                         <div id="sft-form" className="hidden">
                             <Form.Input fluid label="Trial Date" name="trialDate" placeholder="MM/DD/YYYY"  value={trialDate} onChange={this.handleChange}/>    
 
-                            <Form.Input fluid label="Trial Start Date" name="trialStartDate" placeholder="MM/DD/YYYY"  value={trialStartDate} onChange={this.handleChange}/> 
+                            <Form.Input fluid label="Trial Start Time" name="trialStartTime" placeholder="hh:mm"  value={trialStartTime} onChange={this.handleChange}/> 
 
                             <Form.Group widths="equal">
                                 <Form.Checkbox
                                 label="3.5 Motion"
-                                name="threePointFiveMotion"
-                                value={threePointFiveMotion}
+                                name="motion35"
+                                value={motion35}
                                 onChange={this.handleChange}/>
 
                                 <Form.Checkbox
                                 label="3.6 Motion"
-                                name="threePointSixMotion"
-                                value={threePointSixMotion}
+                                name="motion36"
+                                value={motion36}
                                 onChange={this.handleChange}/>
                             </Form.Group>
                         </div>
@@ -228,7 +272,7 @@ class NewClient extends Component {
 
                                 <Form.Group widths="equal">
 
-                                    <Form.Checkbox
+                                <Form.Checkbox
                                 label="Reset"
                                 name="reset"
                                 value={reset}
@@ -244,9 +288,7 @@ class NewClient extends Component {
 
                         </div>
 
-                            <Form.Field id="rc-form-a" className = "hidden">
-                                <Form.Select fluid label="Case Outcome" name="caseOutcome" options={caseOutcomeOptions} placeholder='Select an option' onChange={this.handleChange} />
-                            </Form.Field>
+                            {outcomeOrClosed}
 
                         <div id="rc-form-b" className = "hidden">
                            
@@ -362,4 +404,4 @@ class NewClient extends Component {
     }
 }
 
-export default NewClient;
+export default PreTrial;

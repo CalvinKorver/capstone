@@ -22,15 +22,16 @@ class InformationView extends Component {
                     <Header as="h3">
                         Contact Information
                     </Header>
-                    <p>First Name: {client.FirstName}</p>
-                    <p>Last Name: {client.LastName}</p>
-                    <p>DOB: {client.DateOfBirth}</p>
+                    <p>First Name: {client.first_name}</p>
+                    <p>Last Name: {client.last_name}</p>
+                    <p>DOB: {client.date_of_birth}</p>
                     <p>Phone number: 206-849-0192</p>
                     <p>Mail Address</p>
-                    <p>Street: {client.StreetAddress + " " + client.City}</p>
-                    <p>State: {client.State}</p>
-                    <p>Zip Code: {client.Zipcode}</p>
-                    <p>Country: {client.Country}</p>
+                    <p>Street: {client.street_address + " " + client.city}</p>
+                    <p>State: {client.state}</p>
+                    <p>Zip Code: {client.zipcode}</p>
+                    <p>Country: {client.country}</p>
+
                 </Segment>
             </Grid.Column>
 

@@ -132,8 +132,8 @@ class NewCase extends Component {
             startTimeCustody1, endTimeCustody1,dateFailureToAppear, benchWarrantAmount } = this.state
 
         return (
-            <Modal trigger={<Button floated="right">New Offense</Button>}>
-            <Modal.Header> New Offense </Modal.Header>
+            <Modal trigger={<Button floated="right">New Case</Button>}>
+            <Modal.Header> New Case </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Select fluid label="Court" name="court" options={courtOptions} placeholder='Select an option'  value={court} onChange={this.handleChange} />

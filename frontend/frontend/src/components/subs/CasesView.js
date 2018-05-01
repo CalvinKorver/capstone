@@ -28,8 +28,9 @@ class CasesView extends Component {
         this.props.cases.forEach(element => {
             console.log(element);
             const forms = [
-                <NewCase first_name={this.props.client.first_name} last_name={this.props.client.last_name}/>,
-                <PreTrial caseNumber={element.caseNumber}/>,
+                // <NewCase first_name={this.props.client.first_name} last_name={this.props.client.last_name}/>,
+                <PreTrial caseNumber={element.caseNumber} isPreTrial={true}/>,
+                <PreTrial caseNumber={element.caseNumber} isPreTrial={false}/>,
                 <SentencingCompliance caseNumer={element.caseNumber}/>
             ];
 
@@ -59,9 +60,9 @@ class CasesView extends Component {
                     <Search className="main-search" size="small"/>
                 </Grid.Column>
 
-                {/* <Grid.Column width={4}>
-                    <NewCase/>
-                </Grid.Column> */}
+                <Grid.Column width={4}>
+                    <NewCase first_name={this.props.client.first_name} last_name={this.props.client.last_name}/>
+                </Grid.Column>
 
                 <Grid.Column width={16}>
                     <TimelineShell client={this.props.client}/>
