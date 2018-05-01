@@ -36,18 +36,24 @@ class ClientDashboard extends Component {
                 // clientView: [<InformationView key="info" client={clientData}/>] THIS WILL BE THE DEFAULT ????
             }));
         // this grabs all the cases to check which are linked to our client
-        fetch('http://localhost:8000/case_info?id=' + id, {mode: 'cors'})
-            .then(function(response) {
-              return response.json();
-            })
-            .then(function(caseData) {
-              return caseData;
-            })
-            .then(cases => this.setState({
-                cases: cases,
-                clientView: [<CasesView key="info" client={this.state.client} cases={cases}/>]
-            }));
-      }
+        fetch('http://localhost:8000/cases/', {mode: 'cors'})
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(caseData) {
+          var casesMatch = [];
+          caseData.forEach(function(singleCase){
+            if(singleCase.clientID == id){
+              casesMatch.push(singleCase);
+            }
+          });
+          return casesMatch;
+        })
+        .then(cases => this.setState({
+            cases: cases,
+            clientView: [<CasesView key="info" client={this.state.client} cases={cases}/>]
+        }));
+  }
     
       ribbonChange = (e) => {
           console.log(e);
