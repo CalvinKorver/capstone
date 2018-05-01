@@ -41,7 +41,7 @@ class ClientDashboard extends Component {
               return response.json();
             })
             .then(function(caseData) {
-              return casesMatch;
+              return caseData;
             })
             .then(cases => this.setState({
                 cases: cases,

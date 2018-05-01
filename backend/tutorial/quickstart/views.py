@@ -195,26 +195,23 @@ class CaseInfoViewSet(APIView):
 
     def get(self, request, *args, **kwargs):
         id = request.query_params.get('id', None)
-        cases = Case.objects.all()
+        cases = Case.objects.filter(clientID=id)
 
-        
+        # results = CaseSerializer(cases, many=True).data
+        results = {}
         if id is not None:
-            cases = cases.filter(clientID=id)
-            case_result = {}
             for case in cases:
-                caseID = case.id
-                failures = FailToAppear.objects.filter(caseID = caseID)
-                punishments = Punishment.objects.filter(caseID = caseID)
-                probations = Probation.objects.filter(caseID = caseID)
-
-                case_result[caseID] = {
-                    case: CaseSerializer(case).data,
-                    failures: FailToAppearSerializer(failures, many=True).data,
-                    punishments: PunishmentSerializer(punishments, many=True).data,
-                    probations: ProbationSerializer(probations, many=True).data
-                }
-        print(case_result)
-        return Response(json.dumps(case_result))
+                results[case.id] = {}
+                results[case.id]["caseInfo"] = CaseSerializer(case).data
+                fta = FailToAppear.objects.filter(caseID=case.id)
+                results[case.id]["failToAppearInfo"] = FailToAppearSerializer(fta, many=True).data
+                punishments = Punishment.objects.filter(caseID = case.id)
+                results[case.id]["punishmentInfo"] = PunishmentSerializer(punishments, many=True).data
+                probations = Probation.objects.filter(caseID = case.id)
+                results[case.id]["probationInfo"] = ProbationSerializer(probations, many=True).data
+                trials = Trial.objects.filter(caseID = case.id)
+                results[case.id]["trialInfo"] = TrialSerializer(trials, many=True).data
+        return Response(results)
 
 
         # serializer_class = CaseSerializer(queryset, many=True)
