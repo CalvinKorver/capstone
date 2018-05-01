@@ -125,7 +125,7 @@ class ProbationSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Probation
-        fields = ('punishmentTypeID', 'caseID', 'probationStart', 'probationEnd')
+        fields = ('caseID', 'probationStart', 'probationTypeID', 'probationEnd')
 
 
 class OffenseSerializer(serializers.HyperlinkedModelSerializer):

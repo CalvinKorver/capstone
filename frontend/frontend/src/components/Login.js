@@ -57,10 +57,17 @@ class Login extends Component {
           this.props.history.replace('/');
         })
         .catch(err => {
+          if (err.response != undefined) {
             this.setState({
               errorMessage: err.response.status + ": " + err.response.statusText,
               isInError: true
             });
+          } else {
+            this.setState({
+              errorMessage: "Unknown Error!",
+              isInError: true
+            });
+          }
         })
     }
   }

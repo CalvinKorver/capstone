@@ -31,7 +31,6 @@ class InformationView extends Component {
                     <p>State: {client.State}</p>
                     <p>Zip Code: {client.Zipcode}</p>
                     <p>Country: {client.Country}</p>
-
                 </Segment>
             </Grid.Column>
 

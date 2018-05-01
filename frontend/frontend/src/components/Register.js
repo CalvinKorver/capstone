@@ -38,10 +38,17 @@ class Register extends Component {
           this.props.history.replace('/');
         })
         .catch(err => {
-            this.setState({
-              errorMessage: err.response.status + ": " + err.response.statusText,
-              isInError: true
-            });
+            if (err.response != undefined) {
+              this.setState({
+                errorMessage: err.response.status + ": " + err.response.statusText,
+                isInError: true
+              });
+            } else {
+              this.setState({
+                errorMessage: "Unknown Error!",
+                isInError: true
+              });
+            }
         })
     }
   }
@@ -66,7 +73,7 @@ class Register extends Component {
           <Grid.Column style={{ maxWidth: 450 }}>
             <Header as='h2' color='teal' textAlign='center'>
               Register
-        </Header>
+            </Header>
             <Form size='large' id="registration-form">
               <Segment stacked>
               

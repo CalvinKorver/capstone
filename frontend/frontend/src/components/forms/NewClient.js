@@ -40,13 +40,10 @@ class NewClient extends Component {
         event.preventDefault();
         var URL = "http://localhost:8000/";
         var endpoint = "clients/"
-        console.log(event.target);
         const data = new FormData(event.target);
-        console.log(data);
         return axios
             .post(URL + endpoint, data)
             .then(function (response) {
-                console.log(response);
                 alert("Submitted");
             // window.localStorage.setItem('token', response);
             // store.dispatch(setToken(response.data.token));

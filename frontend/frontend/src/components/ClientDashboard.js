@@ -9,7 +9,6 @@ import CasesView from './subs/CasesView';
 import InformationView from './subs/InformationView';
 import NewCase from './forms/NewCase';
 import '../react_styles/ClientDashboard.css';
-import SentencingCompliance from './forms/SentencingCompliance';
 
 
 class ClientDashboard extends Component {
@@ -23,7 +22,6 @@ class ClientDashboard extends Component {
             client: {},
             cases: {}
         }
-        console.log(this.state.cases);
     }
 
     componentWillMount() {
@@ -38,17 +36,11 @@ class ClientDashboard extends Component {
                 // clientView: [<InformationView key="info" client={clientData}/>] THIS WILL BE THE DEFAULT ????
             }));
         // this grabs all the cases to check which are linked to our client
-        fetch('http://localhost:8000/cases/', {mode: 'cors'})
+        fetch('http://localhost:8000/case_info?id=' + id, {mode: 'cors'})
             .then(function(response) {
               return response.json();
             })
             .then(function(caseData) {
-              var casesMatch = [];
-              caseData.forEach(function(singleCase){
-                if(singleCase.clientID == id){
-                  casesMatch.push(singleCase);
-                }
-              });
               return casesMatch;
             })
             .then(cases => this.setState({
@@ -72,11 +64,6 @@ class ClientDashboard extends Component {
 
     render() {
         var client = this.state.client;
-        console.log("first case: " + this.state.cases[0]);
-        var sentenceCompliance;
-        if (this.state.cases[0]){
-            sentenceCompliance = <SentencingCompliance caseNumber={this.state.cases[0].caseNumber}/>
-        }
         return (
             <div>
                 <NavMenu/>
@@ -87,9 +74,7 @@ class ClientDashboard extends Component {
                 </Container>
 
                 <Container className = "wide">
-                    {/* <NewCase firstName={this.state.client.first_name} lastName={this.state.client.last_name}/> */}
-                    {/* <SentencingCompliance caseNumber={this.state.cases[0].caseNumber} /> */}
-                    {/* {sentenceCompliance} */}
+                    <NewCase firstName={this.state.client.first_name} lastName={this.state.client.last_name}/>
                     {this.state.clientView}
                 </Container>
 

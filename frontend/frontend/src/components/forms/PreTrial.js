@@ -12,7 +12,6 @@ import $ from 'jquery';
 class NewClient extends Component {
     constructor(props) {
         super(props);
-        console.log("Case number: " + this.props.caseNumber);
         this.state = { 
             caseNumber: this.props.caseNumber,
             trialDate: "",
@@ -72,7 +71,6 @@ class NewClient extends Component {
         // const data = new FormData(event.target);
         // console.log(data);
         const data = this.state;
-        console.log("data: " + data);
         return axios
             .put(URL + endpoint, data)
             .then(function (response) {

@@ -79,8 +79,6 @@ class NewCase extends Component {
         var data = this.state;
         data["firstName"] = this.props.firstName;
         data["lastName"] = this.props.lastName;
-        console.log("Next, we perform AXIOS call, which can be commented out");
-        console.log(data);
         return axios
         // this handles the most basic form entry
             .post(URL + endpoint, {
@@ -100,7 +98,6 @@ class NewCase extends Component {
 
             })
             .then(function (response) {
-                console.log(response);
                 alert("submitted");
             })
             .catch(function (error) {
@@ -114,7 +111,6 @@ class NewCase extends Component {
     }
 
     showOtherForm(e) {
-        console.log(e.target.value);
         $('#' + e.target.value).toggleClass("hidden");
     }
 

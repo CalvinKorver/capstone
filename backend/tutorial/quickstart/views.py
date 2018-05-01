@@ -9,6 +9,8 @@ from rest_framework import status, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+import json
+
 
 
 # HELPFUL
@@ -189,6 +191,36 @@ class CaseOutcomeViewSet(viewsets.ModelViewSet):
     queryset = CaseOutcome.objects.all()
     serializer_class = CaseOutcomeSerializer
 
+class CaseInfoViewSet(APIView):
+
+    def get(self, request, *args, **kwargs):
+        id = request.query_params.get('id', None)
+        cases = Case.objects.all()
+
+        
+        if id is not None:
+            cases = cases.filter(clientID=id)
+            case_result = {}
+            for case in cases:
+                caseID = case.id
+                failures = FailToAppear.objects.filter(caseID = caseID)
+                punishments = Punishment.objects.filter(caseID = caseID)
+                probations = Probation.objects.filter(caseID = caseID)
+
+                case_result[caseID] = {
+                    case: CaseSerializer(case).data,
+                    failures: FailToAppearSerializer(failures, many=True).data,
+                    punishments: PunishmentSerializer(punishments, many=True).data,
+                    probations: ProbationSerializer(probations, many=True).data
+                }
+        print(case_result)
+        return Response(json.dumps(case_result))
+
+
+        # serializer_class = CaseSerializer(queryset, many=True)
+        # return Response(serializer_class.data)
+
+
 
 class CaseViewSet(APIView):
     """
@@ -197,6 +229,9 @@ class CaseViewSet(APIView):
     # queryset = Case.objects.all()
     # serializer_class = CaseSerializer
     def get(self, request, *args, **kwargs):
+        print("shit")
+        id = request.query_params.get('id', None)
+        print(id)
         queryset = Case.objects.all()
         serializer_class = CaseSerializer(queryset, many=True)
         return Response(serializer_class.data)
