@@ -48,3 +48,7 @@ insert into tutorial_client (FirstName, LastName, DateOfBirth, StreetAddress, St
 -- Couple cases for client number 1
 
 insert into tutorial_case (ClientID_id, CaseNumber, BenchWarrant, CaseClosed, DomesticViolence, JailTimeSuspended, PayCommunityService, PayWorkCrew, SentenceStart, SentenceEnd) values (1, 8401, '2038.44', true, true, 12, true, true, '2017-05-15', '2017-12-04');
+
+
+insert into tutorial_case (clientID_id, caseNumber, benchWarrant, caseClosed, domesticViolence, jailTimeSuspended, sentenceEnd, sentenceStart, caseOutcomeID_id, preTrialStatusID_id, sentencingStatusID_id, courtID_id, treatmentOrdered)
+values (1, 1242, 124.2, false, false, 4, 1400, 0, '2017-05-15', '2017-12-04');

@@ -32,7 +32,10 @@ class Dashboard extends Component {
             .then(function(listOfClients) {
                 var clients = {};
                 listOfClients.map(client => {
-                    clients[client.id] = { clientInfo: client }
+                    clients[client.id] = { 
+                        clientInfo: client,
+                        openCases: 0
+                    }
                 });
                 return clients;
             })
@@ -40,13 +43,17 @@ class Dashboard extends Component {
                 fetch('http://localhost:8000/cases/', {mode: 'cors'})
                     .then(function(response) { return response.json(); })
                     .then(function(cases) {
-                        cases.forEach(function(singleCase){
+                        cases.forEach(function(singleCase) {
                             var clientID = singleCase.clientID;
                             if (clients[clientID]) {
                                 !clients[clientID].cases ? clients[clientID].cases = [] : null;
+                                if (!singleCase.caseClosed) {
+                                    clients[clientID].openCases++;
+                                }
                                 clients[clientID].cases.push(singleCase);
                             }
                         });
+                        console.log(clients);
                         return clients;
                     })
                     .then(clients => this.setState({
@@ -83,15 +90,17 @@ class Dashboard extends Component {
     render() {            
         const { isLoading, value, clients, results } = this.state;
         var clientRows = [];
+        console.log(results);
         if (results) {
             for (var i = 1; i <= Object.keys(results).length; i++) {
+                var openCaseCount;
                 var caseCount;
-                if (results[i].cases != undefined) {
-                    console.log("yes!");
+                if (results[i].cases) {
                     caseCount = results[i].cases.length
                 } else {
                     caseCount = 0;
-                } 
+                }
+                
                 var client = results[i].clientInfo;
                 clientRows.push(
                 <tr key={client.id}>
