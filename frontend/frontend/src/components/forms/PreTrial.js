@@ -3,11 +3,6 @@ import { Button, Checkbox, Dropdown, Form, Modal } from 'semantic-ui-react'
 import axios from 'axios';
 import $ from 'jquery'; 
 
-// import 'semantic-ui-css/semantic.min.css';
-// import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
-// onTouchTap http://stackoverflow.com/a/34015469/988941 injectTapEventPlugin();
-// import './App.css';
-// import Loginscreen from './loginScreen'
 
 class PreTrial extends Component {
     constructor(props) {
@@ -231,7 +226,7 @@ class PreTrial extends Component {
                         <div id="sft-form" className="hidden">
                             <Form.Input fluid label="Trial Date" name="trialDate" placeholder="MM/DD/YYYY"  value={trialDate} onChange={this.handleChange}/>    
 
-                            <Form.Input fluid label="Trial Start Time" name="trialStartTime" placeholder="hh:mm"  value={trialStartTime} onChange={this.handleChange}/> 
+                            <Form.Input fluid label="Trial Start Time" name="trialStartTime" placeholder="hh:mm"  value={trialStartTime} onChange={this.handleChange}/>
 
                             <Form.Group widths="equal">
                                 <Form.Checkbox

@@ -18,36 +18,55 @@ class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            clients: [],
-            results: [],
+            clientCases: {},
+            results: {},
             value: '',
             isLoading: false,
             searchResults: []
           }
     }
 
-    componentDidMount() {
-        // don't hardcode urls
+    componentWillMount() {
         fetch('http://localhost:8000/clients/', {mode: 'cors'})
-            .then(function(response) {
-              return response.json();
-            })
-            .then(function(clientData){
+            .then(function(response) { return response.json(); })
+            .then(function(clientData) {
+                
+                var clientCases = {};
+
                 clientData.forEach(function(client){
-                    client.title = client.first_name + " " + client.last_name;
+                    clientCases[client.id] = {
+                        clientInfo: client
+                    }
                 });
-                return clientData;
+                return clientCases;
             })
-            .then(clientData => this.setState({
-                clients: clientData,
-                results: clientData
+            .then(clientCases => {
+                fetch('http://localhost:8000/cases/', {mode: 'cors'})
+                    .then(function(response) { return response.json(); })
+                    .then(function(cases) {
+                        cases.forEach(function(singleCase){
+                            if (clientCases[singleCase.clientID] !== null) {
+                                if (clientCases[singleCase.clientID].cases == null) {
+                                    clientCases[singleCase.clientID].cases = [];
+                                }
+                                clientCases[singleCase.clientID].cases.push(singleCase);
+                            }
+                        });
+                        console.log(clientCases);
+                        return clientCases;
+                    })
+                    .then(clientCases => this.setState({
+                        clientCases: clientCases,
+                        results: clientCases
+                    }))
+                return clientCases;
+            })
+            .then(clientCases => this.setState({
+                clientCases: clientCases,
+                results: clientCases
             }))
     }
     
-    componentWillMount() {
-        this.resetComponent()
-    }
-
     resetComponent = () => this.setState({ isLoading: false, results: this.state.clients, value: '' })
 
     handleResultSelect = (e, { result }) => this.setState({ value: result.title, searchResults: result })
@@ -69,28 +88,37 @@ class Dashboard extends Component {
 
     render() {            
         const { isLoading, value, clients, results } = this.state;
-        var renderResults;
-        // console.log(value);
-        // const resultRenderer = ({ first_name }) => <Label content={title} />
-
-        // resultRenderer.propTypes = {
-        //     first_name: PropTypes.string,
-        //     last_name: PropTypes.string,
-        
-        // }
-        // if(this.state.clients){
-        //     console.log(this.state);
-        // }
-        
-        if (this.state.results) {
-            renderResults = this.state.results.map(client => 
-                // can pass case information through here too
-                <div key={client.id}>
-                <Link to={'/client/'+client.id}>Review Cases</Link>
-                <Client key={client.id} data={client} />
-                <Divider/>
-                </div>
-            );
+        var clientRows = [];
+        console.log(results);
+        if (results) {
+            for (var i = 1; i <= Object.keys(results).length; i++) {
+                
+                console.log(results[i])
+                var caseCount;
+                if (results[i].cases != undefined) {
+                    console.log("yes!");
+                    caseCount = results[i].cases.length
+                } else {
+                    caseCount = 0;
+                } 
+                var client = results[i].clientInfo;
+                clientRows.push(
+                <tr key={client.id}>
+                    <td>
+                        <Link to={{pathname: '/client/'+client.id, state: {client: client} }}>
+                            {client.first_name + " " + client.last_name}
+                        </Link>
+                    </td>
+                    <td>
+                        {client.date_of_birth}
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>{caseCount}</td>
+                    <td></td>
+                </tr>
+                )
+            }
         }
         return (
             <Container className="wide">
@@ -115,7 +143,19 @@ class Dashboard extends Component {
                     </Grid.Column>
                     {/* <Clients clients={this.state.searchResults}/> */}
                     <Grid.Column width={16}>
-                    {renderResults}
+                    <table className="ui celled table">
+                        <thead>
+                            <tr><th>Name</th>
+                            <th>Birth Date</th>
+                            <th>Next Court Date</th>
+                            <th>Open Cases</th>
+                            <th>Total Cases</th>
+                            <th>Status</th>
+                        </tr></thead>
+                        <tbody>
+                            {clientRows}
+                        </tbody>
+                        </table>
                     </Grid.Column>
                 </Grid>
             </Container>

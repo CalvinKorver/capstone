@@ -147,7 +147,7 @@ class NewCase extends Component {
                         </Form.Group>
 
                         <Form.Field>
-                            <Button content='Submit' value='charges' onClick={e => this.addMoreFields(e)}>
+                            <Button value='charges' onClick={e => this.addMoreFields(e)}>
                                 <Icon name="plus"/>
                                 Add more charges
                             </Button>

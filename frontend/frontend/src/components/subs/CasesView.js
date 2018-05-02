@@ -35,7 +35,7 @@ class CasesView extends Component {
             ];
 
             caseTable.push(
-                <Table.Row>
+                <Table.Row key={element.caseNumber}>
                     <Table.Cell>{element.caseNumber}</Table.Cell>
                     <Table.Cell>{element.sentenceStart}</Table.Cell>
                     <Table.Cell>{element.sentenceEnd}</Table.Cell> 
@@ -70,7 +70,7 @@ class CasesView extends Component {
 
                 <Grid.Column width={12}>
                     <Segment>
-                        <Header as="h4"  textAlign="centered"> Client Case List </Header>
+                        <Header as="h4"  textAlign="center"> Client Case List </Header>
 
                         <Table padded>
                             <Table.Header>
@@ -91,7 +91,7 @@ class CasesView extends Component {
 
                 <Grid.Column width={4}>
                 <Segment>
-                <Header as="h4"  textAlign="centered"> Notification </Header>
+                <Header as="h4"  textAlign="center"> Notification </Header>
 
                 </Segment>
                     

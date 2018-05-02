@@ -38,7 +38,6 @@ export default class AuthService {
         email: userPayload.email
       })
       .then(function (response) {
-        console.log("setting id_token: " + response.data.token);
         window.localStorage.setItem('id_token', response.data.token)
         // store.dispatch(setToken(response.data.token));
       })
@@ -53,14 +52,9 @@ export default class AuthService {
   }
 
   loggedIn() {
-    console.log("checking if logged in");
     // Checks if there is a saved token and it's still valid
     const token = this.getToken() // GEtting token from localstorage
-    console.log("token");
-    console.log(token);
 
-    console.log("isExpired");
-    console.log(!this.isTokenExpired(token));
     return !!token && !this.isTokenExpired(token) // handwaiving here
   }
 
@@ -78,7 +72,6 @@ export default class AuthService {
   }
 
   setToken(idToken) {
-    console.log("here");
     // Saves user token to localStorage
     window.localStorage.setItem('id_token', idToken)
   }
@@ -102,20 +95,16 @@ export default class AuthService {
   login(userPayload) {
     var URL = "http://localhost:8000/";
     var LOGIN = "rest-auth/login/";
-    console.log(userPayload.username + userPayload.password);
     return axios
       .post(URL + LOGIN, {
         username: userPayload.username,
         password: userPayload.password
       })
       .then(function (response) {
-        console.log(response);
-        console.log("beforesetToken");
         window
         .localStorage
         .setItem('id_token', response.data.token);
         // this.setToken(response.data.token);
-        console.log("after settToken");
         return Promise.resolve(response);
       })
       .catch(function (error) {

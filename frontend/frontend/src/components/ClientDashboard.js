@@ -14,12 +14,12 @@ import '../react_styles/ClientDashboard.css';
 class ClientDashboard extends Component {
     constructor(props) {
         super(props);
+        this.client = props.location.state.client;
         this.state = {
             clientView: [
                 // <CasesView client={null} key="1"/>,
                 // <InformationView key="info" />
             ],
-            client: {},
             cases: {}
         }
     }
@@ -27,14 +27,7 @@ class ClientDashboard extends Component {
     componentWillMount() {
         console.log("comp mounted");
         var id = this.props.match.params.id;
-        fetch('http://localhost:8000/clients/' + id +'/', {mode: 'cors'})
-            .then(function(response) {
-              return response.json();
-            })
-            .then(clientData => this.setState({
-                client: clientData,
-                // clientView: [<InformationView key="info" client={clientData}/>] THIS WILL BE THE DEFAULT ????
-            }));
+
         // this grabs all the cases to check which are linked to our client
         fetch('http://localhost:8000/cases/', {mode: 'cors'})
         .then(function(response) {
@@ -51,25 +44,25 @@ class ClientDashboard extends Component {
         })
         .then(cases => this.setState({
             cases: cases,
-            clientView: [<CasesView key="info" client={this.state.client} cases={cases}/>]
+            clientView: [<CasesView key="info" client={this.client} cases={cases}/>]
         }));
-  }
+    }
     
       ribbonChange = (e) => {
           console.log(e);
           if (e === "Cases") {
               this.setState({
-                  clientView: [<CasesView key="timeline" client={this.state.client} cases={this.state.cases}/>]
+                  clientView: [<CasesView key="timeline" client={this.client} cases={this.state.cases}/>]
               });
           } else if (e === "Information") {
             this.setState({
-                clientView: [<InformationView key="info" client={this.state.client} cases={this.state.cases}/>]
+                clientView: [<InformationView key="info" client={this.client} cases={this.state.cases}/>]
             });
           }
       };
 
     render() {
-        var client = this.state.client;
+        var client = this.client;
         return (
             <div>
                 <NavMenu/>
@@ -80,7 +73,7 @@ class ClientDashboard extends Component {
                 </Container>
 
                 <Container className = "wide">
-                    <NewCase firstName={this.state.client.first_name} lastName={this.state.client.last_name}/>
+                    <NewCase firstName={client.first_name} lastName={client.last_name}/>
                     {this.state.clientView}
                 </Container>
 

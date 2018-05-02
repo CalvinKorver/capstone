@@ -431,11 +431,12 @@ class CaseViewSet(APIView):
         trialDate = request.data.get('trialDate')
         trial = None
         if trialDate:
+            print(request.data.get('trialStartTime'))
             trial = Trial.objects.create(
                 caseID = case,
                 motion35=request.data.get('motion35'),
                 motion36=request.data.get('motion36'),
-                trialTime=request.data.get('trialTime')
+                trialTime=request.data.get('trialStartTime')
             )
 
         # update the fields in case 
