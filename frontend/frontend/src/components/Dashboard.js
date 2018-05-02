@@ -29,41 +29,35 @@ class Dashboard extends Component {
     componentWillMount() {
         fetch('http://localhost:8000/clients/', {mode: 'cors'})
             .then(function(response) { return response.json(); })
-            .then(function(clientData) {
-                
-                var clientCases = {};
-
-                clientData.forEach(function(client){
-                    clientCases[client.id] = {
-                        clientInfo: client
-                    }
+            .then(function(listOfClients) {
+                var clients = {};
+                listOfClients.map(client => {
+                    clients[client.id] = { clientInfo: client }
                 });
-                return clientCases;
+                return clients;
             })
-            .then(clientCases => {
+            .then(clients => {
                 fetch('http://localhost:8000/cases/', {mode: 'cors'})
                     .then(function(response) { return response.json(); })
                     .then(function(cases) {
                         cases.forEach(function(singleCase){
-                            if (clientCases[singleCase.clientID] !== null) {
-                                if (clientCases[singleCase.clientID].cases == null) {
-                                    clientCases[singleCase.clientID].cases = [];
-                                }
-                                clientCases[singleCase.clientID].cases.push(singleCase);
+                            var clientID = singleCase.clientID;
+                            if (clients[clientID]) {
+                                !clients[clientID].cases ? clients[clientID].cases = [] : null;
+                                clients[clientID].cases.push(singleCase);
                             }
                         });
-                        console.log(clientCases);
-                        return clientCases;
+                        return clients;
                     })
-                    .then(clientCases => this.setState({
-                        clientCases: clientCases,
-                        results: clientCases
+                    .then(clients => this.setState({
+                        clientCases: clients,
+                        results: clients
                     }))
-                return clientCases;
+                return clients;
             })
-            .then(clientCases => this.setState({
-                clientCases: clientCases,
-                results: clientCases
+            .then(clients => this.setState({
+                clientCases: clients,
+                results: clients
             }))
     }
     
@@ -89,11 +83,8 @@ class Dashboard extends Component {
     render() {            
         const { isLoading, value, clients, results } = this.state;
         var clientRows = [];
-        console.log(results);
         if (results) {
             for (var i = 1; i <= Object.keys(results).length; i++) {
-                
-                console.log(results[i])
                 var caseCount;
                 if (results[i].cases != undefined) {
                     console.log("yes!");
