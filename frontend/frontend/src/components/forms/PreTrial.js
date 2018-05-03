@@ -11,8 +11,6 @@ class PreTrial extends Component {
             caseNumber: this.props.caseNumber,
             trialDate: "",
             trialStartTime: "",
-            threePointFiveMotion: "",
-            threePointSixMotion: "",
             startSentence: "",
             endSentence: "",
             finesImposed: "",
@@ -31,16 +29,16 @@ class PreTrial extends Component {
             benchWarrant: "",
             jailTimeImposed: false,
             workCrewInLieu: false,
-            payWorkCrew: false,
-            payCommunityService: false,
+            isPayWorkCrew: false,
+            isPayCommunityService: false,
             treatmentOrdered: "",
             caseOutcome: "",
             isPreTrial: this.props.isPreTrial,
             preTrialStatusName: null,
             sentencingStatusName: null,
-            caseClosed: false,
-            motion36: false,
-            motion35: false
+            isCaseClosed: false,
+            isMotion36: false,
+            isMotion35: false
         }
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -123,15 +121,15 @@ class PreTrial extends Component {
             benchWarrant,
             jailTimeImposed,
             workCrewInLieu,
-            payWorkCrew,
-            payCommunityService,
+            isPayWorkCrew,
+            isPayCommunityService,
             treatmentOrdered,
             caseOutcome,
             preTrialStatusName,
             sentencingStatusName,
-            caseClosed,
-            motion36,
-            motion35
+            isCaseClosed,
+            isMotion36,
+            isMotion35
 
         } = this.state
         
@@ -211,8 +209,8 @@ class PreTrial extends Component {
             outcomeOrClosed =
                 <Form.Checkbox
                     label="Has the case been closed?"
-                    name="caseClosed"
-                    value={caseClosed}
+                    name="isCaseClosed"
+                    value={isCaseClosed}
                     onChange={this.handleChange}/>;
         }
         
@@ -231,14 +229,14 @@ class PreTrial extends Component {
                             <Form.Group widths="equal">
                                 <Form.Checkbox
                                 label="3.5 Motion"
-                                name="motion35"
-                                value={motion35}
+                                name="isMotion35"
+                                value={isMotion35}
                                 onChange={this.handleChange}/>
 
                                 <Form.Checkbox
                                 label="3.6 Motion"
-                                name="motion36"
-                                value={motion36}
+                                name="isMotion36"
+                                value={isMotion36}
                                 onChange={this.handleChange}/>
                             </Form.Group>
                         </div>
@@ -374,13 +372,13 @@ class PreTrial extends Component {
                                 </Form.Group>
                                 <Form.Checkbox
                                     label="Can fine pay through work crew?"
-                                    name="payWorkCrew"
-                                    value={payWorkCrew}
+                                    name="isPayWorkCrew"
+                                    value={isPayWorkCrew}
                                     onChange={this.handleChange}/>
                                 <Form.Checkbox
                                     label="Can fine pay through community service?"
-                                    name="payCommunityService"
-                                    value={payCommunityService}
+                                    name="isPayCommunityService"
+                                    value={isPayCommunityService}
                                     onChange={this.handleChange}/>
                                 <Form.Input
                                     fluid
