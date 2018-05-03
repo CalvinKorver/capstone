@@ -55,10 +55,10 @@ class Dashboard extends Component {
                     }))
                 return clients;
             })
-            .then(clients => this.setState({
-                clientCases: clients,
-                results: clients
-            }))
+            // .then(clients => this.setState({
+            //     clientCases: clients,
+            //     results: clients
+            // }))
     }
     
     resetComponent = () => this.setState({ isLoading: false, results: this.state.clients, value: '' })
