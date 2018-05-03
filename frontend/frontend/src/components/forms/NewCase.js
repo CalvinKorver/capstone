@@ -89,10 +89,10 @@ class NewCase extends Component {
                 clientLastName: this.props.lastName,
                 jailTimeSuspended: 0,
                 benchWarrant: 0,
-                payWorkCrew: false,
-                payCommunityService: false,
-                domesticViolence: false,
-                caseClosed: false,
+                isPayWorkCrew: false,
+                isPayCommunityService: false,
+                isDomesticViolence: false,
+                isCaseClosed: false,
                 benchWarrant: this.state.benchWarrantAmount,
                 failToAppearDate: this.state.dateFailureToAppear
 

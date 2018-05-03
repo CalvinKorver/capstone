@@ -198,19 +198,27 @@ class CaseInfoViewSet(APIView):
         cases = Case.objects.filter(clientID=id)
 
         # results = CaseSerializer(cases, many=True).data
-        results = {}
+        results = []
         if id is not None:
+            i = 0
             for case in cases:
-                results[case.id] = {}
-                results[case.id]["caseInfo"] = CaseSerializer(case).data
+                results.append({})
+                results[i]["caseInfo"] = CaseSerializer(case).data
                 fta = FailToAppear.objects.filter(caseID=case.id)
-                results[case.id]["failToAppearInfo"] = FailToAppearSerializer(fta, many=True).data
+                results[i]["failToAppearInfo"] = FailToAppearSerializer(fta, many=True).data
                 punishments = Punishment.objects.filter(caseID = case.id)
-                results[case.id]["punishmentInfo"] = PunishmentSerializer(punishments, many=True).data
+                results[i]["punishmentInfo"] = PunishmentSerializer(punishments, many=True).data
+                for punishmentInstance in results[i]["punishmentInfo"]:
+
+                    # also get punishment name
+                    punishmentType = PunishmentType.objects.get(id=punishmentInstance['punishmentTypeID'])
+                    punishmentInstance['punishmentTypeName'] = punishmentType.punishmentTypeName 
+
                 probations = Probation.objects.filter(caseID = case.id)
-                results[case.id]["probationInfo"] = ProbationSerializer(probations, many=True).data
+                results[i]["probationInfo"] = ProbationSerializer(probations, many=True).data
                 trials = Trial.objects.filter(caseID = case.id)
-                results[case.id]["trialInfo"] = TrialSerializer(trials, many=True).data
+                results[i]["trialInfo"] = TrialSerializer(trials, many=True).data
+                i += 1
         return Response(results)
 
 
@@ -274,11 +282,11 @@ class CaseViewSet(APIView):
             sentenceStart=request.data.get('sentenceStart'),
             sentenceEnd=request.data.get('sentenceEnd'),
             jailTimeSuspended=request.data.get('jailTimeSuspended'),
-            payWorkCrew=request.data.get('payWorkCrew'),
+            payWorkCrew=request.data.get('isPayWorkCrew'),
             payCommunityService=request.data.get('payCommunityService'),
-            domesticViolence=request.data.get('domesticViolence'),
+            isDomesticViolence=request.data.get('isDomesticViolence'),
             benchWarrant=request.data.get('benchWarrant'),
-            caseClosed=request.data.get('caseClosed'),
+            isCaseClosed=request.data.get('isCaseClosed'),
             clientID=clientID,
             preTrialStatusID=preTrialStatus,
             sentencingStatusID=sentencingStatus,
@@ -424,8 +432,8 @@ class CaseViewSet(APIView):
                 caseID = case,
                 finesImposed = fines,
                 finesSuspended = request.data.get('finesSuspended'),
-                payCommunityService = request.data.get('payCommunityService'),
-                payWorkCrew = request.data.get('payWorkCrew')
+                isPayCommunityService = request.data.get('isPayCommunityService'),
+                isPayWorkCrew = request.data.get('isPayWorkCrew')
             )
         
         trialDate = request.data.get('trialDate')
@@ -434,8 +442,9 @@ class CaseViewSet(APIView):
             print(request.data.get('trialStartTime'))
             trial = Trial.objects.create(
                 caseID = case,
-                motion35=request.data.get('motion35'),
-                motion36=request.data.get('motion36'),
+                trialDate = trialDate,
+                isMotion35=request.data.get('isMotion35'),
+                isMotion36=request.data.get('isMotion36'),
                 trialTime=request.data.get('trialStartTime')
             )
 
@@ -446,12 +455,12 @@ class CaseViewSet(APIView):
             case.sentenceEnd=request.data.get('endSentence')
         if(request.data.get('jailTimeSuspended')):
             case.jailTimeSuspended=request.data.get('jailTimeSuspended')
-        if(request.data.get('domesticViolence')):
-            case.domesticViolence=request.data.get('domesticViolence')
+        if(request.data.get('isDomesticViolence')):
+            case.isDomesticViolence=request.data.get('isDomesticViolence')
         if(request.data.get('benchWarrant')):
             case.benchWarrant=request.data.get('benchWarrant')
-        if(request.data.get('caseClosed')):
-            case.caseClosed=request.data.get('caseClosed')
+        if(request.data.get('isCaseClosed')):
+            case.isCaseClosed=request.data.get('isCaseClosed')
         if(request.data.get('treatmentOrdered')):
             case.treatmentOrdered=request.data.get('treatmentOrdered')
         # case.preTrialStatusID=preTrialStatus

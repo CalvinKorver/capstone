@@ -13,6 +13,7 @@ import {
 import NewCase from '../forms/NewCase';
 import SentencingCompliance from '../forms/SentencingCompliance';
 import PreTrial from '../forms/PreTrial';
+import Notifications from './Notifications';
 
 class CasesView extends Component {
 
@@ -25,20 +26,21 @@ class CasesView extends Component {
 
     componentWillMount() {
         var caseTable = []
-        this.props.cases.forEach(element => {
-            console.log(element);
+        console.log("cases: " + this.props.cases);
+        this.props.cases.forEach(singleCase => {
+            console.log(singleCase);
             const forms = [
                 // <NewCase first_name={this.props.client.first_name} last_name={this.props.client.last_name}/>,
-                <PreTrial caseNumber={element.caseNumber} isPreTrial={true}/>,
-                <PreTrial caseNumber={element.caseNumber} isPreTrial={false}/>,
-                <SentencingCompliance caseNumer={element.caseNumber}/>
+                <PreTrial caseNumber={singleCase.caseInfo.caseNumber} isPreTrial={true}/>,
+                <PreTrial caseNumber={singleCase.caseInfo.caseNumber} isPreTrial={false}/>,
+                <SentencingCompliance caseNumer={singleCase.caseInfo.caseNumber}/>
             ];
 
             caseTable.push(
-                <Table.Row key={element.caseNumber}>
-                    <Table.Cell>{element.caseNumber}</Table.Cell>
-                    <Table.Cell>{element.sentenceStart}</Table.Cell>
-                    <Table.Cell>{element.sentenceEnd}</Table.Cell> 
+                <Table.Row key={singleCase.caseInfo.caseNumber}>
+                    <Table.Cell>{singleCase.caseInfo.caseNumber}</Table.Cell>
+                    <Table.Cell>{singleCase.caseInfo.sentenceStart}</Table.Cell>
+                    <Table.Cell>{singleCase.caseInfo.sentenceEnd}</Table.Cell> 
                     <Table.Cell >
                         <Dropdown placeholder='Edit' fluid selection options={forms} />
                     </Table.Cell>   
@@ -65,7 +67,7 @@ class CasesView extends Component {
                 </Grid.Column>
 
                 <Grid.Column width={16}>
-                    <TimelineShell client={this.props.client}/>
+                    <TimelineShell client={this.props.client} cases={this.props.cases}/>
                 </Grid.Column>
 
                 <Grid.Column width={12}>
@@ -91,8 +93,8 @@ class CasesView extends Component {
 
                 <Grid.Column width={4}>
                 <Segment>
-                <Header as="h4"  textAlign="center"> Notification </Header>
-
+                <Header as="h4"  textAlign="center"> Notifications </Header>
+                    <Notifications cases={this.props.cases}/>
                 </Segment>
                     
                 </Grid.Column>

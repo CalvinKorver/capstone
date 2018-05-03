@@ -22,16 +22,17 @@ class Dashboard extends Component {
             results: {},
             value: '',
             isLoading: false,
-            searchResults: []
-          }
+            searchResults: [],
+            trials: []
+        }
     }
 
     componentWillMount() {
         fetch('http://localhost:8000/clients/', {mode: 'cors'})
             .then(function(response) { return response.json(); })
-            .then(function(listOfClients) {
+            .then(function(listClients) {
                 var clients = {};
-                listOfClients.map(client => {
+                listClients.map(client => {
                     clients[client.id] = { 
                         clientInfo: client,
                         openCases: 0
@@ -60,12 +61,36 @@ class Dashboard extends Component {
                         clientCases: clients,
                         results: clients
                     }))
-                return clients;
+
+                fetch('http://localhost:8000/trials/', {mode: 'cors'})
+                    .then(function(response){ return response.json();})
+                    .then(trials => 
+                        this.setState({
+                            trials: trials
+                        })
+                    )
+                    // .then(function(trials){
+                    //     trials.forEach(function(trial) {
+                    //         // console.log("gets here too: " + listOfClients[0].id);
+                    //         var caseID = trial.caseID;
+                    //         for (var i = 1; i <= Object.keys(results).length; i++) {
+                    //             if (clients[i].cases) {
+                    //                 clients[i].cases.forEach(function(case){
+
+                    //                 })
+                    //             }
+                    //         }
+                    //         if (clients[clientID]) {
+                    //             !clients[clientID].trials ? clients[clientID].trials = [] : null;
+                    //             clients[clientID].trials.push(trial);
+                    //         }
+                    //     })
+                    //     console.log("results after: " + clients);
+                    //     this.setState({
+                    //         results: clients
+                    //     })
+                    // })
             })
-            .then(clients => this.setState({
-                clientCases: clients,
-                results: clients
-            }))
     }
     
     resetComponent = () => this.setState({ isLoading: false, results: this.state.clients, value: '' })
@@ -88,15 +113,45 @@ class Dashboard extends Component {
     }
 
     render() {            
-        const { isLoading, value, clients, results } = this.state;
+        const { isLoading, value, clients, results, trials } = this.state;
         var clientRows = [];
         console.log(results);
         if (results) {
+            // get today's date
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if(dd<10) {
+                dd = '0'+dd
+            } 
+
+            if(mm<10) {
+                mm = '0'+mm
+            } 
+
+            var dateToday = yyyy + '-' + mm + '-' + dd;
             for (var i = 1; i <= Object.keys(results).length; i++) {
+                let nextCourtDate;
                 var openCaseCount;
                 var caseCount;
                 if (results[i].cases) {
-                    caseCount = results[i].cases.length
+                    caseCount = results[i].cases.length;
+                    // this is ugly as fuck. Matches trials to cases and determines which is the most recent
+                    results[i].cases.forEach(function(singleCase){
+                        trials.forEach(function(trial){
+                            if(singleCase.id == trial.caseID) {
+                                console.log(trial.caseID);
+                                console.log(trial.trialDate < nextCourtDate);
+                                console.log(trial.trialDate > dateToday);
+                                if( (trial.trialDate > dateToday && !nextCourtDate) || (nextCourtDate && trial.trialDate < nextCourtDate)){
+                                    console.log(trial.trialDate);
+                                    nextCourtDate = trial.trialDate;
+                                }
+                            }
+                        })
+                    })
                 } else {
                     caseCount = 0;
                 }
@@ -112,7 +167,7 @@ class Dashboard extends Component {
                     <td>
                         {client.date_of_birth}
                     </td>
-                    <td></td>
+                    <td>{nextCourtDate}</td>
                     <td></td>
                     <td>{caseCount}</td>
                     <td></td>

@@ -15,9 +15,9 @@ class SentencingCompliance extends Component {
         this.state = {
             caseNumber: this.props.caseNumber,
             sentencingComplianceStatus: "",
-            admitOrDeny: false,
-            reserveOrImpose: false,
-            caseClosed: false
+            isAdmit: false,
+            isReserve: false,
+            isCaseClosed: false
         }
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,9 +43,9 @@ class SentencingCompliance extends Component {
         // }
         var data = {
             violationName: this.state.sentencingComplianceStatus,
-            admit: this.state.admitOrDeny,
-            reserve: this.state.reserveOrImpose,
-            caseClosed: this.state.caseClosed,
+            isAdmit: this.state.isAdmit,
+            isReserve: this.state.isReserve,
+            isCaseClosed: this.state.isCaseClosed,
             caseNumber: this.state.caseNumber
         }
         return axios
@@ -81,7 +81,7 @@ class SentencingCompliance extends Component {
     }
 
     render() {
-        const { caseNumber, trialStartDate, threePointFiveMotion, caseClosed } = this.state
+        const { caseNumber, trialStartDate, isCaseClosed } = this.state
 
         var violationOptions = [ 
             {text: "New Criminal Law Violation", value:"New Criminal Law Violation"},
@@ -105,8 +105,8 @@ class SentencingCompliance extends Component {
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Checkbox
                             label="Has the case been closed?"
-                            name="caseClosed"
-                            value={caseClosed}
+                            name="isCaseClosed"
+                            value={isCaseClosed}
                             onChange={this.handleChange}/>
 
                         <Form.Select fluid label="Alleged Violation" name="sentencingComplianceStatus" options={violationOptions} placeholder='Select an option' onChange={this.handleChange}/>
@@ -115,9 +115,9 @@ class SentencingCompliance extends Component {
                             <Form.Input fluid label="Case Number" name="caseNumber" placeholder=""  value={caseNumber} onChange={this.handleChange}/>    
                         </div>
 
-                        <Form.Select fluid label="Admit or Deny?" name="admitOrDeny" options={admitOptions} placeholder='Select an option' onChange={this.handleChange}/>
+                        <Form.Select fluid label="Admit or Deny?" name="isAdmite" options={admitOptions} placeholder='Select an option' onChange={this.handleChange}/>
 
-                        <Form.Select fluid label="Reserve or Impose?" name="reserveOrImpose" options={reserveOptions} placeholder='Select an option' onChange={this.handleChange}/>
+                        <Form.Select fluid label="Reserve or Impose?" name="isReserve" options={reserveOptions} placeholder='Select an option' onChange={this.handleChange}/>
 
                         <Button type="submit">Save and Continue</Button>
                         
