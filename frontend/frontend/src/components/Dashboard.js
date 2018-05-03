@@ -11,8 +11,8 @@ import {
     Header
   } from 'semantic-ui-react'
 import Client from './Client';
+import NewClient from './forms/NewClient';
 import NewCase from './forms/NewCase';
-
 
 class Dashboard extends Component {
     constructor(props) {
@@ -139,7 +139,7 @@ class Dashboard extends Component {
                     </Grid.Column>
 
                     <Grid.Column width={2}>
-                        <Button href='/new-client'> New Client </Button>
+                        <NewClient/>
                     </Grid.Column>
                     {/* <Clients clients={this.state.searchResults}/> */}
                     <Grid.Column width={16}>
