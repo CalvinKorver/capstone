@@ -26,9 +26,7 @@ class CasesView extends Component {
 
     componentWillMount() {
         var caseTable = []
-        console.log("cases: " + this.props.cases);
         this.props.cases.forEach(singleCase => {
-            console.log(singleCase);
             const forms = [
                 // <NewCase first_name={this.props.client.first_name} last_name={this.props.client.last_name}/>,
                 <PreTrial caseNumber={singleCase.caseInfo.caseNumber} isPreTrial={true}/>,
@@ -57,14 +55,10 @@ class CasesView extends Component {
         
         return (
             <Grid>
-                <Grid.Column width={12}>
+                {/* <Grid.Column width={12}>
                     <Header as="h4"  floated="left" style={{marginTop: "6px"}}> Case Search </Header>
                     <Search className="main-search" size="small"/>
-                </Grid.Column>
-
-                <Grid.Column width={4}>
-                    <NewCase first_name={this.props.client.first_name} last_name={this.props.client.last_name}/>
-                </Grid.Column>
+                </Grid.Column> */}
 
                 <Grid.Column width={16}>
                     <TimelineShell client={this.props.client} cases={this.props.cases}/>

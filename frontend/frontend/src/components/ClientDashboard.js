@@ -25,7 +25,6 @@ class ClientDashboard extends Component {
     }
 
     componentWillMount() {
-        console.log("comp mounted");
         var id = this.props.match.params.id;
 
         // this grabs all the cases to check which are linked to our client
@@ -67,7 +66,6 @@ class ClientDashboard extends Component {
 
     render() {
         var client = this.client;
-        console.log("in dashboard: " + this.state.clientCaseInfo);
         return (
             <div>
                 <NavMenu/>

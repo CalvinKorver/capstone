@@ -26,9 +26,8 @@ import {
             <Menu pointing secondary>
                     <Menu.Item name='Information' active={activeItem === 'Information'} onClick={this.handleItemClick} />
                     <Menu.Item name='Cases' active={activeItem === 'Cases'} onClick={this.handleItemClick} />
-                    <Menu.Item name='Documents' active={activeItem === 'Documents'} onClick={this.handleItemClick} />
-
-                    <Menu.Item name='Notes' active={activeItem === 'Notes'} onClick={this.handleItemClick} />
+                    {/* <Menu.Item name='Documents' active={activeItem === 'Documents'} onClick={this.handleItemClick} />
+                    <Menu.Item name='Notes' active={activeItem === 'Notes'} onClick={this.handleItemClick} /> */}
                     </Menu>
                     
                     </div>

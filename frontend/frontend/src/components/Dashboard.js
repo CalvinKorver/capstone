@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router-dom'
+import '../index.css';
 
 import {
     Button,
@@ -32,6 +33,9 @@ class Dashboard extends Component {
             .then(function(response) { return response.json(); })
             .then(function(listClients) {
                 var clients = {};
+                listClients.forEach(function(client){
+                    client.title = client.first_name + " " + client.last_name;
+                })
                 listClients.map(client => {
                     clients[client.id] = { 
                         clientInfo: client,
@@ -59,7 +63,8 @@ class Dashboard extends Component {
                     })
                     .then(clients => this.setState({
                         clientCases: clients,
-                        results: clients
+                        results: clients,
+                        searchResults: clients
                     }))
 
                 fetch('http://localhost:8000/trials/', {mode: 'cors'})
@@ -93,9 +98,13 @@ class Dashboard extends Component {
             })
     }
     
-    resetComponent = () => this.setState({ isLoading: false, results: this.state.clients, value: '' })
+    resetComponent = () => this.setState({ isLoading: false, searchResults: this.state.results, value: '' })
 
-    handleResultSelect = (e, { result }) => this.setState({ value: result.title, searchResults: result })
+    handleResultSelect = (e, { result }) => {
+        var showOneResult = [];
+        showOneResult.push(result);
+        this.setState({ value: result.clientInfo.title, results: showOneResult })
+    }
 
     handleSearchChange = (e, { value }) => {
         this.setState({ isLoading: true, value })
@@ -103,20 +112,19 @@ class Dashboard extends Component {
         setTimeout(() => {
             if (this.state.value.length < 1) return this.resetComponent()
             const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-            const isMatch = result => {console.log("Result: " + result.title); let test = re.test(result.title); console.log("test: " + test); return test;};
+            const isMatch = result => {console.log("Result: " + result.clientInfo.title); let test = re.test(result.clientInfo.title); console.log("test: " + test); return test;};
             this.setState({
                 isLoading: false,
-                results: _.filter(this.state.clients, isMatch),
+                searchResults: _.filter(this.state.results, isMatch),
             })
             // console.log(this.state.clients)
         }, 300)
     }
 
     render() {            
-        const { isLoading, value, clients, results, trials } = this.state;
+        const { isLoading, value, clients, results, trials, searchResults } = this.state;
         var clientRows = [];
-        console.log(results);
-        if (results) {
+        if (searchResults) {
             // get today's date
             var today = new Date();
             var dd = today.getDate();
@@ -132,47 +140,47 @@ class Dashboard extends Component {
             } 
 
             var dateToday = yyyy + '-' + mm + '-' + dd;
-            for (var i = 1; i <= Object.keys(results).length; i++) {
-                let nextCourtDate;
-                var openCaseCount;
-                var caseCount;
-                if (results[i].cases) {
-                    caseCount = results[i].cases.length;
-                    // this is ugly as fuck. Matches trials to cases and determines which is the most recent
-                    results[i].cases.forEach(function(singleCase){
-                        trials.forEach(function(trial){
-                            if(singleCase.id == trial.caseID) {
-                                console.log(trial.caseID);
-                                console.log(trial.trialDate < nextCourtDate);
-                                console.log(trial.trialDate > dateToday);
-                                if( (trial.trialDate > dateToday && !nextCourtDate) || (nextCourtDate && trial.trialDate < nextCourtDate)){
-                                    console.log(trial.trialDate);
-                                    nextCourtDate = trial.trialDate;
+            for (var i = 0; i < Object.keys(searchResults).length; i++) {
+                if (searchResults[i]){
+                    let nextCourtDate = "None coming up";
+                    var openCaseCount;
+                    var caseCount;
+                    if (searchResults[i].cases) {
+                        console.log(searchResults[i]);
+                        console.log(searchResults);
+                        caseCount = searchResults[i].cases.length;
+                        // this is ugly as fuck. Matches trials to cases and determines which is the most recent
+                        searchResults[i].cases.forEach(function(singleCase){
+                            trials.forEach(function(trial){
+                                if(singleCase.id == trial.caseID) {
+                                    if( (trial.trialDate > dateToday && nextCourtDate=="None coming up") || (nextCourtDate != "None coming up" && trial.trialDate < nextCourtDate)){
+                                        nextCourtDate = trial.trialDate;
+                                    }
                                 }
-                            }
+                            })
                         })
-                    })
-                } else {
-                    caseCount = 0;
+                    } else {
+                        caseCount = 0;
+                    }
+                    
+                    var client = searchResults[i].clientInfo;
+                    clientRows.push(
+                    <tr key={client.id}>
+                        <td>
+                            <Link to={{pathname: '/client/'+client.id, state: {client: client} }}>
+                                {client.first_name + " " + client.last_name}
+                            </Link>
+                        </td>
+                        <td>
+                            {client.date_of_birth}
+                        </td>
+                        <td>{nextCourtDate}</td>
+                        <td></td>
+                        <td>{caseCount}</td>
+                        <td></td>
+                    </tr>
+                    )
                 }
-                
-                var client = results[i].clientInfo;
-                clientRows.push(
-                <tr key={client.id}>
-                    <td>
-                        <Link to={{pathname: '/client/'+client.id, state: {client: client} }}>
-                            {client.first_name + " " + client.last_name}
-                        </Link>
-                    </td>
-                    <td>
-                        {client.date_of_birth}
-                    </td>
-                    <td>{nextCourtDate}</td>
-                    <td></td>
-                    <td>{caseCount}</td>
-                    <td></td>
-                </tr>
-                )
             }
         }
         return (
@@ -185,10 +193,11 @@ class Dashboard extends Component {
                             loading={isLoading}
                             onResultSelect={this.handleResultSelect}
                             onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
-                            results={results}
+                            // results={searchResults}
+                            showNoResults={false}
                             value={value}
                             placeholder="Name or case number"
-                            {...this.props}
+                            // {...this.props}
                             // resultRenderer={resultRenderer}
                         /> 
                     </Grid.Column>

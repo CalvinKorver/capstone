@@ -42,7 +42,9 @@ class Notifications extends Component {
         // don't need to do failure to appears since they are in the past
     });
 
-
+    if(!notifications[0]){
+        notifications = "Nothing coming up in the next week"
+    }
     return (
       <div className="App">
         {notifications}
