@@ -198,19 +198,27 @@ class CaseInfoViewSet(APIView):
         cases = Case.objects.filter(clientID=id)
 
         # results = CaseSerializer(cases, many=True).data
-        results = {}
+        results = []
         if id is not None:
+            i = 0
             for case in cases:
-                results[case.id] = {}
-                results[case.id]["caseInfo"] = CaseSerializer(case).data
+                results.append({})
+                results[i]["caseInfo"] = CaseSerializer(case).data
                 fta = FailToAppear.objects.filter(caseID=case.id)
-                results[case.id]["failToAppearInfo"] = FailToAppearSerializer(fta, many=True).data
+                results[i]["failToAppearInfo"] = FailToAppearSerializer(fta, many=True).data
                 punishments = Punishment.objects.filter(caseID = case.id)
-                results[case.id]["punishmentInfo"] = PunishmentSerializer(punishments, many=True).data
+                results[i]["punishmentInfo"] = PunishmentSerializer(punishments, many=True).data
+                for punishmentInstance in results[i]["punishmentInfo"]:
+
+                    # also get punishment name
+                    punishmentType = PunishmentType.objects.get(id=punishmentInstance['punishmentTypeID'])
+                    punishmentInstance['punishmentTypeName'] = punishmentType.punishmentTypeName 
+
                 probations = Probation.objects.filter(caseID = case.id)
-                results[case.id]["probationInfo"] = ProbationSerializer(probations, many=True).data
+                results[i]["probationInfo"] = ProbationSerializer(probations, many=True).data
                 trials = Trial.objects.filter(caseID = case.id)
-                results[case.id]["trialInfo"] = TrialSerializer(trials, many=True).data
+                results[i]["trialInfo"] = TrialSerializer(trials, many=True).data
+                i += 1
         return Response(results)
 
 

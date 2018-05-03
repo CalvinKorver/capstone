@@ -8,21 +8,6 @@ import {
 
 import '../react_styles/TimelineShell.css'
 
-const basicExample = {
-  options: {
-    start: '2018-01-10',
-    end: '2018-10-30',
-  },
-  items: [
-    { id: 1, content: 'Jail Time', start: '2018-01-20', end: '2018-03-20' },
-    { id: 2, content: 'Pre-Trial', start: '2018-04-01', type: 'point' },
-    { id: 3, content: 'Trial', start: '2018-04-27', type: 'point' },
-    { id: 4, content: 'Prison Time', start: '2018-05-16', end: '2018-06-19' },
-    { id: 5, content: 'Probation', start: '2018-05-16', end: '2018-09-19' }
-    // { id: 6, content: 'item 6', start: '2018-04-27', type: 'point' },
-  ],
-}
-
 const groupsExample = {
   groups: [],
   items: [],
@@ -72,6 +57,53 @@ class TimelineShell extends Component {
   }
 
   render() {
+    var basicExample = {
+      // need to play around with this range
+      options: {
+        start: '2015-01-10',
+        end: '2018-10-30',
+      },
+      items: [
+        { id: 1, content: 'Jail Time', start: '2018-01-20', end: '2018-03-20' },
+        { id: 2, content: 'Pre-Trial', start: '2018-04-01', type: 'point' },
+        { id: 3, content: 'Trial', start: '2018-04-27', type: 'point' },
+        { id: 4, content: 'Prison Time', start: '2018-05-16', end: '2018-06-19' },
+        { id: 5, content: 'Probation', start: '2018-05-16', end: '2018-09-19' }
+        // { id: 6, content: 'item 6', start: '2018-04-27', type: 'point' },
+      ],
+    }
+
+    var items = [];
+    console.log(this.props.cases.caseInfo);
+    this.props.cases.forEach(singleCase => {
+      console.log(singleCase.caseInfo)
+      var sentence = {id: 1, content: 'Sentence', start: singleCase.caseInfo.sentenceStart, end: singleCase.caseInfo.sentenceEnd};
+      items.push(sentence);
+      var i = 2;
+      singleCase.trialInfo.forEach(singleTrial => {
+        var trial = {id: i, content: 'Trial', start: singleTrial.trialDate, type: 'point'};
+        i += 1;
+        items.push(trial);
+      })
+      singleCase.punishmentInfo.forEach(singlePunishment => {
+        var punishment = {id: i, content: singlePunishment.punishmentTypeName, start: singlePunishment.dueDate, type: 'point'};
+        i += 1;
+        items.push(punishment);
+      })
+      singleCase.probationInfo.forEach(singleProbation => {
+        var probation = {id: i, content: 'Probation', start: singleProbation.probationStart, end: singleProbation.probationEnd};
+        i += 1;
+        items.push(probation);
+      })
+      singleCase.failToAppearInfo.forEach(singleFailToAppear => {
+        var failToAppear = {id: i, content: 'Failed to Appear', start: singleFailToAppear.failToAppearDate, type: 'point'};
+        i += 1;
+        items.push(failToAppear);
+      })
+    });
+
+    basicExample['items'] = items;
+
     return (
       <div className="App">
         <Header as="h3" textAlign="center">

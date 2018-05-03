@@ -20,7 +20,7 @@ class ClientDashboard extends Component {
                 // <CasesView client={null} key="1"/>,
                 // <InformationView key="info" />
             ],
-            cases: {}
+            clientCaseInfo: []
         }
     }
 
@@ -29,21 +29,25 @@ class ClientDashboard extends Component {
         var id = this.props.match.params.id;
 
         // this grabs all the cases to check which are linked to our client
-        fetch('http://localhost:8000/cases/', {mode: 'cors'})
+        fetch('http://localhost:8000/case-info/?id=' + id, {mode: 'cors'})
         .then(function(response) {
           return response.json();
         })
-        .then(function(caseData) {
-          var casesMatch = [];
-          caseData.forEach(function(singleCase){
-            if(singleCase.clientID == id){
-              casesMatch.push(singleCase);
-            }
-          });
-          return casesMatch;
-        })
+        // .then(function(clientData) {
+        //   var casesMatch = [];
+        //   caseData.forEach(function(singleCase){
+        //     if(singleCase.clientID == id){
+        //       casesMatch.push(singleCase);
+        //     }
+        //   });
+        //   return casesMatch;
+            
+            // for (var i = 1; i <= Object.keys(clientData).length; i++) {
+                
+            // }
+        // })
         .then(cases => this.setState({
-            cases: cases,
+            clientCaseInfo: cases,
             clientView: [<CasesView key="info" client={this.client} cases={cases}/>]
         }));
     }
@@ -52,17 +56,18 @@ class ClientDashboard extends Component {
           console.log(e);
           if (e === "Cases") {
               this.setState({
-                  clientView: [<CasesView key="timeline" client={this.client} cases={this.state.cases}/>]
+                  clientView: [<CasesView key="timeline" client={this.client} cases={this.state.clientCaseInfo}/>]
               });
           } else if (e === "Information") {
             this.setState({
-                clientView: [<InformationView key="info" client={this.client} cases={this.state.cases}/>]
+                clientView: [<InformationView key="info" client={this.client} cases={this.state.clientCaseInfo}/>]
             });
           }
       };
 
     render() {
         var client = this.client;
+        console.log("in dashboard: " + this.state.clientCaseInfo);
         return (
             <div>
                 <NavMenu/>
