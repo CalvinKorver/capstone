@@ -15,6 +15,32 @@ class InformationView extends Component {
 
   render() {
     let client = this.props.client;
+
+    var casesInfo = []
+    // map the different cases for a client to a list like that for client info
+    this.props.cases.map(singleCase => {
+        if(singleCase.caseInfo){
+            var singleCaseInfo = (
+                [
+                    <p>Case Number: {singleCase.caseInfo.caseNumber} </p>,
+                    <p>Start of Sentence: {singleCase.caseInfo.sentenceStart}</p>,
+                    <p>End of Sentence: {singleCase.caseInfo.sentenceEnd}</p>,
+                    <p>Suspended Jail Time: {singleCase.caseInfo.jailTimeSuspended + " days"}</p>,
+                    <p>Bench Warrant Amount: {"$" + singleCase.caseInfo.benchWarrant}</p>,
+                    <p>Treatment Ordered: {singleCase.caseInfo.treatmentOrdered}</p>
+                ]);
+            if(singleCase.caseInfo.isDomesticViolence){
+                singleCaseInfo.push(<p>Domestic Violence Case</p>)
+            }
+            if(singleCase.caseInfo.isCaseClosed){
+                singleCaseInfo.push(<p><b>Case has been closed</b></p>)
+            }
+        }
+        if(singleCase.punishmentInfo){
+
+        }
+        casesInfo.push(singleCaseInfo);
+    });
     return (
         <Grid>
             <Grid.Column width={8}>
@@ -37,9 +63,10 @@ class InformationView extends Component {
 
             <Grid.Column width={8}>
             <Segment>
-            <Header as="h3">
-                        Legal Information
-                    </Header>
+                <Header as="h3">
+                    Legal Information
+                </Header>
+                {casesInfo}
 
                 </Segment>
             </Grid.Column>

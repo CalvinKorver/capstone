@@ -75,11 +75,12 @@ class TimelineShell extends Component {
 
     var items = [];
     console.log(this.props.cases.caseInfo);
+    var i = 0;
     this.props.cases.forEach(singleCase => {
       console.log(singleCase.caseInfo)
-      var sentence = {id: 1, content: 'Sentence', start: singleCase.caseInfo.sentenceStart, end: singleCase.caseInfo.sentenceEnd};
+      var sentence = {id: i, content: 'Sentence', start: singleCase.caseInfo.sentenceStart, end: singleCase.caseInfo.sentenceEnd};
       items.push(sentence);
-      var i = 2;
+      i += 1;
       singleCase.trialInfo.forEach(singleTrial => {
         var trial = {id: i, content: 'Trial', start: singleTrial.trialDate, type: 'point'};
         i += 1;
