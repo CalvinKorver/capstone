@@ -76,33 +76,63 @@ class TimelineShell extends Component {
     var items = [];
     console.log(this.props.cases.caseInfo);
     var i = 0;
+    var earliestDate;
+    var latestDate;// = getDate();
+    function checkDate(date) {
+      if(!earliestDate) {
+        earliestDate = date;
+      } else if(date < earliestDate) {
+          earliestDate = date;
+      }
+      
+
+      if(!latestDate) {
+        latestDate = date;
+      } else if(date > latestDate) {
+        latestDate = date;
+      }
+    }
     this.props.cases.forEach(singleCase => {
-      console.log(singleCase.caseInfo)
-      var sentence = {id: i, content: 'Sentence', start: singleCase.caseInfo.sentenceStart, end: singleCase.caseInfo.sentenceEnd};
+      let sentenceStart = singleCase.caseInfo.sentenceStart;
+      let sentenceEnd = singleCase.caseInfo.sentenceEnd;
+      checkDate(sentenceStart);
+      checkDate(sentenceEnd);
+      var sentence = {id: i, content: 'Sentence', start: sentenceStart, end: sentenceEnd};
       items.push(sentence);
       i += 1;
       singleCase.trialInfo.forEach(singleTrial => {
+        checkDate(singleTrial.trialDate);
         var trial = {id: i, content: 'Trial', start: singleTrial.trialDate, type: 'point'};
         i += 1;
         items.push(trial);
       })
       singleCase.punishmentInfo.forEach(singlePunishment => {
+        checkDate(singlePunishment.dueDate);
         var punishment = {id: i, content: singlePunishment.punishmentTypeName, start: singlePunishment.dueDate, type: 'point'};
         i += 1;
         items.push(punishment);
       })
       singleCase.probationInfo.forEach(singleProbation => {
+        checkDate(singleProbation.probationStart);
+        checkDate(singleProbation.probationEnd);
         var probation = {id: i, content: 'Probation', start: singleProbation.probationStart, end: singleProbation.probationEnd};
         i += 1;
         items.push(probation);
       })
       singleCase.failToAppearInfo.forEach(singleFailToAppear => {
+        checkDate(singleFailToAppear.failToAppearDate);
         var failToAppear = {id: i, content: 'Failed to Appear', start: singleFailToAppear.failToAppearDate, type: 'point'};
         i += 1;
         items.push(failToAppear);
       })
     });
 
+    console.log(earliestDate);
+    console.log(latestDate);
+
+    let twoMonthsInMS = 5256000000;
+    basicExample['options']['start'] = new Date(earliestDate).getTime() - twoMonthsInMS;
+    basicExample['options']['end'] = new Date(latestDate).getTime() + twoMonthsInMS;
     basicExample['items'] = items;
 
     return (

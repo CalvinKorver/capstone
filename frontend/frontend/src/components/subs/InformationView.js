@@ -23,6 +23,7 @@ class InformationView extends Component {
             var singleCaseInfo = (
                 [
                     <p>Case Number: {singleCase.caseInfo.caseNumber} </p>,
+                    <hr/>,
                     <p>Start of Sentence: {singleCase.caseInfo.sentenceStart}</p>,
                     <p>End of Sentence: {singleCase.caseInfo.sentenceEnd}</p>,
                     <p>Suspended Jail Time: {singleCase.caseInfo.jailTimeSuspended + " days"}</p>,
@@ -37,8 +38,11 @@ class InformationView extends Component {
             }
         }
         if(singleCase.punishmentInfo){
-
+            singleCase.punishmentInfo.forEach(punishment => {
+                singleCaseInfo.push(<p>{punishment.punishmentTypeName + " due on " + punishment.dueDate}</p>)
+            })
         }
+        singleCaseInfo.push(<p></p>); // add an empty paragraph as a spacing between different cases information sections   
         casesInfo.push(singleCaseInfo);
     });
     return (
