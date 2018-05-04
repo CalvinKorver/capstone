@@ -12,10 +12,6 @@
     width: 95% !important;
 }
 
-.main-search > .ui.icon.input {
-    width: 80%;
-}
-
 .main-search > .ui.icon.input > input {
         border-radius: 0;
         width: 100%;

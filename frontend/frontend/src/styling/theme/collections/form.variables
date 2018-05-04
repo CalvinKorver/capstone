@@ -1,0 +1,7 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+
+@inputFocusBorderRadius: 2px;
+@inputBorderRadius: 2px;

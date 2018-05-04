@@ -7,7 +7,8 @@ import {
     Header,
     Segment,
     Table,
-    Dropdown
+    Dropdown,
+    Dimmer
   } from 'semantic-ui-react';
 
 import NewCase from '../forms/NewCase';
@@ -55,13 +56,21 @@ class CasesView extends Component {
         
         return (
             <Grid>
-                {/* <Grid.Column width={12}>
+                <Grid.Column width={12}>
                     <Header as="h4"  floated="left" style={{marginTop: "6px"}}> Case Search </Header>
-                    <Search className="main-search" size="small"/>
-                </Grid.Column> */}
+                        <Search className="main-search" size="small"/>
+                </Grid.Column>
+                
+                <Grid.Column width={4}>
+                    <NewCase firstName={this.props.client.first_name} lastName={this.props.client.last_name}/>
+                </Grid.Column>
 
                 <Grid.Column width={16}>
-                    <TimelineShell client={this.props.client} cases={this.props.cases}/>
+                    <Grid.Row>
+                        <Segment>
+                            <TimelineShell client={this.props.client} cases={this.props.cases}/>
+                        </Segment>
+                    </Grid.Row>
                 </Grid.Column>
 
                 <Grid.Column width={12}>

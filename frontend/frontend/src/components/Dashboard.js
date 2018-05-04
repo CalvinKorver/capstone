@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router-dom'
-import '../index.css';
 
 import {
     Button,
@@ -14,6 +13,7 @@ import {
 import Client from './Client';
 import NewClient from './forms/NewClient';
 import NewCase from './forms/NewCase';
+import '../react_styles/App.css';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -184,27 +184,27 @@ class Dashboard extends Component {
             }
         }
         return (
-            <Container className="wide">
-                <Grid>
+            <Grid padded>
+            
                     <Grid.Column width={14}>
-                        <Header as="h4"  floated="left" style={{marginTop: "8px", marginRight: "2em"}}> Client Search </Header>
-                        <Search
-                            className="main-search"
-                            loading={isLoading}
-                            onResultSelect={this.handleResultSelect}
-                            onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
-                            // results={searchResults}
-                            showNoResults={false}
-                            value={value}
-                            placeholder="Name or case number"
-                            // {...this.props}
-                            // resultRenderer={resultRenderer}
-                        /> 
-                    </Grid.Column>
+                            <Header as="h4"  floated="left" style={{marginTop: "8px", marginRight: "2em"}}> Client Search </Header>
+                            <Search
+                                className= "main-search"
+                                loading={isLoading}
+                                onResultSelect={this.handleResultSelect}
+                                onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
+                                // results={searchResults}
+                                showNoResults={false}
+                                value={value}
+                                placeholder="Name or case number"
+                                // {...this.props}
+                                // resultRenderer={resultRenderer}
+                            /> 
+                        </Grid.Column>
 
-                    <Grid.Column width={2}>
-                        <NewClient/>
-                    </Grid.Column>
+                        <Grid.Column width={2}>
+                            <NewClient/>
+                        </Grid.Column>
                     {/* <Clients clients={this.state.searchResults}/> */}
                     <Grid.Column width={16}>
                     <table className="ui celled table">
@@ -222,7 +222,6 @@ class Dashboard extends Component {
                         </table>
                     </Grid.Column>
                 </Grid>
-            </Container>
         )
     }
 

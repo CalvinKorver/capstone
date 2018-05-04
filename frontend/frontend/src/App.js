@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
-import './react_styles/App.css';
+import React, { Component } from 'react'
+import { Button, Grid, Header, List, Segment } from 'semantic-ui-react'
 import './util/ApiClient.js'
+import 'styling/semantic.less'
 
 import AuthService from './util/AuthService.js';
 import withAuth from './components/withAuth';
@@ -23,11 +24,8 @@ class App extends Component {
       <div className = "App" >
         <Layout/>
         <hr/>
-        {/* <div className="App-header">
-            <h2>Welcome {this.props.user.username}</h2>
-        </div> */}
           <button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Logout</button>
-        </div>
+      </div>
     );
   }
 }

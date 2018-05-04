@@ -1,0 +1,13 @@
+/*******************************
+     User Global Variables
+*******************************/
+
+
+
+@headerFont        : 'Merriweather', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+@pageFont          : 'Open-sans', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+
+@grey: #FAFAFA;
+@blue: #12AEF4;
+
+@borderRadius: 4px;

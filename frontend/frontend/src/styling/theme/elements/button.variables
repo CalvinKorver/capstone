@@ -1,0 +1,6 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+@borderRadius      : 2px;
+@basicBorderRadius : 2px;

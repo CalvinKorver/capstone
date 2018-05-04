@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {
     Menu,
     Icon
-  } from 'semantic-ui-react'
+  } from 'semantic-ui-react';
 
   class NavMenu extends Component {
     constructor(props) {

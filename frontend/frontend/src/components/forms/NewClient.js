@@ -61,7 +61,8 @@ class NewClient extends Component {
 
         var stateOptions = [{text: "CA", value:"CA"}, {text: "WA", value:"WA"}]
         return (
-            <Modal trigger={<Button floated="right">New Client</Button>}>
+            <Modal 
+                trigger={<Button color="blue" floated="right">New Client</Button>}>
                 <Modal.Header> New Client</Modal.Header>
                     <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>

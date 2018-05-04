@@ -8,7 +8,6 @@ import $ from 'jquery';
 // import 'semantic-ui-css/semantic.min.css';
 // import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
 // onTouchTap http://stackoverflow.com/a/34015469/988941 injectTapEventPlugin();
-import '../../react_styles/App.css';
 // import Loginscreen from './loginScreen'
 
 const courtOptions = [
@@ -132,7 +131,7 @@ class NewCase extends Component {
             startTimeCustody1, endTimeCustody1,dateFailureToAppear, benchWarrantAmount } = this.state
 
         return (
-            <Modal trigger={<Button floated="right">New Case</Button>}>
+            <Modal trigger={<Button color="blue" floated="right">New Case</Button>}>
             <Modal.Header> New Case </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>
