@@ -17,6 +17,7 @@ import '../react_styles/App.css';
 
 class Dashboard extends Component {
     constructor(props) {
+        console.log("lkjasdlkfjaskdf");
         super(props);
         this.state = {
             clientCases: {},
