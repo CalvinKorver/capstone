@@ -173,9 +173,9 @@ class PreTrial extends Component {
             {text: "Set for Trial", value: "Set for Trial"}];
         
         var sentencingOptions = [
-            {text: "Found Not Guilty", value:"Found Not Guilty"},
-            {text: "Found Guilty of Lesser-Included Offense", value:"Found Guilty of Lesser-Included Offense"},
-            {text: "Found Guilty as Charged", value:"Found Guilty as Charged"}
+            {text: "Found not guilty", value:"Found not guilty"},
+            {text: "Found guilty of lesser-included offense", value:"Found guilty of lesser-included offense"},
+            {text: "Found guilty as charged", value:"Found guilty as charged"}
         ]
 
         var caseOutcomeOptions = [  
