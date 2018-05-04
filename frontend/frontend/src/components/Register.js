@@ -6,6 +6,7 @@ import ErrorMessage from './subs/ErrorMessage';
 import AuthService from '../util/AuthService.js'
 import '../util/ApiClient.js'
 import SwitchButton from './SwitchButton';
+import NavMenu from './subs/NavMenu';
 
 class Register extends Component {
   constructor(props) {
@@ -66,16 +67,18 @@ class Register extends Component {
     const {first_name, last_name, email, username, password1, password2} = this.state;
     return (
       <div>
+        <NavMenu/>
         <Grid
           textAlign='center'
           style={{ height: '100%' }}
           verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as='h2' color='teal' textAlign='center'>
+            <Form size='large' id="registration-form">
+            <Segment style={{padding: "3em", marginTop: "20%"}}>
+            <Header as='h3' textAlign='center'
+            style={{marginBottom: "1em"}}>
               Register
             </Header>
-            <Form size='large' id="registration-form">
-              <Segment stacked>
               
               <Form.Input
                   id="first_name"
@@ -128,7 +131,7 @@ class Register extends Component {
                     message={this.state.errorMessage}
                     dismissed={this.handleErrorClose.bind(this)}/>
                 <br />
-                <Button color='teal' fluid size='large' onClick={(event) => this.handleClick(event)}>Register</Button>
+                <Button color="blue" fluid size='large' onClick={(event) => this.handleClick(event)}>Register</Button>
               </Segment>
             </Form>
           </Grid.Column>

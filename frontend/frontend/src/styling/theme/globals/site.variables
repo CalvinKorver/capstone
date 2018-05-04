@@ -11,3 +11,4 @@
 @blue: #12AEF4;
 
 @borderRadius: 4px;
+@pageBackground: @grey;

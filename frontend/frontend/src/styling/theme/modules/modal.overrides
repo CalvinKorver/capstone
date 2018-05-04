@@ -7,6 +7,21 @@
 margin-top: 0 !important;
 }
 
+.ui.modal > .header {
+    text-align: center;
+    padding: 2em;
+}
+
 .ui.page.modals.transition.visible {
     display: flex !important;
+}
+
+
+div.ui.page.modals.dimmer.transition.visible.active > div > i {
+    position: relative;
+    float: right;
+    right: 1em;
+    top: 1em;
+    z-index: 1005;
+    color: black;
 }
