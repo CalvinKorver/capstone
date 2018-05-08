@@ -185,6 +185,7 @@ class Dashboard extends Component {
                     )
                 }
             }
+            // clientRows.sort((a,b) => return a.nextCourtDate < b.nextCourtDate)
         }
         return (
             <Container className="wide">

@@ -33,7 +33,7 @@ class NewCase extends Component {
             startTimeCustody1: "",
             endTimeCustody1: "",
             dateFailureToAppear: "", 
-            benchWarrantAmount: ""
+            benchWarrantAmount: 0.00
         }
 
 
