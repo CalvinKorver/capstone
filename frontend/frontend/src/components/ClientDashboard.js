@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {
     Container,
     Header,
+    Grid,
+    Row
   } from 'semantic-ui-react'
 import NavMenu from './subs/NavMenu';
 import RibbonMenu from './subs/RibbonMenu';
@@ -14,7 +16,9 @@ import '../react_styles/ClientDashboard.css';
 class ClientDashboard extends Component {
     constructor(props) {
         super(props);
+        console.log("in clientdashconstructor");
         this.client = props.location.state.client;
+        console.log(this.client);
         this.state = {
             clientView: [
                 // <CasesView client={null} key="1"/>,
@@ -32,23 +36,16 @@ class ClientDashboard extends Component {
         .then(function(response) {
           return response.json();
         })
-        // .then(function(clientData) {
-        //   var casesMatch = [];
-        //   caseData.forEach(function(singleCase){
-        //     if(singleCase.clientID == id){
-        //       casesMatch.push(singleCase);
-        //     }
-        //   });
-        //   return casesMatch;
-            
-            // for (var i = 1; i <= Object.keys(clientData).length; i++) {
-                
-            // }
-        // })
-        .then(cases => this.setState({
+        .then(cases => {
+            console.log(cases);
+            this.setState({
             clientCaseInfo: cases,
             clientView: [<CasesView key="info" client={this.client} cases={cases}/>]
-        }));
+            })
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
     
       ribbonChange = (e) => {
@@ -69,22 +66,20 @@ class ClientDashboard extends Component {
         return (
             <div>
                 <NavMenu/>
-                <Container className="ribbon-container">
-                    <Header as='h1'>{client.first_name + " " + client.last_name}
-                    </Header>
-                    <RibbonMenu onChange={this.ribbonChange}/>
-                </Container>
+                <Grid padded>
+                    <Grid.Row>
+                        <Container className="ribbon-container">
+                            <Header as='h1' >{client.first_name + " " + client.last_name}</Header>
+                            <RibbonMenu onChange={this.ribbonChange}/>
+                        </Container>
+                    </Grid.Row>
 
                 <Container className = "wide">
-                    <NewCase firstName={client.first_name} lastName={client.last_name}/>
                     {this.state.clientView}
                 </Container>
 
-                {/* <NewCase firstName={this.state.FirstName} lastName={this.state.LastName}/> */}
-                {/* <PreTrial />
-                <SentencingCompliance />
-                <Button> New Case </Button>
-                <Client id={id}/> */}
+                    
+                </Grid>
             </div>
         )
     }

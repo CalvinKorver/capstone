@@ -12,7 +12,7 @@ import * as utils from '../util/Functions';
 import ErrorMessage from './subs/ErrorMessage';
 
 import SwitchButton from './SwitchButton';
-// import {CONST} from './Constants/Constants';
+import NavMenu from './subs/NavMenu';
 
 import AuthService from '../util/AuthService.js'
 import '../util/ApiClient.js'
@@ -74,15 +74,16 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="loginscreen" style={{padding: '2em'}}>
+      <div className="loginscreen">
+      <NavMenu/>
         <Grid
             textAlign='center'
             style={{ height: '100%' }}
             verticalAlign='middle'>
-          <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as='h2' color='teal' textAlign='center'>Log In</Header>
+          <Grid.Column style={{ maxWidth: 500 }}>
             <Form size='large' id="login-form">
-              <Segment>
+              <Segment style={{padding: "3em", marginTop: "20%"}}>
+              <Header as='h3' textAlign='center' style={{marginBottom: "1em"}}>Sign in to view cases</Header>
                 <Form.Input
                   fluid
                   icon='user'
@@ -99,10 +100,10 @@ class Login extends Component {
                   onChange=
                   {(event,newValue) => this.setState({password:newValue.value})}/>
                 <Button
-                  color='teal'
+                  color="blue"
                   fluid
                   size='large'
-                  onClick={(event) => this.handleClick(event)}>Login</Button>
+                  onClick={(event) => this.handleClick(event)}>Sign in</Button>
                   <ErrorMessage
                     display={this.state.isInError} 
                     message={this.state.errorMessage}

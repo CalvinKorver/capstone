@@ -6,13 +6,13 @@ import {
   } from 'semantic-ui-react'
 
 
-import '../react_styles/TimelineShell.css'
 
 const groupsExample = {
   groups: [],
   items: [],
   options: {
-    groupOrder: 'content', // groupOrder can be a property name or a sorting function
+    groupOrder: 'content', // groupOrder can be a property name or a sorting function,
+    height: '300px',
   },
 }
 
@@ -58,40 +58,31 @@ class TimelineShell extends Component {
 
   render() {
     var basicExample = {
-      // need to play around with this range
       options: {
         start: '2015-01-10',
         end: '2018-10-30',
-      },
-      items: [
-        { id: 1, content: 'Jail Time', start: '2018-01-20', end: '2018-03-20' },
-        { id: 2, content: 'Pre-Trial', start: '2018-04-01', type: 'point' },
-        { id: 3, content: 'Trial', start: '2018-04-27', type: 'point' },
-        { id: 4, content: 'Prison Time', start: '2018-05-16', end: '2018-06-19' },
-        { id: 5, content: 'Probation', start: '2018-05-16', end: '2018-09-19' }
-        // { id: 6, content: 'item 6', start: '2018-04-27', type: 'point' },
-      ],
+      }
     }
 
     var items = [];
-    console.log(this.props.cases.caseInfo);
     var i = 0;
     var earliestDate;
     var latestDate;// = getDate();
+    
     function checkDate(date) {
       if(!earliestDate) {
         earliestDate = date;
       } else if(date < earliestDate) {
           earliestDate = date;
       }
-      
-
       if(!latestDate) {
         latestDate = date;
       } else if(date > latestDate) {
         latestDate = date;
       }
     }
+
+
     this.props.cases.forEach(singleCase => {
       let sentenceStart = singleCase.caseInfo.sentenceStart;
       let sentenceEnd = singleCase.caseInfo.sentenceEnd;
@@ -130,14 +121,17 @@ class TimelineShell extends Component {
     console.log(earliestDate);
     console.log(latestDate);
 
-    let twoMonthsInMS = 5256000000;
-    basicExample['options']['start'] = new Date(earliestDate).getTime() - twoMonthsInMS;
-    basicExample['options']['end'] = new Date(latestDate).getTime() + twoMonthsInMS;
-    basicExample['items'] = items;
+    if (earliestDate && latestDate) {
+      let twoMonthsInMS = 5256000000;
+      basicExample['options']['start'] = new Date(earliestDate).getTime() - twoMonthsInMS;
+      basicExample['options']['end'] = new Date(latestDate).getTime() + twoMonthsInMS;
+      basicExample['items'] = items;
+    }
 
+    basicExample['options']['height'] = '200px';
     return (
-      <div className="App">
-        <Header as="h3" textAlign="center">
+      <div>
+        <Header padded as="h2" textAlign="center">
             Timeline
         </Header>
         <Timeline {...basicExample} />

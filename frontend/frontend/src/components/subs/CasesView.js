@@ -7,7 +7,8 @@ import {
     Header,
     Segment,
     Table,
-    Dropdown
+    Dropdown,
+    Dimmer
   } from 'semantic-ui-react';
 
 import NewCase from '../forms/NewCase';
@@ -55,13 +56,21 @@ class CasesView extends Component {
         
         return (
             <Grid>
-                {/* <Grid.Column width={12}>
+                <Grid.Column width={12}>
                     <Header as="h4"  floated="left" style={{marginTop: "6px"}}> Case Search </Header>
-                    <Search className="main-search" size="small"/>
-                </Grid.Column> */}
+                        <Search className="main-search" size="small"/>
+                </Grid.Column>
+                
+                <Grid.Column width={4}>
+                    <NewCase firstName={this.props.client.first_name} lastName={this.props.client.last_name}/>
+                </Grid.Column>
 
                 <Grid.Column width={16}>
-                    <TimelineShell client={this.props.client} cases={this.props.cases}/>
+                    <Grid.Row>
+                        <Segment>
+                            <TimelineShell client={this.props.client} cases={this.props.cases}/>
+                        </Segment>
+                    </Grid.Row>
                 </Grid.Column>
 
                 <Grid.Column width={12}>
@@ -71,13 +80,15 @@ class CasesView extends Component {
                         <Table padded>
                             <Table.Header>
                                 <Table.Row>
-                                <Table.HeaderCell >Case Number</Table.HeaderCell>
-                                    <Table.HeaderCell>Sentence Start</Table.HeaderCell>
-                                    <Table.HeaderCell>Sentence End</Table.HeaderCell>
-                                    {/* <Table.HeaderCell>Last Update</Table.HeaderCell> */}
+                                    <Table.HeaderCell width={3}>Case Number</Table.HeaderCell>
+                                    <Table.HeaderCell width={3}>Sentence Start</Table.HeaderCell>
+                                    <Table.HeaderCell width={3}>Sentence End</Table.HeaderCell>
+                                    <Table.HeaderCell width={7}>Last Update</Table.HeaderCell>
                                 </Table.Row>
-                                {this.state.caseTable}
                             </Table.Header>
+                            <Table.Body>
+                                {this.state.caseTable}
+                            </Table.Body>
                         </Table>
 
 
