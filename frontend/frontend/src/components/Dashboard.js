@@ -17,7 +17,6 @@ import '../react_styles/App.css';
 
 class Dashboard extends Component {
     constructor(props) {
-        console.log("lkjasdlkfjaskdf");
         super(props);
         this.state = {
             clientCases: {},
@@ -59,7 +58,6 @@ class Dashboard extends Component {
                                 clients[clientID].cases.push(singleCase);
                             }
                         });
-                        console.log(clients);
                         return clients;
                     })
                     .then(clients => this.setState({
@@ -144,14 +142,15 @@ class Dashboard extends Component {
             for (var i = 0; i < Object.keys(searchResults).length; i++) {
                 if (searchResults[i]){
                     let nextCourtDate = "None coming up";
-                    var openCaseCount;
+                    var openCaseCount = 0;
                     var caseCount;
                     if (searchResults[i].cases) {
-                        console.log(searchResults[i]);
-                        console.log(searchResults);
                         caseCount = searchResults[i].cases.length;
                         // this is ugly as fuck. Matches trials to cases and determines which is the most recent
                         searchResults[i].cases.forEach(function(singleCase){
+                            if (!singleCase.isCaseClosed){
+                                openCaseCount += 1;
+                            }
                             trials.forEach(function(trial){
                                 if(singleCase.id == trial.caseID) {
                                     if( (trial.trialDate > dateToday && nextCourtDate=="None coming up") || (nextCourtDate != "None coming up" && trial.trialDate < nextCourtDate)){
@@ -176,7 +175,7 @@ class Dashboard extends Component {
                             {client.date_of_birth}
                         </td>
                         <td>{nextCourtDate}</td>
-                        <td></td>
+                        <td>{openCaseCount}</td>
                         <td>{caseCount}</td>
                         <td></td>
                     </tr>

@@ -33,7 +33,7 @@ class NewCase extends Component {
             startTimeCustody1: "",
             endTimeCustody1: "",
             dateFailureToAppear: "", 
-            benchWarrantAmount: ""
+            benchWarrantAmount: 0.00
         }
 
 
@@ -89,8 +89,6 @@ class NewCase extends Component {
                 clientLastName: this.props.lastName,
                 jailTimeSuspended: 0,
                 benchWarrant: 0,
-                isPayWorkCrew: false,
-                isPayCommunityService: false,
                 isDomesticViolence: false,
                 isCaseClosed: false,
                 benchWarrant: this.state.benchWarrantAmount,
