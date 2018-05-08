@@ -50,6 +50,7 @@ for (let i = 0; i < itemCount; i++) {
 class TimelineShell extends Component {
   constructor(props) {
     super(props)
+    console.log(this.props);
 
     this.state = {
       selectedIds: [],
@@ -88,9 +89,11 @@ class TimelineShell extends Component {
       let sentenceEnd = singleCase.caseInfo.sentenceEnd;
       checkDate(sentenceStart);
       checkDate(sentenceEnd);
-      var sentence = {id: i, content: 'Sentence', start: sentenceStart, end: sentenceEnd};
-      items.push(sentence);
-      i += 1;
+      if (sentenceStart) {
+        var sentence = {id: i, content: 'Sentence', start: sentenceStart, end: sentenceEnd};
+        items.push(sentence);
+        i += 1;
+      }
       singleCase.trialInfo.forEach(singleTrial => {
         checkDate(singleTrial.trialDate);
         var trial = {id: i, content: 'Trial', start: singleTrial.trialDate, type: 'point'};
@@ -127,6 +130,7 @@ class TimelineShell extends Component {
       basicExample['options']['end'] = new Date(latestDate).getTime() + twoMonthsInMS;
       basicExample['items'] = items;
     }
+    console.log(basicExample);
 
     basicExample['options']['height'] = '200px';
     return (
