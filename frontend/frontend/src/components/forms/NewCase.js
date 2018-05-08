@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import { Icon, Form, Button, Modal} from 'semantic-ui-react';
 import axios from 'axios';
 import $ from 'jquery'; 
+import DateTimeInput from '../subs/DateTimeInput';
 
 
 
 // import 'semantic-ui-css/semantic.min.css';
 // import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
 // onTouchTap http://stackoverflow.com/a/34015469/988941 injectTapEventPlugin();
-import '../../react_styles/App.css';
 // import Loginscreen from './loginScreen'
 
 const courtOptions = [
@@ -33,7 +33,7 @@ class NewCase extends Component {
             startTimeCustody1: "",
             endTimeCustody1: "",
             dateFailureToAppear: "", 
-            benchWarrantAmount: ""
+            benchWarrantAmount: 0.00
         }
 
 
@@ -89,8 +89,6 @@ class NewCase extends Component {
                 clientLastName: this.props.lastName,
                 jailTimeSuspended: 0,
                 benchWarrant: 0,
-                isPayWorkCrew: false,
-                isPayCommunityService: false,
                 isDomesticViolence: false,
                 isCaseClosed: false,
                 benchWarrant: this.state.benchWarrantAmount,
@@ -132,13 +130,13 @@ class NewCase extends Component {
             startTimeCustody1, endTimeCustody1,dateFailureToAppear, benchWarrantAmount } = this.state
 
         return (
-            <Modal trigger={<Button floated="right">New Case</Button>}>
-            <Modal.Header> New Case </Modal.Header>
-                <Modal.Content>
+            <Modal trigger={<Button color="blue" floated="right">New Case</Button>} closeIcon>
+            <Modal.Header> Offense </Modal.Header>
+                <Modal.Content scrolling>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Select fluid label="Court" name="court" options={courtOptions} placeholder='Select an option'  value={court} onChange={this.handleChange} />
                         
-                        <Form.Input fluid label="Date of Offense" name="dateOfOffense" placeholder="YYYY-MM-DD"  value={dateOfOffense} onChange={this.handleChange} />
+                        <DateTimeInput time={false} name="dateOfOffense" label="Date of offense" handleChange={this.handleChange}/>
 
                         <Form.Input fluid label="Case Number" name="caseNumber"  placeholder=""  value={caseNumber} onChange={this.handleChange} />
 
@@ -163,6 +161,9 @@ class NewCase extends Component {
                             onChange={e => this.showOtherForm(e)}/>
                         
                         <div id="time-in-custody-div" className="hidden">
+                        <DateTimeInput time={false} name="startTimeCustody1" label="Beginning of time in custody" handleChange={this.handleChange}/>
+                        <DateTimeInput time={false} name="endTimeCustody1" label="End of time in custody" handleChange={this.handleChange}/>
+{/*                             
                             <Form.Group widths='equal'>
                                 <Form.Input 
                                 fluid 
@@ -177,7 +178,7 @@ class NewCase extends Component {
                                 name="endTimeCustody1"
                                 value={endTimeCustody1}
                                 onChange={this.handleChange}/>
-                            </Form.Group>
+                            </Form.Group> */}
                         
                             <Form.Field>
                                 <Form.Button content='Submit' >
