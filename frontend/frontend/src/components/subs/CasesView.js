@@ -30,9 +30,12 @@ class CasesView extends Component {
         this.props.cases.forEach(singleCase => {
             const forms = [
                 // <NewCase first_name={this.props.client.first_name} last_name={this.props.client.last_name}/>,
+                <hr/>,
                 <PreTrial caseNumber={singleCase.caseInfo.caseNumber} isPreTrial={true}/>,
+                <hr/>,
                 <PreTrial caseNumber={singleCase.caseInfo.caseNumber} isPreTrial={false}/>,
-                <SentencingCompliance caseNumer={singleCase.caseInfo.caseNumber}/>
+                <hr/>,
+                <SentencingCompliance caseNumer={singleCase.caseInfo.caseNumber}/>,
             ];
 
             caseTable.push(
@@ -83,7 +86,7 @@ class CasesView extends Component {
                                     <Table.HeaderCell width={3}>Case Number</Table.HeaderCell>
                                     <Table.HeaderCell width={3}>Sentence Start</Table.HeaderCell>
                                     <Table.HeaderCell width={3}>Sentence End</Table.HeaderCell>
-                                    <Table.HeaderCell width={7}>Last Update</Table.HeaderCell>
+                                    <Table.HeaderCell width={7}>Update Information</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
                             <Table.Body>

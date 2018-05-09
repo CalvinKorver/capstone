@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Button, Checkbox, Dropdown, Form, Modal } from 'semantic-ui-react'
 import axios from 'axios';
 import $ from 'jquery'; 
+import DateTimeInput from '../subs/DateTimeInput';
 
 
 class PreTrial extends Component {
@@ -213,18 +214,23 @@ class PreTrial extends Component {
                     value={isCaseClosed}
                     onChange={this.handleChange}/>;
         }
+        var triggerStyle = {
+            cursor: 'pointer',
+            textAlign: 'center'
+        }
         
         return (
-            <Modal trigger={<Button>{title + " Modal"}</Button>}>
+        <Modal trigger={<h4 style={triggerStyle}>{title}</h4>}>
             <Modal.Header> {title} </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Select fluid label={title +" Status"} name={fieldName} options={options} placeholder='Select an option' onChange={this.handleChange}/>
 
                         <div id="sft-form" className="hidden">
-                            <Form.Input fluid label="Trial Date" name="trialDate" placeholder="MM/DD/YYYY"  value={trialDate} onChange={this.handleChange}/>    
+                            {/* <Form.Input fluid label="Trial Date" name="trialDate" placeholder="MM/DD/YYYY"  value={trialDate} onChange={this.handleChange}/>     */}
 
-                            <Form.Input fluid label="Trial Start Time" name="trialStartTime" placeholder="hh:mm"  value={trialStartTime} onChange={this.handleChange}/>
+                            {/* <Form.Input fluid label="Trial Start Time" name="trialStartTime" placeholder="hh:mm"  value={trialStartTime} onChange={this.handleChange}/> */}
+                            <DateTimeInput time={true} name="trialDate" label="trial Date" handleChange={this.handleChange}/>
 
                             <Form.Group widths="equal">
                                 <Form.Checkbox
@@ -243,21 +249,25 @@ class PreTrial extends Component {
 
 
                         <div id="ptc-form" className = "hidden">
-                        <Form.Input
+                        {/* <Form.Input
                                 fluid
                                 label="Next Court Date"
                                 placeholder="MM/DD/YYYY"
                                 name="nextCourtDate"
                                 value={nextCourtDate}
-                                onChange={this.handleChange}/>
+                                onChange={this.handleChange}/> */}
+                                <DateTimeInput time={false} name="nextCourtDate" label="Next Court Date" handleChange={this.handleChange}/>
 
-                                <Form.Input
+
+                                {/* <Form.Input
                                 fluid
                                 label="Waiver of Time for Trial End Date"
                                 placeholder="MM/DD/YYYY"
                                 name="waiverOfTimeForTrialEndDate"
                                 value={waiverOfTimeForTrialEndDate}
-                                onChange={this.handleChange}/>
+                                onChange={this.handleChange}/> */}
+                                <DateTimeInput time={false} name="waiverOfTimeForTrialEndDate" label="Waiver of Time for Trial End Date" handleChange={this.handleChange}/>
+
 
                                 <Form.Field>
                                     <label>Failure to Appear</label>
@@ -285,22 +295,26 @@ class PreTrial extends Component {
 
                         <div id="rc-form-b" className = "hidden">
                            
-                           <Form.Group widths='equal'>
-                                <Form.Input 
+                           {/* <Form.Group widths='equal'> */}
+                                {/* <Form.Input 
                                 fluid 
                                 label="Beginning of Sentence" 
                                 placeholder="MM/DD/YYYY"
                                 name="startSentence"
                                 value={startSentence}
-                                onChange={this.handleChange}/>
-                                <Form.Input
+                                onChange={this.handleChange}/> */}
+                                <DateTimeInput time={false} name="startSentence" label="Beginning of Sentence" handleChange={this.handleChange}/>
+
+                                {/* <Form.Input
                                 fluid
                                 label="End of Sentence"
                                 placeholder="MM/DD/YYYY"
                                 name="endSentence"
                                 value={endSentence}
-                                onChange={this.handleChange}/>
-                            </Form.Group>
+                                onChange={this.handleChange}/> */}
+                                <DateTimeInput time={false} name="endSentence" label="End of Sentence" handleChange={this.handleChange}/>
+
+                            {/* </Form.Group> */}
 
                             <Form.Input fluid label="Jail Time Suspended" name="jailTimeSuspended"  placeholder=""  value={jailTimeSuspended} onChange={this.handleChange} />
 
@@ -311,11 +325,12 @@ class PreTrial extends Component {
                                 onChange={this.handleFormChange}/>
 
                             <div className="hidden" id="jail-time-imposed-form">
-                            <Form.Group  widths="equal">
+                            {/* <Form.Group  widths="equal"> */}
                                 <Form.Input fluid label="Credit for Days Served" name="creditForDaysServed"  placeholder=""  value={creditForDaysServed} onChange={this.handleChange} />
                                 
-                                <Form.Input fluid label="Due Date for Time Served" name="dueDateForTimeServed"  placeholder=""  value={dueDateForTimeServed} onChange={this.handleChange} />
-                            </Form.Group>
+                                {/* <Form.Input fluid label="Due Date for Time Served" name="dueDateForTimeServed"  placeholder=""  value={dueDateForTimeServed} onChange={this.handleChange} /> */}
+                                <DateTimeInput time={false} name="dueDateForTimeServed" label="Due Date for Time Served" handleChange={this.handleChange}/>
+                            {/* </Form.Group> */}
                             </div>
 
                             <Form.Checkbox
@@ -327,16 +342,18 @@ class PreTrial extends Component {
 
 
                             <div id="work-crew-form" className="hidden">
-                                <Form.Group  widths="equal" >
+                                {/* <Form.Group  widths="equal" > */}
                                     <Form.Input fluid label="Credit for Work Crew" name="creditForWorkCrew"  placeholder="0"  value={creditForWorkCrew} onChange={this.handleChange} />
 
-                                    <Form.Input fluid label="Due Date for Work Crew" name="dueDateForWorkCrew"  placeholder="MM/DD/YYYY"
+                                    {/* <Form.Input fluid label="Due Date for Work Crew" name="dueDateForWorkCrew"  placeholder="MM/DD/YYYY"
                                     value={dueDateForWorkCrew} onChange={this.handleChange} />
-                                    </Form.Group>
+                                    </Form.Group> */}
+                                    <DateTimeInput time={false} name="dueDateForWorkCrew" label="Work Crew Due Date" handleChange={this.handleChange}/>
+
 
                                 <Form.Select fluid label="Jurisdiction of Work Crew" name="jurisdictionOfWorkCrew" options={jurisdictionOfWorkCrewOptions} placeholder='Select an option' onChange={this.handleChange} />
 
-                                <Form.Group widths='equal'>
+                                {/* <Form.Group widths='equal'> */}
                                     <Form.Input 
                                     fluid 
                                     label="Community Service Days" 
@@ -344,14 +361,16 @@ class PreTrial extends Component {
                                     name="communityServiceDays"
                                     value={communityServiceDays}
                                     onChange={this.handleChange}/>
-                                    <Form.Input
+                                    {/* <Form.Input
                                     fluid
                                     label="CommunityServiceDueDate"
                                     placeholder="MM/DD/YYYY"
                                     name="communityServiceDueDate"
                                     value={communityServiceDueDate}
-                                    onChange={this.handleChange}/>
-                                </Form.Group>
+                                    onChange={this.handleChange}/> */}
+                                    <DateTimeInput time={false} name="communityServiceDueDate" label="Community Service Due Date" handleChange={this.handleChange}/>
+                                    
+                                {/* </Form.Group> */}
 
 
                                 <Form.Group widths='equal'>
@@ -387,6 +406,7 @@ class PreTrial extends Component {
                                     value={treatmentOrdered}
                                     onChange={this.handleChange}
                                 />
+                                {/* </Form.Group> */}
                             </div>
                             </div>
                             <Form.Button  fluid type="submit">Save and Continue</Form.Button>
