@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Timeline from 'react-visjs-timeline'
-import moment from 'moment'
+import moment from 'moment';
 import {
     Header,
   } from 'semantic-ui-react'
@@ -9,11 +9,7 @@ import {
 
 const groupsExample = {
   groups: [],
-  items: [],
-  options: {
-    groupOrder: 'content', // groupOrder can be a property name or a sorting function,
-    height: '300px',
-  },
+  items: []
 }
 
 const now = moment()
@@ -26,8 +22,6 @@ const itemCount = 20
 class TimelineShell extends Component {
   constructor(props) {
     super(props)
-    console.log(this.props);
-
     this.state = {
       selectedIds: [],
     }
@@ -66,56 +60,44 @@ class TimelineShell extends Component {
       checkDate(sentenceStart);
       checkDate(sentenceEnd);
       if (sentenceStart) {
-        var sentence = {id: i, content: 'Sentence', start: sentenceStart, end: sentenceEnd};
+        var sentence = {id: i++, content: 'Sentence', start: sentenceStart, end: sentenceEnd};
         items.push(sentence);
-        i += 1;
       }
       singleCase.trialInfo.forEach(singleTrial => {
         checkDate(singleTrial.trialDate);
-        var trial = {id: i, content: 'Trial', start: singleTrial.trialDate, type: 'point'};
-        i += 1;
+        var trial = {id: i++, content: 'Trial', start: singleTrial.trialDate, type: 'point'};
         items.push(trial);
       })
       singleCase.punishmentInfo.forEach(singlePunishment => {
         checkDate(singlePunishment.dueDate);
-        var punishment = {id: i, content: singlePunishment.punishmentTypeName, start: singlePunishment.dueDate, type: 'point'};
-        i += 1;
+        var punishment = {id: i++, content: singlePunishment.punishmentTypeName, start: singlePunishment.dueDate, type: 'point'};
         items.push(punishment);
       })
       singleCase.probationInfo.forEach(singleProbation => {
         checkDate(singleProbation.probationStart);
         checkDate(singleProbation.probationEnd);
-        var probation = {id: i, content: 'Probation', start: singleProbation.probationStart, end: singleProbation.probationEnd};
-        i += 1;
+        var probation = {id: i++, content: 'Probation', start: singleProbation.probationStart, end: singleProbation.probationEnd};
         items.push(probation);
       })
       singleCase.failToAppearInfo.forEach(singleFailToAppear => {
         checkDate(singleFailToAppear.failToAppearDate);
-        var failToAppear = {id: i, content: 'Failed to Appear', start: singleFailToAppear.failToAppearDate, type: 'point'};
-        i += 1;
+        var failToAppear = {id: i++, content: 'Failed to Appear', start: singleFailToAppear.failToAppearDate, type: 'point'};
         items.push(failToAppear);
       })
     });
 
-    console.log(earliestDate);
-    console.log(latestDate);
     let twoMonthsInMS = 5256000000;
-
-    console.log(basicExample);
-
     if (earliestDate && latestDate) {
       basicExample['options']['start'] = new Date(earliestDate).getTime() - twoMonthsInMS;
       basicExample['options']['end'] = new Date(latestDate).getTime() + twoMonthsInMS;
       basicExample['items'] = items;
     }
-    console.log(basicExample);
-    // basicExample['start'] = earliestDate;
 
     basicExample['options']['height'] = '200px';
     return (
       <div>
         <Header padded as="h2" textAlign="center">
-            Timeline
+            Client Timeline
         </Header>
         <Timeline {...basicExample} />
       </div>

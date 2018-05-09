@@ -4,13 +4,6 @@ import axios from 'axios';
 import $ from 'jquery'; 
 import DateTimeInput from '../subs/DateTimeInput';
 
-
-
-// import 'semantic-ui-css/semantic.min.css';
-// import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
-// onTouchTap http://stackoverflow.com/a/34015469/988941 injectTapEventPlugin();
-// import Loginscreen from './loginScreen'
-
 const courtOptions = [
     { key: 'fedwaymunicipal', text: 'Federal Way Municipal Court', value: "Federal Way Municipal Court"},
     { key: 'kingcountyfederal', text: 'King County Federal Court', value: "King County Federal Court"}
@@ -130,7 +123,9 @@ class NewCase extends Component {
             startTimeCustody1, endTimeCustody1,dateFailureToAppear, benchWarrantAmount } = this.state
 
         return (
-            <Modal trigger={<Button color="blue" floated="right">New Case</Button>} closeIcon>
+            <Modal 
+                trigger={<Button color="blue"floated="right">New Case</Button>}
+                closeIcon>
             <Modal.Header> Offense </Modal.Header>
                 <Modal.Content scrolling>
                     <Form onSubmit={this.handleSubmit}>
@@ -160,7 +155,6 @@ class NewCase extends Component {
                             value="time-in-custody-div"
                             onChange={e => this.showOtherForm(e)}/>
                         
-                        {/* it looks like this isn't going to get processed on the server side since those variables don't get posted*/}
                         <div id="time-in-custody-div" className="hidden">
                         <DateTimeInput time={false} name="startTimeCustody1" label="Beginning of time in custody" handleChange={this.handleChange}/>
                         <DateTimeInput time={false} name="endTimeCustody1" label="End of time in custody" handleChange={this.handleChange}/>

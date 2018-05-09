@@ -23,9 +23,11 @@ import {
                 </Menu.Menu>
 
                 <Menu.Menu>
-                <Menu.Item>
+                <a href="/">
+                    <Menu.Item as="a">
                         Shield
                     </Menu.Item>
+                </a>
                 </Menu.Menu>
                 <Menu.Menu position='right'>
                     <Menu.Item as='a'>

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { Button, Checkbox, Dropdown, Form, Modal } from 'semantic-ui-react'
-import DateTimeInput from '../subs/DateTimeInput';
 import axios from 'axios';
 import $ from 'jquery'; 
 import DateTimeInput from '../subs/DateTimeInput';
+import '../../react_styles/App.css';
 
 
 class PreTrial extends Component {
@@ -216,13 +216,9 @@ class PreTrial extends Component {
                     value={isCaseClosed}
                     onChange={this.handleChange}/>;
         }
-        var triggerStyle = {
-            cursor: 'pointer',
-            textAlign: 'center'
-        }
         
         return (
-        <Modal trigger={<h4 style={triggerStyle}>{title}</h4>}>
+        <Modal trigger={<Button style={{width: '100%', backgroundColor: 'Aliceblue'}}>{title}</Button>}>
             <Modal.Header> {title} </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>

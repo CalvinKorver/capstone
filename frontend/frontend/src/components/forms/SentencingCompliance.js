@@ -98,13 +98,8 @@ class SentencingCompliance extends Component {
             {text: "Reserve", value:true},
             {text: "Impose", value:false}];
 
-        var triggerStyle = {
-            cursor: 'pointer',
-            textAlign: 'center'
-        }
-            
         return (
-            <Modal trigger={<h4 style={triggerStyle}>Sentencing Compliance Modal</h4>}>
+            <Modal trigger={<Button style={{width: '100%', backgroundColor: 'Aliceblue'}}>Sentencing Compliance Modal</Button>}>
             <Modal.Header> Sentence Compliance </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>
