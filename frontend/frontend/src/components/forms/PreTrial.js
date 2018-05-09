@@ -230,7 +230,7 @@ class PreTrial extends Component {
                             {/* <Form.Input fluid label="Trial Date" name="trialDate" placeholder="MM/DD/YYYY"  value={trialDate} onChange={this.handleChange}/>     */}
 
                             {/* <Form.Input fluid label="Trial Start Time" name="trialStartTime" placeholder="hh:mm"  value={trialStartTime} onChange={this.handleChange}/> */}
-                            <DateTimeInput time={true} name="trialDate" label="trial Date" handleChange={this.handleChange}/>
+                            <DateTimeInput time={true} name="trialDate" label="Trial Date" handleChange={this.handleChange}/>
 
                             <Form.Group widths="equal">
                                 <Form.Checkbox

@@ -209,9 +209,10 @@ class NewCase extends Component {
                         <Form.Group 
                         class="hidden"
                         widths='equal'>
-                            <Form.Input fluid label="Date of failure to appear" placeholder="MM/DD/YYYY"
+                            {/* <Form.Input fluid label="Date of failure to appear" placeholder="MM/DD/YYYY"
                             name="dateFailureToAppear"
-                            value={dateFailureToAppear} onChange={this.handleChange}/>
+                            value={dateFailureToAppear} onChange={this.handleChange}/> */}
+                            <DateTimeInput time={false} name="dateFilureToAppear" label="Date of failure to appear" handleChange={this.handleChange}/>            
                         </Form.Group>
                         </div>
 
