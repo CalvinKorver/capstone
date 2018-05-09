@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-// import moment from 'moment'
+import moment from 'moment'
 import TimelineShell from '../TimelineShell';
 import {
     Grid,
+    Form,
     Search,
     Header,
     Segment,
@@ -28,21 +29,19 @@ class CasesView extends Component {
     componentWillMount() {
         var caseTable = []
         this.props.cases.forEach(singleCase => {
+            var _case = singleCase.caseInfo;
             const forms = [
-                // <NewCase first_name={this.props.client.first_name} last_name={this.props.client.last_name}/>,
-                <hr/>,
-                <PreTrial caseNumber={singleCase.caseInfo.caseNumber} isPreTrial={true}/>,
-                <hr/>,
-                <PreTrial caseNumber={singleCase.caseInfo.caseNumber} isPreTrial={false}/>,
-                <hr/>,
-                <SentencingCompliance caseNumer={singleCase.caseInfo.caseNumber}/>,
+                <PreTrial caseNumber={_case.caseNumber} isPreTrial={true}/>,
+                <PreTrial caseNumber={_case.caseNumber} isPreTrial={false}/>,
+                <SentencingCompliance caseNumer={_case.caseNumber}/>
             ];
-
             caseTable.push(
-                <Table.Row key={singleCase.caseInfo.caseNumber}>
-                    <Table.Cell>{singleCase.caseInfo.caseNumber}</Table.Cell>
-                    <Table.Cell>{singleCase.caseInfo.sentenceStart}</Table.Cell>
-                    <Table.Cell>{singleCase.caseInfo.sentenceEnd}</Table.Cell> 
+                <Table.Row key={_case.caseNumber}>
+                    <Table.Cell>{_case.caseNumber}</Table.Cell>
+                    <Table.Cell>{
+                        _case.sentenceStart ? moment(_case.sentenceStart).format('MMM. Do YYYY'): "none"}</Table.Cell>
+                    <Table.Cell>{
+                        _case.sentenceEnd ? moment(_case.sentenceEnd).format('MMM. Do YYYY') : "-"}</Table.Cell> 
                     <Table.Cell >
                         <Dropdown placeholder='Edit' fluid selection options={forms} />
                     </Table.Cell>   

@@ -21,14 +21,16 @@ class Notifications extends Component {
         var oneWeek = 604800000; // in milliseconds
         var importantDate = new Date(date);
         if(importantDate.getTime() < new Date().getTime() + oneWeek && importantDate.getTime() > new Date().getTime()){
-            notifications.push(<h3>{label}</h3>)
+            notifications.push(<h4>{label}</h4>)
         }
     }
     this.props.cases.forEach(singleCase => {
         checkDateComingUp(singleCase.caseInfo.sentenceEnd, "Sentence ending soon");
     
         singleCase.trialInfo.forEach(singleTrial => {
-            checkDateComingUp(singleTrial.trialDate, "Trial coming up");
+            var dateTime = moment(singleTrial.trialDate + " " + singleTrial.trialTime).format('MMMM Do YYYY h:mm a')
+            checkDateComingUp(singleTrial.trialDate, 
+                "Trial coming up on " + dateTime);
         })
 
         singleCase.punishmentInfo.forEach(singlePunishment => {

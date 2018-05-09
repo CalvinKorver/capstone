@@ -39,8 +39,8 @@ class ClientDashboard extends Component {
         .then(cases => {
             console.log(cases);
             this.setState({
-            clientCaseInfo: cases,
-            clientView: [<CasesView key="info" client={this.client} cases={cases}/>]
+                clientCaseInfo: cases,
+                clientView: [<CasesView key="info" client={this.client} cases={cases}/>]
             })
         })
         .catch(error => {

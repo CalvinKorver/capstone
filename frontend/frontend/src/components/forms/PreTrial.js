@@ -3,6 +3,7 @@ import { Button, Checkbox, Dropdown, Form, Modal } from 'semantic-ui-react'
 import axios from 'axios';
 import $ from 'jquery'; 
 import DateTimeInput from '../subs/DateTimeInput';
+import '../../react_styles/App.css';
 
 
 class PreTrial extends Component {
@@ -89,6 +90,7 @@ class PreTrial extends Component {
     }
 
     handleChange = (e, { name, value }) => { 
+        console.log(name, value);
         var checkboxes = ["motion35", "motion36", "caseClosed", "reset", "benchWarrant", 
             "jailTimeImposed", "workCrewInLieu", "payWorkCrew", "payCommunityService"]
         if (checkboxes.includes(name)){
@@ -214,23 +216,21 @@ class PreTrial extends Component {
                     value={isCaseClosed}
                     onChange={this.handleChange}/>;
         }
-        var triggerStyle = {
-            cursor: 'pointer',
-            textAlign: 'center'
-        }
         
         return (
-        <Modal trigger={<h4 style={triggerStyle}>{title}</h4>}>
+        <Modal trigger={<Button style={{width: '100%', backgroundColor: 'Aliceblue'}}>{title}</Button>}>
             <Modal.Header> {title} </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Select fluid label={title +" Status"} name={fieldName} options={options} placeholder='Select an option' onChange={this.handleChange}/>
 
                         <div id="sft-form" className="hidden">
-                            {/* <Form.Input fluid label="Trial Date" name="trialDate" placeholder="MM/DD/YYYY"  value={trialDate} onChange={this.handleChange}/>     */}
 
-                            {/* <Form.Input fluid label="Trial Start Time" name="trialStartTime" placeholder="hh:mm"  value={trialStartTime} onChange={this.handleChange}/> */}
-                            <DateTimeInput time={true} name="trialDate" label="Trial Date" handleChange={this.handleChange}/>
+                            <DateTimeInput time={true} 
+                                name="trialDate"
+                                timeName="trialStartTime"
+                                label="Trial Date"
+                                handleChange={this.handleChange}/>
 
                             <Form.Group widths="equal">
                                 <Form.Checkbox

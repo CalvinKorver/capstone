@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router-dom'
-
+import moment from 'moment';
 import {
     Button,
     Search,
@@ -14,6 +14,7 @@ import Client from './Client';
 import NewClient from './forms/NewClient';
 import NewCase from './forms/NewCase';
 import '../react_styles/App.css';
+import * as utils from '../util/Functions';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -124,24 +125,10 @@ class Dashboard extends Component {
         const { isLoading, value, clients, results, trials, searchResults } = this.state;
         var clientRows = [];
         if (searchResults) {
-            // get today's date
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth()+1; //January is 0!
-            var yyyy = today.getFullYear();
-
-            if(dd<10) {
-                dd = '0'+dd
-            } 
-
-            if(mm<10) {
-                mm = '0'+mm
-            } 
-
-            var dateToday = yyyy + '-' + mm + '-' + dd;
+            var dateToday = utils.getDate();
             for (var i = 0; i < Object.keys(searchResults).length; i++) {
                 if (searchResults[i]){
-                    let nextCourtDate = "None coming up";
+                    let nextCourtDate = "";
                     var openCaseCount = 0;
                     var caseCount;
                     if (searchResults[i].cases) {
@@ -153,7 +140,7 @@ class Dashboard extends Component {
                             }
                             trials.forEach(function(trial){
                                 if(singleCase.id == trial.caseID) {
-                                    if( (trial.trialDate > dateToday && nextCourtDate=="None coming up") || (nextCourtDate != "None coming up" && trial.trialDate < nextCourtDate)){
+                                    if(trial.trialDate > dateToday && utils.isEmpty(nextCourtDate) || (!utils.isEmpty(nextCourtDate) && trial.trialDate < nextCourtDate)){
                                         nextCourtDate = trial.trialDate;
                                     }
                                 }
@@ -172,12 +159,11 @@ class Dashboard extends Component {
                             </Link>
                         </td>
                         <td>
-                            {client.date_of_birth}
+                            {client.date_of_birth ? moment(client.date_of_birth).format('MMM DD, YYYY') : "-"}
                         </td>
-                        <td>{nextCourtDate}</td>
+                        <td>{nextCourtDate ? moment(nextCourtDate).format('MMM DD, YYYY'): "-"}</td>
                         <td>{openCaseCount}</td>
                         <td>{caseCount}</td>
-                        {/* <td></td> */}
                     </tr>
                     )
                 }
