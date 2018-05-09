@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { Button, Dropdown, Form, Modal } from 'semantic-ui-react'
 import axios from 'axios';
 import DateTimeInput from '../subs/DateTimeInput';
+import * as utils from '../../util/Functions';
+import ErrorMessage from '../subs/ErrorMessage';
 
 // import 'semantic-ui-css/semantic.min.css';
 // import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
@@ -13,14 +15,16 @@ class NewClient extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            first_name: "",
-            last_name: "",
+            first_name: '',
+            last_name: '',
             date_of_birth: "",
             street_address: "",
             city: "",
             state: "",
             zipcode: "",
-            country: ""
+            country: "",
+            isInError: false,
+            errorMessage: ""
         }
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,9 +51,24 @@ class NewClient extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        if (utils.isEmpty(this.state.first_name) || utils.isEmpty(this.state.last_name)) {
+            this.setState({
+              isInError: true,
+              errorMessage: "Sorry, clients must have a first and last name."
+            });
+        } else {
         var URL = "http://localhost:8000/";
         var endpoint = "clients/"
-        const data = this.state;
+        const data = {
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            date_of_birth: this.state.date_of_birth,
+            street_address: this.state.street_address,
+            city: this.state.city,
+            state: this.state.state,
+            zipcode: this.state.zipcode,
+            country: this.state.country
+        }
         return axios
             .post(URL + endpoint, data)
             .then(function (response) {
@@ -64,11 +83,16 @@ class NewClient extends Component {
             //   }
             //   throw error;
             // });
+        }
     }
 
     handleChange = (e, { name, value }) => { 
         this.setState({ [name]: value })
     }
+
+    handleErrorClose() {
+        this.setState({isInError: false });
+      }
 
     render() {
         const {first_name, last_name, date_of_birth, street_address, city, state, zipcode, country} = this.state
@@ -132,6 +156,10 @@ class NewClient extends Component {
                             name="country"
                             value={country} onChange={this.handleChange}/>
                         </Form.Field>
+                        <ErrorMessage
+                            display={this.state.isInError} 
+                            message={this.state.errorMessage}
+                            dismissed={this.handleErrorClose.bind(this)}/>
                         <Button type="submit">Submit</Button>
                     </Form> 
                 </Modal.Content>
