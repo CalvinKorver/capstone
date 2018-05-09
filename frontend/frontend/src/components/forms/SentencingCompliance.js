@@ -97,9 +97,14 @@ class SentencingCompliance extends Component {
         var reserveOptions = [ 
             {text: "Reserve", value:true},
             {text: "Impose", value:false}];
+
+        var triggerStyle = {
+            cursor: 'pointer',
+            textAlign: 'center'
+        }
             
         return (
-            <Modal trigger={<Button>Sentencing Compliance Modal</Button>}>
+            <Modal trigger={<h4 style={triggerStyle}>Sentencing Compliance Modal</h4>}>
             <Modal.Header> Sentence Compliance </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>

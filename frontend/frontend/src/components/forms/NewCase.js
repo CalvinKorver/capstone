@@ -160,6 +160,7 @@ class NewCase extends Component {
                             value="time-in-custody-div"
                             onChange={e => this.showOtherForm(e)}/>
                         
+                        {/* it looks like this isn't going to get processed on the server side since those variables don't get posted*/}
                         <div id="time-in-custody-div" className="hidden">
                         <DateTimeInput time={false} name="startTimeCustody1" label="Beginning of time in custody" handleChange={this.handleChange}/>
                         <DateTimeInput time={false} name="endTimeCustody1" label="End of time in custody" handleChange={this.handleChange}/>
