@@ -42,7 +42,7 @@ class InformationView extends Component {
                 singleCaseInfo.push(<p>{punishment.punishmentTypeName + " due on " + punishment.dueDate}</p>)
             })
         }
-        singleCaseInfo.push(<p></p>); // add an empty paragraph as a spacing between different cases information sections   
+        singleCaseInfo.push(<br/>,<br/>); // add spacing between different cases information sections   
         casesInfo.push(singleCaseInfo);
     });
     return (

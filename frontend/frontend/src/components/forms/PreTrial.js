@@ -99,6 +99,11 @@ class PreTrial extends Component {
         this.setState({ [name]: value })
     }
 
+    showOtherForm(event) {
+        console.log("target: " + event.target);
+        $('#' + event.target.value).toggleClass("hidden");
+    }
+
     handleFormChange = (e, { name, value }) => {$("#" + value).toggleClass("hidden");}
 
     render() {
@@ -137,8 +142,8 @@ class PreTrial extends Component {
         } = this.state
         
         if (caseOutcome == "Entered Plea Bargain" 
-            || sentencingStatusName == "Found Guilty of Lesser-Included Offense" 
-            || sentencingStatusName == "Found Guilty as Charged"){
+            || sentencingStatusName == "Found guilty of lesser-included offense" 
+            || sentencingStatusName == "Found guilty as charged"){
             $("#rc-form-b").removeClass("hidden");
         } else {
             $("#rc-form-b").addClass("hidden");
@@ -203,7 +208,7 @@ class PreTrial extends Component {
             options = preTrialOptions;
             outcomeOrClosed = 
             <Form.Field id="rc-form-a" className = "hidden">
-                <Form.Select fluid label="Case Outcome" name="caseOutcome" options={caseOutcomeOptions} placeholder='Select an option' onChange={this.handleChange} />
+                <Form.Select fluid label="Case Outcome" name="caseOutcome" options={caseOutcomeOptions} placeholder='Select an option' onChange={(event) => {this.handleChange; this.showOtherForm(event) }} />
             </Form.Field>;
         } else {
             title = "Sentencing";
@@ -249,23 +254,9 @@ class PreTrial extends Component {
 
 
                         <div id="ptc-form" className = "hidden">
-                        {/* <Form.Input
-                                fluid
-                                label="Next Court Date"
-                                placeholder="MM/DD/YYYY"
-                                name="nextCourtDate"
-                                value={nextCourtDate}
-                                onChange={this.handleChange}/> */}
+
                                 <DateTimeInput time={false} name="nextCourtDate" label="Next Court Date" handleChange={this.handleChange}/>
 
-
-                                {/* <Form.Input
-                                fluid
-                                label="Waiver of Time for Trial End Date"
-                                placeholder="MM/DD/YYYY"
-                                name="waiverOfTimeForTrialEndDate"
-                                value={waiverOfTimeForTrialEndDate}
-                                onChange={this.handleChange}/> */}
                                 <DateTimeInput time={false} name="waiverOfTimeForTrialEndDate" label="Waiver of Time for Trial End Date" handleChange={this.handleChange}/>
 
 
@@ -294,27 +285,10 @@ class PreTrial extends Component {
                             {outcomeOrClosed}
 
                         <div id="rc-form-b" className = "hidden">
-                           
-                           {/* <Form.Group widths='equal'> */}
-                                {/* <Form.Input 
-                                fluid 
-                                label="Beginning of Sentence" 
-                                placeholder="MM/DD/YYYY"
-                                name="startSentence"
-                                value={startSentence}
-                                onChange={this.handleChange}/> */}
-                                <DateTimeInput time={false} name="startSentence" label="Beginning of Sentence" handleChange={this.handleChange}/>
+                        
+                            <DateTimeInput time={false} name="startSentence" label="Beginning of Sentence" handleChange={this.handleChange}/>
 
-                                {/* <Form.Input
-                                fluid
-                                label="End of Sentence"
-                                placeholder="MM/DD/YYYY"
-                                name="endSentence"
-                                value={endSentence}
-                                onChange={this.handleChange}/> */}
-                                <DateTimeInput time={false} name="endSentence" label="End of Sentence" handleChange={this.handleChange}/>
-
-                            {/* </Form.Group> */}
+                            <DateTimeInput time={false} name="endSentence" label="End of Sentence" handleChange={this.handleChange}/>
 
                             <Form.Input fluid label="Jail Time Suspended" name="jailTimeSuspended"  placeholder=""  value={jailTimeSuspended} onChange={this.handleChange} />
 
