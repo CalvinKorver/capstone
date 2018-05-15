@@ -1,3 +1,0 @@
-#!/bin/bash
-gnome-terminal -x sh -c 'cd /home/kyle/code/capstone/backend; . ./venv.sh; python manage.py runserver; exec bash'
-gnome-terminal -x sh -c 'npm start --prefix /home/kyle/code/capstone/frontend/frontend; exec bash'
