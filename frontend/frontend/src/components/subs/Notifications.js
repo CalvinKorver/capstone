@@ -17,13 +17,24 @@ class Notifications extends Component {
 
     // this function takes a date in ISO format and a string describing the notification
     // checks if the date is in less than a week from now, then adds it to the notification list if so
-    function checkDateComingUp(date, label){
+    function checkDateComingUp(date, label, probationEnd){
         var oneWeek = 604800000; // in milliseconds
+        if(probationEnd && probationEnd == "probationEnd") {
+            oneWeek = 7884000000; // set "oneweek" to three months for the probation end check
+        }
         var importantDate = new Date(date);
         if(importantDate.getTime() < new Date().getTime() + oneWeek && importantDate.getTime() > new Date().getTime()){
             notifications.push(<h4>{label}</h4>)
         }
     }
+
+    // function checkProbationThreeMonths(date, label){
+    //     var threeMonths = ; // in milliseconds
+    //     var importantDate = new Date(date);
+    //     if(importantDate.getTime() < new Date().getTime() + oneWeek && importantDate.getTime() > new Date().getTime()){
+    //         notifications.push(<h4>{label}</h4>)
+    //     }
+    // }
 
     var duiDates = [];
     this.props.cases.forEach(singleCase => {
@@ -45,7 +56,7 @@ class Notifications extends Component {
 
         singleCase.probationInfo.forEach(singleProbation => {
             checkDateComingUp(singleProbation.probationStart, "Probation starts soon");
-            checkDateComingUp(singleProbation.probationEnd, "Probation ends soon");
+            checkDateComingUp(singleProbation.probationEnd, "Probation ends soon", "probationEnd");
         })
         // don't need to do failure to appears since they are in the past
     });

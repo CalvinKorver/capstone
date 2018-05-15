@@ -208,7 +208,7 @@ class PreTrial extends Component {
             options = preTrialOptions;
             outcomeOrClosed = 
             <Form.Field id="rc-form-a" className = "hidden">
-                <Form.Select fluid label="Case Outcome" name="caseOutcome" options={caseOutcomeOptions} placeholder='Select an option' onChange={(event) => {this.handleChange; this.showOtherForm(event) }} />
+                <Form.Select fluid label="Case Outcome" name="caseOutcome" options={caseOutcomeOptions} placeholder='Select an option' onChange={this.handleChange} />
             </Form.Field>;
         } else {
             title = "Sentencing";
@@ -253,7 +253,7 @@ class PreTrial extends Component {
                         </div>
 
 
-                        <div id="ptc-form" className = "hidden">
+                        <div id="fta-form" className = "hidden">
 
                                 <DateTimeInput time={false} name="nextCourtDate" label="Next Court Date" handleChange={this.handleChange}/>
 
