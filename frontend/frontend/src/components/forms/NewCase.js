@@ -11,8 +11,8 @@ const courtOptions = [
 
 
 const chargeOptions = [
-    { key: 'wa', text: 'Washington', value: "wa"},
-    { key: 'ca', text: 'California', value: 'ca'}
+    { key: 'DUI', text: 'DUI', value: "DUI"},
+    { key: 'Theft', text: 'Theft', value: 'Theft'}
 ]
 
 class NewCase extends Component {

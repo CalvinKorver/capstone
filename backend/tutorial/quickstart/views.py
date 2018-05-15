@@ -203,6 +203,17 @@ class CaseInfoViewSet(APIView):
             i = 0
             for case in cases:
                 results.append({})
+                # check if the case is a DUI
+                offenses = Offense.objects.filter(caseID = case.id)
+                print(offenses)
+                # if offenses:
+                for offenseInstance in offenses:
+                    # print(offenseInstance.chargeTypeID.id)
+                    chargeType = ChargeType.objects.get(id = offenseInstance.chargeTypeID.id)
+                    print(chargeType.chargeTypeName)
+                    if chargeType.chargeTypeName == "DUI":
+                        results[i]["dateDUI"] = offenseInstance.offenseDate
+
                 results[i]["caseInfo"] = CaseSerializer(case).data
                 fta = FailToAppear.objects.filter(caseID=case.id)
                 results[i]["failToAppearInfo"] = FailToAppearSerializer(fta, many=True).data

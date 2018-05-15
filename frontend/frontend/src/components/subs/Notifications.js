@@ -24,9 +24,15 @@ class Notifications extends Component {
             notifications.push(<h4>{label}</h4>)
         }
     }
+
+    var duiDates = [];
     this.props.cases.forEach(singleCase => {
         checkDateComingUp(singleCase.caseInfo.sentenceEnd, "Sentence ending soon");
-    
+
+        if(singleCase.dateDUI){
+            duiDates.push(singleCase.dateDUI);
+        }
+
         singleCase.trialInfo.forEach(singleTrial => {
             var dateTime = moment(singleTrial.trialDate + " " + singleTrial.trialTime).format('MMMM Do YYYY h:mm a')
             checkDateComingUp(singleTrial.trialDate, 
@@ -43,6 +49,18 @@ class Notifications extends Component {
         })
         // don't need to do failure to appears since they are in the past
     });
+    duiDates.push("2019-03-25")
+    duiDates.sort();
+    if (duiDates.length > 1) {
+        // check if the two most recent dates (last two) are within 7 years of each other
+        var earlierDate = new Date(duiDates[duiDates.length - 2]);
+        var laterDate = new Date(duiDates[duiDates.length - 1]);
+        var sevenYears = 220898482000;
+        if(laterDate.getTime() - earlierDate.getTime() < sevenYears && laterDate > new Date()){
+            notifications.push("Two DUI offenses within seven years");
+        }
+    }
+    console.log(duiDates);
 
     if(!notifications[0]){
         notifications = "Nothing coming up in the next week"
