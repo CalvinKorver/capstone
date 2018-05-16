@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { Button, Checkbox, Dropdown, Form, Modal } from 'semantic-ui-react'
 import axios from 'axios';
 import $ from 'jquery'; 
+import * as utils from '../../util/Functions';
+
 
 // import 'semantic-ui-css/semantic.min.css';
 // import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
@@ -33,7 +35,6 @@ class SentencingCompliance extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        var URL = "http://localhost:8000/";
         var endpoint = "sentence-compliance/"
         // console.log(event.target);
         // const data = new FormData(event.target);
@@ -49,7 +50,7 @@ class SentencingCompliance extends Component {
             caseNumber: this.state.caseNumber
         }
         return axios
-            .post(URL + endpoint, data)
+            .post(utils.globalURL + endpoint, data)
             .then(function (response) {
                 console.log(response);
             // window.localStorage.setItem('token', response);

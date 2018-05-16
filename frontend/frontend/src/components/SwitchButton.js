@@ -1,7 +1,9 @@
 
 
 import React, { Component } from 'react';
-import { Button, Grid } from 'semantic-ui-react'
+import { Button, Grid } from 'semantic-ui-react';
+import * as utils from '../util/Functions';
+
 
 
 export default class SwitchButton extends Component {
@@ -11,7 +13,7 @@ export default class SwitchButton extends Component {
     // }
 
     handleClick(e) {
-        window.location.href = 'http://localhost:3000/' + this.props.endpoint;
+        window.location.href = utils.globalURLFrontend + this.props.endpoint;
     }
 
     render() {

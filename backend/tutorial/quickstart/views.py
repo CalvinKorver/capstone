@@ -245,9 +245,8 @@ class CaseViewSet(APIView):
     # queryset = Case.objects.all()
     # serializer_class = CaseSerializer
     def get(self, request, *args, **kwargs):
-        print("shit")
         id = request.query_params.get('id', None)
-        print(id)
+        # print(id)
         queryset = Case.objects.all()
         serializer_class = CaseSerializer(queryset, many=True)
         return Response(serializer_class.data)
@@ -304,7 +303,6 @@ class CaseViewSet(APIView):
             caseOutcomeID=caseOutcome,
             courtID=court,
             )
-
 
         offenseDate = request.data.get('offenseDate')
         if (offenseDate):

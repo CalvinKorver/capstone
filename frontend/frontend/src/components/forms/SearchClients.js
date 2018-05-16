@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Input } from 'semantic-ui-react'
 import axios from 'axios';
+import * as utils from '../util/Functions';
 
 class SearchClients extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class SearchClients extends Component {
 
      componentDidMount() {
         // don't hardcode urls
-        fetch('http://localhost:8000/clients/', {mode: 'cors'})
+        fetch(utils.globalURL + 'clients/', {mode: 'cors'})
             .then(function(response) {
               return response.json();
             })

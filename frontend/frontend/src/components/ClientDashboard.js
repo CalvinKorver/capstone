@@ -11,19 +11,15 @@ import CasesView from './subs/CasesView';
 import InformationView from './subs/InformationView';
 import NewCase from './forms/NewCase';
 import '../react_styles/ClientDashboard.css';
+import * as utils from '../util/Functions';
 
 
 class ClientDashboard extends Component {
     constructor(props) {
         super(props);
-        console.log("in clientdashconstructor");
         this.client = props.location.state.client;
-        console.log(this.client);
         this.state = {
-            clientView: [
-                // <CasesView client={null} key="1"/>,
-                // <InformationView key="info" />
-            ],
+            clientView: [],
             clientCaseInfo: []
         }
     }
@@ -32,7 +28,7 @@ class ClientDashboard extends Component {
         var id = this.props.match.params.id;
 
         // this grabs all the cases to check which are linked to our client
-        fetch('http://localhost:8000/case-info/?id=' + id, {mode: 'cors'})
+        fetch(utils.globalURL + 'case-info/?id=' + id, {mode: 'cors'})
         .then(function(response) {
           return response.json();
         })

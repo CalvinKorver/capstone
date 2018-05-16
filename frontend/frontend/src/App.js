@@ -24,7 +24,7 @@ class App extends Component {
       <div className = "App" >
         <Layout/>
         <hr/>
-          <button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Logout</button>
+          <Button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Logout</Button>
       </div>
     );
   }

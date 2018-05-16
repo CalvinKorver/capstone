@@ -30,24 +30,6 @@ class NewClient extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
      }
-//   componentWillMount() {
-//     // var gameScreen = [];
-//     // gameScreen.push(<Game appContext={this}/>);
-//     // this.setState({   gameScreen: gameScreen });
-//     var loginPage = [];
-//     loginPage.push(<Loginscreen appContext={this} key={"loginScreen"}/>);
-//     this.setState({loginPage: loginPage})
-//   }
-// componentDidMount() {
-//   // don't hardcode urls
-//   fetch('http://localhost:8000/clients/', {mode: 'cors'})
-//       .then(function(response) {
-//         return response.json();
-//       })
-//       .then(clientData => this.setState({
-//           clients: clientData
-//       }));
-// }
 
     handleSubmit(event) {
         event.preventDefault();
@@ -57,7 +39,6 @@ class NewClient extends Component {
               errorMessage: "Sorry, clients must have a first and last name."
             });
         } else {
-        var URL = "http://localhost:8000/";
         var endpoint = "clients/"
         const data = {
             first_name: this.state.first_name,
@@ -70,7 +51,7 @@ class NewClient extends Component {
             country: this.state.country
         }
         return axios
-            .post(URL + endpoint, data)
+            .post(utils.globalURL + endpoint, data)
             .then(function (response) {
                 alert("Submitted");
             // window.localStorage.setItem('token', response);

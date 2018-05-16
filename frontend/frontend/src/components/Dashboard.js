@@ -31,7 +31,7 @@ class Dashboard extends Component {
     }
 
     componentWillMount() {
-        fetch('http://localhost:8000/clients/', {mode: 'cors'})
+        fetch(utils.globalURL + 'clients/', {mode: 'cors'})
             .then(function(response) { return response.json(); })
             .then(function(listClients) {
                 var clients = {};
@@ -47,7 +47,7 @@ class Dashboard extends Component {
                 return clients;
             })
             .then(clients => {
-                fetch('http://localhost:8000/cases/', {mode: 'cors'})
+                fetch(utils.globalURL + 'cases/', {mode: 'cors'})
                     .then(function(response) { return response.json(); })
                     .then(function(cases) {
                         cases.forEach(function(singleCase) {
@@ -68,7 +68,7 @@ class Dashboard extends Component {
                         searchResults: clients
                     }))
 
-                fetch('http://localhost:8000/trials/', {mode: 'cors'})
+                fetch(utils.globalURL + 'trials/', {mode: 'cors'})
                     .then(function(response){ return response.json();})
                     .then(trials => 
                         this.setState({

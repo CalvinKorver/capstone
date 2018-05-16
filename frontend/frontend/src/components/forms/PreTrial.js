@@ -4,6 +4,7 @@ import axios from 'axios';
 import $ from 'jquery'; 
 import DateTimeInput from '../subs/DateTimeInput';
 import '../../react_styles/App.css';
+import * as utils from '../../util/Functions';
 
 
 class PreTrial extends Component {
@@ -45,28 +46,10 @@ class PreTrial extends Component {
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
      }
-//   componentWillMount() {
-//     // var gameScreen = [];
-//     // gameScreen.push(<Game appContext={this}/>);
-//     // this.setState({   gameScreen: gameScreen });
-//     var loginPage = [];
-//     loginPage.push(<Loginscreen appContext={this} key={"loginScreen"}/>);
-//     this.setState({loginPage: loginPage})
-//   }
-// componentDidMount() {
-//   // don't hardcode urls
-//   fetch('http://localhost:8000/clients/', {mode: 'cors'})
-//       .then(function(response) {
-//         return response.json();
-//       })
-//       .then(clientData => this.setState({
-//           clients: clientData
-//       }));
-// }
+
 
     handleSubmit(event) {
         event.preventDefault();
-        var URL = "http://localhost:8000/";
         var endpoint = "cases/"
         // console.log(event.target);
         // const data = new FormData(event.target);
@@ -74,7 +57,7 @@ class PreTrial extends Component {
         const data = this.state;
         // console.log("data: " + data);
         return axios
-            .put(URL + endpoint, data)
+            .put(utils.globalURL + endpoint, data)
             .then(function (response) {
                 console.log(response);
             // window.localStorage.setItem('token', response);
