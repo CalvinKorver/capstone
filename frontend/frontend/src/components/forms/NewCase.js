@@ -3,6 +3,7 @@ import { Icon, Form, Button, Modal} from 'semantic-ui-react';
 import axios from 'axios';
 import $ from 'jquery'; 
 import DateTimeInput from '../subs/DateTimeInput';
+import * as utils from '../../util/Functions';
 
 const courtOptions = [
     { key: 'fedwaymunicipal', text: 'Federal Way Municipal Court', value: "Federal Way Municipal Court"},
@@ -11,8 +12,8 @@ const courtOptions = [
 
 
 const chargeOptions = [
-    { key: 'wa', text: 'Washington', value: "wa"},
-    { key: 'ca', text: 'California', value: 'ca'}
+    { key: 'DUI', text: 'DUI', value: "DUI"},
+    { key: 'Theft', text: 'Theft', value: 'Theft'}
 ]
 
 class NewCase extends Component {
@@ -46,35 +47,16 @@ class NewCase extends Component {
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
      }
-//   componentWillMount() {
-//     // var gameScreen = [];
-//     // gameScreen.push(<Game appContext={this}/>);
-//     // this.setState({   gameScreen: gameScreen });
-//     var loginPage = [];
-//     loginPage.push(<Loginscreen appContext={this} key={"loginScreen"}/>);
-//     this.setState({loginPage: loginPage})
-//   }
-// componentDidMount() {
-//   // don't hardcode urls
-//   fetch('http://localhost:8000/clients/', {mode: 'cors'})
-//       .then(function(response) {
-//         return response.json();
-//       })
-//       .then(clientData => this.setState({
-//           clients: clientData
-//       }));
-// }
 
     handleSubmit(event) {
         event.preventDefault();
-        var URL = "http://localhost:8000/";
         var endpoint = "cases/"
         var data = this.state;
         data["firstName"] = this.props.firstName;
         data["lastName"] = this.props.lastName;
         return axios
         // this handles the most basic form entry
-            .post(URL + endpoint, {
+            .post(utils.globalURL + endpoint, {
                 caseNumber: this.state.caseNumber,
                 offenseDate: this.state.dateOfOffense,
                 chargeTypeName: this.state.charge1,
@@ -206,7 +188,7 @@ class NewCase extends Component {
                             {/* <Form.Input fluid label="Date of failure to appear" placeholder="MM/DD/YYYY"
                             name="dateFailureToAppear"
                             value={dateFailureToAppear} onChange={this.handleChange}/> */}
-                            <DateTimeInput time={false} name="dateFilureToAppear" label="Date of failure to appear" handleChange={this.handleChange}/>            
+                            <DateTimeInput time={false} name="failToAppearDate" label="Date of failure to appear" handleChange={this.handleChange}/>            
                         </Form.Group>
                         </div>
 

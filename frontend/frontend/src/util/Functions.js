@@ -23,3 +23,11 @@ export function getDate() {
 
     return (yyyy + '-' + mm + '-' + dd);
 }
+
+// export const globalURL = "shield-app.tk/"
+// export const globalURLFrontend = "shield-site.tk/"
+
+export const globalURL = "http://localhost:8000/"
+export const globalURLFrontend = "http://localhost:3000/"
+
+

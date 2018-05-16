@@ -102,8 +102,8 @@ class CaseSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class AuthUserCaseSerializer(serializers.HyperlinkedModelSerializer):
-    user = UserSerializer()
-    case = CaseSerializer()
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+    case = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Auth_User_Case

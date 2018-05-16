@@ -4,6 +4,7 @@ import axios from 'axios';
 import $ from 'jquery'; 
 import DateTimeInput from '../subs/DateTimeInput';
 import '../../react_styles/App.css';
+import * as utils from '../../util/Functions';
 
 
 class PreTrial extends Component {
@@ -45,28 +46,10 @@ class PreTrial extends Component {
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
      }
-//   componentWillMount() {
-//     // var gameScreen = [];
-//     // gameScreen.push(<Game appContext={this}/>);
-//     // this.setState({   gameScreen: gameScreen });
-//     var loginPage = [];
-//     loginPage.push(<Loginscreen appContext={this} key={"loginScreen"}/>);
-//     this.setState({loginPage: loginPage})
-//   }
-// componentDidMount() {
-//   // don't hardcode urls
-//   fetch('http://localhost:8000/clients/', {mode: 'cors'})
-//       .then(function(response) {
-//         return response.json();
-//       })
-//       .then(clientData => this.setState({
-//           clients: clientData
-//       }));
-// }
+
 
     handleSubmit(event) {
         event.preventDefault();
-        var URL = "http://localhost:8000/";
         var endpoint = "cases/"
         // console.log(event.target);
         // const data = new FormData(event.target);
@@ -74,7 +57,7 @@ class PreTrial extends Component {
         const data = this.state;
         // console.log("data: " + data);
         return axios
-            .put(URL + endpoint, data)
+            .put(utils.globalURL + endpoint, data)
             .then(function (response) {
                 console.log(response);
             // window.localStorage.setItem('token', response);
@@ -97,6 +80,11 @@ class PreTrial extends Component {
             value = !value;
         }
         this.setState({ [name]: value })
+    }
+
+    showOtherForm(event) {
+        console.log("target: " + event.target);
+        $('#' + event.target.value).toggleClass("hidden");
     }
 
     handleFormChange = (e, { name, value }) => {$("#" + value).toggleClass("hidden");}
@@ -137,8 +125,8 @@ class PreTrial extends Component {
         } = this.state
         
         if (caseOutcome == "Entered Plea Bargain" 
-            || sentencingStatusName == "Found Guilty of Lesser-Included Offense" 
-            || sentencingStatusName == "Found Guilty as Charged"){
+            || sentencingStatusName == "Found guilty of lesser-included offense" 
+            || sentencingStatusName == "Found guilty as charged"){
             $("#rc-form-b").removeClass("hidden");
         } else {
             $("#rc-form-b").addClass("hidden");
@@ -248,24 +236,10 @@ class PreTrial extends Component {
                         </div>
 
 
-                        <div id="ptc-form" className = "hidden">
-                        {/* <Form.Input
-                                fluid
-                                label="Next Court Date"
-                                placeholder="MM/DD/YYYY"
-                                name="nextCourtDate"
-                                value={nextCourtDate}
-                                onChange={this.handleChange}/> */}
+                        <div id="fta-form" className = "hidden">
+
                                 <DateTimeInput time={false} name="nextCourtDate" label="Next Court Date" handleChange={this.handleChange}/>
 
-
-                                {/* <Form.Input
-                                fluid
-                                label="Waiver of Time for Trial End Date"
-                                placeholder="MM/DD/YYYY"
-                                name="waiverOfTimeForTrialEndDate"
-                                value={waiverOfTimeForTrialEndDate}
-                                onChange={this.handleChange}/> */}
                                 <DateTimeInput time={false} name="waiverOfTimeForTrialEndDate" label="Waiver of Time for Trial End Date" handleChange={this.handleChange}/>
 
 
@@ -294,27 +268,10 @@ class PreTrial extends Component {
                             {outcomeOrClosed}
 
                         <div id="rc-form-b" className = "hidden">
-                           
-                           {/* <Form.Group widths='equal'> */}
-                                {/* <Form.Input 
-                                fluid 
-                                label="Beginning of Sentence" 
-                                placeholder="MM/DD/YYYY"
-                                name="startSentence"
-                                value={startSentence}
-                                onChange={this.handleChange}/> */}
-                                <DateTimeInput time={false} name="startSentence" label="Beginning of Sentence" handleChange={this.handleChange}/>
+                        
+                            <DateTimeInput time={false} name="startSentence" label="Beginning of Sentence" handleChange={this.handleChange}/>
 
-                                {/* <Form.Input
-                                fluid
-                                label="End of Sentence"
-                                placeholder="MM/DD/YYYY"
-                                name="endSentence"
-                                value={endSentence}
-                                onChange={this.handleChange}/> */}
-                                <DateTimeInput time={false} name="endSentence" label="End of Sentence" handleChange={this.handleChange}/>
-
-                            {/* </Form.Group> */}
+                            <DateTimeInput time={false} name="endSentence" label="End of Sentence" handleChange={this.handleChange}/>
 
                             <Form.Input fluid label="Jail Time Suspended" name="jailTimeSuspended"  placeholder=""  value={jailTimeSuspended} onChange={this.handleChange} />
 

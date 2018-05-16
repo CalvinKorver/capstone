@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {
     Container,
   } from 'semantic-ui-react';
+import * as utils from '../util/Functions';
 
 class Client extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ componentDidMount() {
     client: this.props.data
   })
   // this grabs all the cases to check which are linked to our client
-  fetch('http://localhost:8000/cases/', {mode: 'cors'})
+  fetch(utils.globalURL + 'cases/', {mode: 'cors'})
       .then(function(response) {
         return response.json();
       })

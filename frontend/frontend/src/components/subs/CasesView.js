@@ -59,8 +59,8 @@ class CasesView extends Component {
         return (
             <Grid>
                 <Grid.Column width={12}>
-                    <Header as="h4"  floated="left" style={{marginTop: "6px"}}> Case Search </Header>
-                        <Search className="main-search" size="small"/>
+                    {/* <Header as="h4"  floated="left" style={{marginTop: "6px"}}> Case Search </Header>
+                        <Search className="main-search" size="small"/> */}
                 </Grid.Column>
                 
                 <Grid.Column width={4}>

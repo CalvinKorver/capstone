@@ -1,12 +1,14 @@
 // file: src/util/AuthService.js
 import axios from 'axios';
 import _ from 'lodash';
+import * as utils from './Functions';
+
 
 import decode from 'jwt-decode';
 
 export default class AuthService {
   constructor(domain) {
-    this.domain = domain || 'http://localhost:8080' // API server domain
+    this.domain = domain || utils.globalURL // API server domain
     this.fetch = this
       .fetch
       .bind(this) // React binding stuff
@@ -28,10 +30,10 @@ export default class AuthService {
   // }
 
   createNewUser(userPayload) {
-    var URL = "http://localhost:8000/rest-auth/";
+    var endpoint = "rest-auth/";
     var LOGIN = "registration/"
     return axios
-      .post(URL + LOGIN, {
+      .post(utils.globalURL + endpoint + LOGIN, {
         username: userPayload.username,
         password1: userPayload.password1,
         password2: userPayload.password2,
@@ -93,10 +95,9 @@ export default class AuthService {
 
 
   login(userPayload) {
-    var URL = "http://localhost:8000/";
     var LOGIN = "rest-auth/login/";
     return axios
-      .post(URL + LOGIN, {
+      .post(utils.globalURL + LOGIN, {
         username: userPayload.username,
         password: userPayload.password
       })
