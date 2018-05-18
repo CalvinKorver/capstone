@@ -4,6 +4,15 @@ Follow these guidelines for good commit messages when you push.
 https://chris.beams.io/posts/git-commit/
 
 
+####
+
+To deploy the backend.
+For now there is a bug, so there are two steps.
+
+1. `cd` into the backend, execute `./deploy.sh`
+2. (Temporary) `ssh -i /users/calvinkorver/.aws/gemini_vm.pem ec2-user@ec2-52-40-241-18.us-west-2.compute.amazonaws.com`
+3. Execute `docker-compose build && docker-compose up`
+
 This guide was followed to create dev environment (still need to couple with Docker later)
 
 #### Pre Setup:
