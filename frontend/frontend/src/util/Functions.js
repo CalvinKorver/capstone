@@ -24,10 +24,10 @@ export function getDate() {
     return (yyyy + '-' + mm + '-' + dd);
 }
 
-// export const globalURL = "shield-app.tk/"
-// export const globalURLFrontend = "shield-site.tk/"
-
-export const globalURL = "http://http://ec2-52-40-241-18.us-west-2.compute.amazonaws.com:8000"
+export const globalURL = "http://shield-app.tk:8000/"
 export const globalURLFrontend = "http://shield-site.tk/"
+
+// export const globalURL = "http://localhost:8000/"
+// export const globalURLFrontend = "http://localhost:3000/"
 
 

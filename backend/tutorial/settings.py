@@ -28,7 +28,7 @@ SECRET_KEY = 'i(*w9(uthz#o)dhivep=_o^k5+3%t7-+mfg1)o#_f!^#hng%-%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['shield-app.tk']
+ALLOWED_HOSTS = ['ec2-52-40-241-18.us-west-2.compute.amazonaws.com', 'shield-app.tk']
 
 # Application definition
 
