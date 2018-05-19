@@ -40,10 +40,22 @@ class Register extends Component {
         })
         .catch(err => {
             if (err.response != undefined) {
-              this.setState({
-                errorMessage: err.response.status + ": " + err.response.statusText,
-                isInError: true
-              });
+              console.log(err.response.data);
+              if (err.response.status == 400) {
+                let message = ""
+                for(let e in err.response.data) {
+                  message += err.response.data[e] + "\n";
+                }
+                this.setState({
+                  errorMessage: message,
+                  isInError:true
+                })
+              } else {
+                  this.setState({
+                    errorMessage: err.response.status + ": " + err.response.statusText,
+                    isInError: true
+                  });
+              }
             } else {
               this.setState({
                 errorMessage: "Unknown Error!",

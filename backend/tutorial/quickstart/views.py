@@ -191,6 +191,7 @@ class CaseOutcomeViewSet(viewsets.ModelViewSet):
     queryset = CaseOutcome.objects.all()
     serializer_class = CaseOutcomeSerializer
 
+
 class CaseInfoViewSet(APIView):
 
     def get(self, request, *args, **kwargs):
@@ -332,12 +333,16 @@ class CaseViewSet(APIView):
         #     chargeID = Charge.objects.get(name=request.data.get('charge1'))
         #     print(chargeID)
         #     print(case)
-        return Response({'status': 'Case created'})
+        return Response(
+            {'status': 'Case created'})
 
     def delete(self, request):
-        case = Case.objects.get(id = request.data.get('id'))
+        id = request.query_params.get('caseID', None)
+        case = Case.objects.get(caseNumber = id)
         case.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            {'status': 200,
+            'statusText': 'Successfully deleted a case'})
 
     # def patch(self, request):
     #     case = Case.objects.filter(name = request.data.get('name'))

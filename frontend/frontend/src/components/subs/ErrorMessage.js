@@ -20,15 +20,14 @@ class ErrorMessage extends Component {
 
     render() {
         if (this.state.visible) {
-            console.log("is visible");
-        return (
-            <Message
-                color="red"
-                onDismiss={this.handleDismiss}
-                header='Error!'
-                content={this.props.message}
-            />
-        )
+            return (
+                <Message
+                    color={this.props.isError ? "red" : "green"}
+                    onDismiss={this.handleDismiss}
+                    header={this.props.isError ? "Error" : "Success"}
+                    content={this.props.message}
+                />
+            )
         }
         return null;
     }

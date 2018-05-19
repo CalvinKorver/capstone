@@ -4,6 +4,9 @@ import axios from 'axios';
 import $ from 'jquery'; 
 import DateTimeInput from '../subs/DateTimeInput';
 import * as utils from '../../util/Functions';
+import ErrorMessage from '../subs/ErrorMessage';
+
+const centered={marginLeft: '40%', marginRight: '40%', width: '20%'}
 
 const courtOptions = [
     { key: 'fedwaymunicipal', text: 'Federal Way Municipal Court', value: "Federal Way Municipal Court"},
@@ -27,7 +30,10 @@ class NewCase extends Component {
             startTimeCustody1: "",
             endTimeCustody1: "",
             dateFailureToAppear: "", 
-            benchWarrantAmount: 0.00
+            benchWarrantAmount: 0.00,
+            displayMessage: false,
+            message: "",
+            isError: false
         }
 
 
@@ -68,14 +74,42 @@ class NewCase extends Component {
                 isCaseClosed: false,
                 benchWarrant: this.state.benchWarrantAmount,
                 failToAppearDate: this.state.dateFailureToAppear
-
             })
-            .then(function (response) {
-                alert("submitted");
+            .then(response => {
+                this.setState({
+                    isError: false,
+                    message: "Submitted a new case!",
+                    displayMessage: true
+                })
             })
-            .catch(function (error) {
-              // raise different exception if due to invalid credentials
-              throw error;
+            .catch(err => {
+                if (err.response != undefined) {
+                    console.log(err.response.data);
+                    if (err.response.status == 400) {
+                      let message = ""
+                      for(let e in err.response.data) {
+                        message += err.response.data[e] + "\n";
+                      }
+                      this.setState({
+                        isError: true,
+                        message: message,
+                        displayMessage:true
+                      })
+                    } else {
+                        this.setState({
+                            isError: true,
+                            message: err.response.status + ": " + err.response.statusText,
+                            displayMessage: true
+                        });
+                    }
+                  } else {
+                    this.setState({
+                        isError: true,
+                        message: "Unknown Error!",
+                        displayMessage: true
+                    });
+                  }
+              throw err;
             });
     }
 
@@ -86,6 +120,10 @@ class NewCase extends Component {
     showOtherForm(e) {
         $('#' + e.target.value).toggleClass("hidden");
     }
+
+    handleErrorClose() {
+        this.setState({displayMessage: false });
+      }
 
     addMoreFields(e) {
         switch (e.target.value) {
@@ -106,9 +144,9 @@ class NewCase extends Component {
 
         return (
             <Modal 
-                trigger={<Button color="blue"floated="right">New Case</Button>}
+                trigger={<Button color="blue"floated="right" style={{width: '180px'}}>New Offense / Case</Button>}
                 closeIcon>
-            <Modal.Header> Offense </Modal.Header>
+            <Modal.Header>Create New Offense </Modal.Header>
                 <Modal.Content scrolling>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Select fluid label="Court" name="court" options={courtOptions} placeholder='Select an option'  value={court} onChange={this.handleChange} />
@@ -122,7 +160,7 @@ class NewCase extends Component {
                         </Form.Group>
 
                         <Form.Field>
-                            <Button value='charges' onClick={e => this.addMoreFields(e)}>
+                            <Button value='charges' color='blue' onClick={e => this.addMoreFields(e)}>
                                 <Icon name="plus"/>
                                 Add more charges
                             </Button>
@@ -140,25 +178,8 @@ class NewCase extends Component {
                         <div id="time-in-custody-div" className="hidden">
                         <DateTimeInput time={false} name="startTimeCustody1" label="Beginning of time in custody" handleChange={this.handleChange}/>
                         <DateTimeInput time={false} name="endTimeCustody1" label="End of time in custody" handleChange={this.handleChange}/>
-{/*                             
-                            <Form.Group widths='equal'>
-                                <Form.Input 
-                                fluid 
-                                label="Beginning of time in custody" 
-                                placeholder="YYYY-MM-DD"
-                                name="startTimeCustody1"
-                                value={startTimeCustody1}
-                                onChange={this.handleChange}/>
-                                <Form.Input
-                                fluid
-                                label="End of time in custody" placeholder="YYYY-MM-DD"
-                                name="endTimeCustody1"
-                                value={endTimeCustody1}
-                                onChange={this.handleChange}/>
-                            </Form.Group> */}
-                        
                             <Form.Field>
-                                <Form.Button content='Submit' >
+                                <Form.Button  color='blue'  >
                                     <Icon name="plus"/>
                                     Add additional date of time in custody
                                 </Form.Button>
@@ -199,7 +220,14 @@ class NewCase extends Component {
                             value={benchWarrantAmount} onChange={this.handleChange}/>
                         </Form.Group>
                         </div>
-                        <Button type="submit">Submit</Button>
+                            <Button type="submit"  color='blue' 
+                                style={centered}>Submit</Button>
+                            <br/>
+                        <ErrorMessage
+                            isError={this.state.isError}
+                            display={this.state.displayMessage} 
+                            message={this.state.message}
+                            dismissed={this.handleErrorClose.bind(this)}/>
                     </Form>
                 </Modal.Content>
              </Modal>

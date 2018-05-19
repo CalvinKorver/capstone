@@ -12,6 +12,7 @@ import InformationView from './subs/InformationView';
 import NewCase from './forms/NewCase';
 import '../react_styles/ClientDashboard.css';
 import * as utils from '../util/Functions';
+import axios from 'axios';
 
 
 class ClientDashboard extends Component {
@@ -24,7 +25,23 @@ class ClientDashboard extends Component {
         }
     }
 
-    componentWillMount() {
+
+    deleteCase = (caseNumber) => {
+        let endpoint = 'cases?caseID=' + caseNumber;
+        return axios
+            .delete(utils.globalURL + endpoint)
+            .then(response => {
+                console.log(response.status + response.statusText);
+                this.refreshCases();
+            })
+            .catch(err => {
+                throw err
+            })
+    }
+
+
+    refreshCases = () => {
+        console.log("in refresh cases");
         var id = this.props.match.params.id;
 
         // this grabs all the cases to check which are linked to our client
@@ -36,12 +53,16 @@ class ClientDashboard extends Component {
             console.log(cases);
             this.setState({
                 clientCaseInfo: cases,
-                clientView: [<CasesView key="info" client={this.client} cases={cases}/>]
+                clientView: [<CasesView key="info" client={this.client} cases={cases} deleteCase={this.deleteCase}/>]
             })
         })
         .catch(error => {
             console.log(error);
         })
+    }
+
+    componentWillMount() {
+        this.refreshCases()
     }
     
       ribbonChange = (e) => {
@@ -59,6 +80,7 @@ class ClientDashboard extends Component {
 
     render() {
         var client = this.client;
+        console.log(this.state);
         return (
             <div>
                 <NavMenu/>

@@ -42,7 +42,6 @@ class DateTimeInput extends Component {
     }
 
     render() {
-        console.log(this.state);
         const monthOptions = [
             {text: 'January', value: "01"},
             {text: 'February', value: "02"},
