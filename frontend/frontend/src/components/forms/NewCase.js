@@ -23,9 +23,9 @@ class NewCase extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            court: "",
-            dateOfOffense: "", //02/14/1995
-            caseNumber: "",
+            court: "King County Municpal",
+            dateOfOffense: "2018-02-14", //02/14/1995
+            caseNumber: "12345",
             charge1: "",
             startTimeCustody1: "",
             endTimeCustody1: "",

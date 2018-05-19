@@ -18,7 +18,8 @@ class Register extends Component {
       email: 'j@gmail.com',
       password1: 'password1',
       password2: 'password',
-      isInError: false,
+      isError: false,
+      isDisplayError: false,
       errorMessage: ""
     }
     this.AuthService = new AuthService();
@@ -29,7 +30,8 @@ class Register extends Component {
     var payload = this.state;
     if (utils.isEmpty(payload.first_name) || utils.isEmpty(payload.last_name) || utils.isEmpty(payload.password1) || utils.isEmpty(payload.password2) || utils.isEmpty(payload.email)) {
       this.setState({
-        isInError: true,
+        isError: true,
+        isDisplayError: true,
         errorMessage: "Sorry, please fill out all form fields prior to logging in."
       });
     } else {
@@ -48,18 +50,21 @@ class Register extends Component {
                 }
                 this.setState({
                   errorMessage: message,
-                  isInError:true
+                  isError: true,
+                  isDisplayError: true,
                 })
               } else {
                   this.setState({
                     errorMessage: err.response.status + ": " + err.response.statusText,
-                    isInError: true
+                    isError: true,
+                    isDisplayError: true,
                   });
               }
             } else {
               this.setState({
                 errorMessage: "Unknown Error!",
-                isInError: true
+                isError: true,
+                isDisplayError: true,
               });
             }
         })
@@ -139,7 +144,8 @@ class Register extends Component {
                   onChange={this.handleChange}
                 />
                 <ErrorMessage
-                    display={this.state.isInError} 
+                    display={this.state.isDisplayError} 
+                    isError={this.state.isError}
                     message={this.state.errorMessage}
                     dismissed={this.handleErrorClose.bind(this)}/>
                 <br />

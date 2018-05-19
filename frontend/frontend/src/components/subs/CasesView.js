@@ -30,6 +30,41 @@ class CasesView extends Component {
         }
     }
 
+    componentWillReceiveProps() {
+        console.log("component recieved new props");
+        console.log(this.props.cases);
+        var caseTable = []
+        this.props.cases.forEach(singleCase => {
+            var _case = singleCase.caseInfo;
+            const forms = [
+                <PreTrial caseNumber={_case.caseNumber} isPreTrial={true}/>,
+                <PreTrial caseNumber={_case.caseNumber} isPreTrial={false}/>,
+                <SentencingCompliance caseNumer={_case.caseNumber}/>
+            ];
+            caseTable.push(
+                <Table.Row key={_case.caseNumber}>
+                    <Table.Cell>{_case.caseNumber}</Table.Cell>
+                    <Table.Cell>{
+                        _case.sentenceStart ? moment(_case.sentenceStart).format('MMM. Do YYYY'): "none"}</Table.Cell>
+                    <Table.Cell>{
+                        _case.sentenceEnd ? moment(_case.sentenceEnd).format('MMM. Do YYYY') : "-"}</Table.Cell> 
+                    <Table.Cell >
+                        <Dropdown placeholder='Edit' fluid selection options={forms} />
+                    </Table.Cell>   
+                    <Table.Cell >
+                        <a onClick={() => this.props.deleteCase(_case.caseNumber)} >
+                            <Icon color="red" name='trash'/>
+                        </a>
+                    </Table.Cell>
+                </Table.Row>
+            )
+        });
+        console.log(caseTable);
+        this.setState({
+            caseTable: caseTable
+        })
+    }
+
     componentWillMount() {
         var caseTable = []
         this.props.cases.forEach(singleCase => {

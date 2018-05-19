@@ -21,7 +21,7 @@ class ClientDashboard extends Component {
         this.client = props.location.state.client;
         this.state = {
             clientView: [],
-            clientCaseInfo: []
+            clientCaseInfo: {}
         }
     }
 
@@ -49,11 +49,11 @@ class ClientDashboard extends Component {
         .then(function(response) {
           return response.json();
         })
-        .then(cases => {
-            console.log(cases);
+        .then(newCases => {
+            console.log(newCases);
             this.setState({
-                clientCaseInfo: cases,
-                clientView: [<CasesView key="info" client={this.client} cases={cases} deleteCase={this.deleteCase}/>]
+                clientCaseInfo: newCases,
+                clientView: <CasesView key="info" client={this.client} cases={newCases} deleteCase={this.deleteCase}/>
             })
         })
         .catch(error => {
@@ -69,11 +69,11 @@ class ClientDashboard extends Component {
           console.log(e);
           if (e === "Cases") {
               this.setState({
-                  clientView: [<CasesView key="timeline" client={this.client} cases={this.state.clientCaseInfo}/>]
+                  clientView: <CasesView key="timeline" client={this.client} cases={this.state.clientCaseInfo}/>
               });
           } else if (e === "Information") {
             this.setState({
-                clientView: [<InformationView key="info" client={this.client} cases={this.state.clientCaseInfo}/>]
+                clientView: <InformationView key="info" client={this.client} cases={this.state.clientCaseInfo}/>
             });
           }
       };
