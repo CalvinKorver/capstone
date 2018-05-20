@@ -83,7 +83,7 @@ class NewCase extends Component {
 
     handleErrorClose() {
         this.setState({isDisplayError: false });
-      }
+    }
 
     render() {
 

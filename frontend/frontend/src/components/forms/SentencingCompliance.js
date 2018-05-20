@@ -5,6 +5,9 @@ import $ from 'jquery';
 import * as utils from '../../util/Functions';
 import ErrorMessage from '../subs/ErrorMessage';
 
+const centered={marginLeft: '40%', marginRight: '40%', width: '20%'}
+
+
 class SentencingCompliance extends Component {
     constructor(props) {
         super(props);
@@ -111,8 +114,9 @@ class SentencingCompliance extends Component {
 
                         <Form.Select fluid label="Reserve or Impose?" name="isReserve" options={reserveOptions} placeholder='Select an option' onChange={this.handleChange}/>
 
-                        <Button type="submit" color="blue">Save and Continue</Button>
-
+<                       Button type="submit"  color='blue' 
+                            style={centered}>Submit</Button>
+                        <br/>
                         <ErrorMessage
                             isError={this.state.isError}
                             display={this.state.isDisplayError} 

@@ -5,6 +5,9 @@ import $ from 'jquery';
 import DateTimeInput from '../subs/DateTimeInput';
 import '../../react_styles/App.css';
 import * as utils from '../../util/Functions';
+import ErrorMessage from '../subs/ErrorMessage';
+
+const centered={marginLeft: '40%', marginRight: '40%', width: '20%'}
 
 
 class PreTrial extends Component {
@@ -41,7 +44,10 @@ class PreTrial extends Component {
             sentencingStatusName: null,
             isCaseClosed: false,
             isMotion36: false,
-            isMotion35: false
+            isMotion35: false,
+            isDisplayError: false,
+            errorMessage: "",
+            isError: false
         }
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,26 +56,33 @@ class PreTrial extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        const payload = this.state;
         var endpoint = "cases/"
-        // console.log(event.target);
-        // const data = new FormData(event.target);
-        // console.log(data);
-        const data = this.state;
-        // console.log("data: " + data);
-        return axios
-            .put(utils.globalURL + endpoint, data)
-            .then(function (response) {
-                console.log(response);
-            // window.localStorage.setItem('token', response);
-            // store.dispatch(setToken(response.data.token));
+        var editType;
+        if(payload.isPreTrial){
+            editType = "pre-trial";
+        } else {
+            editType = "sentencing"
+        }
+        if ((utils.isEmpty(payload.sentencingStatusName) && utils.isEmpty(payload.preTrialStatusName))) {
+            this.setState({isError: true,
+                isDisplayError: true,
+                errorMessage: "Sorry, please fill out all appropriate fields before modifying the " + editType + " information."});
+        } else {
+            return axios
+            .put(utils.globalURL + endpoint, payload)
+            .then(response => {
+                this.setState({isError: false,
+                    errorMessage: "Edited the case " + editType + " information!",
+                    isDisplayError: true
+                })
+            })
+            .catch(err => {
+                errorUpdate = utils.processError(err);
+                this.setState(errorUpdate);
+                throw err;
             });
-            // .catch(function (error) {
-            //   // raise different exception if due to invalid credentials
-            //   if (_.get(error, 'response.status') === 400) {
-            //     throw new InvalidCredentialsException(error);
-            //   }
-            //   throw error;
-            // });
+        }
     }
 
     handleChange = (e, { name, value }) => { 
@@ -88,6 +101,10 @@ class PreTrial extends Component {
     }
 
     handleFormChange = (e, { name, value }) => {$("#" + value).toggleClass("hidden");}
+
+    handleErrorClose() {
+        this.setState({isDisplayError: false });
+    }
 
     render() {
 
@@ -366,7 +383,14 @@ class PreTrial extends Component {
                                 {/* </Form.Group> */}
                             </div>
                             </div>
-                            <Form.Button  fluid type="submit">Save and Continue</Form.Button>
+                            <Button type="submit"  color='blue' 
+                                style={centered}>Submit</Button>
+                            <br/>
+                            <ErrorMessage
+                                isError={this.state.isError}
+                                display={this.state.isDisplayError} 
+                                message={this.state.errorMessage}
+                                dismissed={this.handleErrorClose.bind(this)}/>
                     </Form>
                 </Modal.Content>
             </Modal>
