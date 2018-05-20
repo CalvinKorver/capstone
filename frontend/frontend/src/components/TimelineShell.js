@@ -70,7 +70,13 @@ class TimelineShell extends Component {
       })
       singleCase.punishmentInfo.forEach(singlePunishment => {
         checkDate(singlePunishment.dueDate);
-        var punishment = {id: i++, content: singlePunishment.punishmentTypeName, start: singlePunishment.dueDate, type: 'point'};
+        var punishment;
+        if(singlePunishment.startDate != "2000-10-10") { // this is the default date, so check if the date is not null basically
+          punishment = {id: i++, content: singlePunishment.punishmentTypeName, start: singlePunishment.startDate, end: singlePunishment.dueDate};
+
+        } else {
+          punishment = {id: i++, content: singlePunishment.punishmentTypeName, start: singlePunishment.dueDate, type: 'point'};
+        }
         items.push(punishment);
       })
       singleCase.probationInfo.forEach(singleProbation => {

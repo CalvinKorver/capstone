@@ -42,7 +42,7 @@ class ProbationTypeSerializer(serializers.HyperlinkedModelSerializer):
 class PunishmentTypeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PunishmentType
-        fields = ('punishmentTypeName')
+        fields = ('punishmentTypeName',)
 
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
@@ -116,7 +116,7 @@ class PunishmentSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Punishment
-        fields = ('punishmentTypeID', 'caseID', 'credit', 'dueDate', 'jurisdiction')
+        fields = ('punishmentTypeID', 'caseID', 'credit', 'startDate', 'dueDate', 'jurisdiction')
 
 
 class ProbationSerializer(serializers.HyperlinkedModelSerializer):

@@ -65,6 +65,11 @@ class NewCase extends Component {
                 })
             })
             .catch(err => {
+                this.setState({
+                    isError: true,
+                    errorMessage: err,
+                    isDisplayError: true
+                })
                 errorUpdate = utils.processError(err);
                 this.setState(errorUpdate);
                 throw err;
