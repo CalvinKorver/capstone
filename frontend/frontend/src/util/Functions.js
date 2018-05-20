@@ -1,6 +1,5 @@
 export function isEmpty(s) {
     if (s.length == 0 || s == undefined || s == null) {
-        console.log("is some form of empty");
         return true;
     } else {
         return false;
@@ -22,6 +21,28 @@ export function getDate() {
     } 
 
     return (yyyy + '-' + mm + '-' + dd);
+}
+
+
+export function processError(err) {
+    if (err.response != undefined) {
+        console.log(err.response.data);
+        if (err.response.status == 400) {
+            let message = ""
+            for (let e in err.response.data) {
+                message += err.response.data[e] + "\n";
+            }
+            return ({isError: true, errorMessage: message, isDisplayError: true})
+        } else {
+            return ({
+                isError: true,
+                errorMessage: err.response.status + ": " + err.response.statusText,
+                isDisplayError: true
+            });
+        }
+    } else {
+        return ({isError: true, errorMessage: "Unknown Error!", isDisplayError: true});
+    }
 }
 
 // export const globalURL = "shield-app.tk/"

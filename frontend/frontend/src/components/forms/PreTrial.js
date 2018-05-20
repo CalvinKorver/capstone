@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Checkbox, Dropdown, Form, Modal } from 'semantic-ui-react'
+import { Button, Checkbox, Form, Modal } from 'semantic-ui-react'
 import axios from 'axios';
 import $ from 'jquery'; 
 import DateTimeInput from '../subs/DateTimeInput';

@@ -5,6 +5,7 @@
 
 .ui.modal {
 margin-top: 0 !important;
+max-width: 700px;
 }
 
 .ui.modal > .header {

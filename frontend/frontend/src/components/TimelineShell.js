@@ -96,7 +96,7 @@ class TimelineShell extends Component {
     basicExample['options']['height'] = '200px';
     return (
       <div>
-        <Header padded as="h2" textAlign="center">
+        <Header as="h2" textAlign="center">
             Client Timeline
         </Header>
         <Timeline {...basicExample} />

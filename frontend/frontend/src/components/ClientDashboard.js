@@ -12,6 +12,7 @@ import InformationView from './subs/InformationView';
 import NewCase from './forms/NewCase';
 import '../react_styles/ClientDashboard.css';
 import * as utils from '../util/Functions';
+import axios from 'axios';
 
 
 class ClientDashboard extends Component {
@@ -20,11 +21,27 @@ class ClientDashboard extends Component {
         this.client = props.location.state.client;
         this.state = {
             clientView: [],
-            clientCaseInfo: []
+            clientCaseInfo: {}
         }
     }
 
-    componentWillMount() {
+
+    deleteCase = (caseNumber) => {
+        let endpoint = 'cases?caseID=' + caseNumber;
+        return axios
+            .delete(utils.globalURL + endpoint)
+            .then(response => {
+                console.log(response.status + response.statusText);
+                this.refreshCases();
+            })
+            .catch(err => {
+                throw err
+            })
+    }
+
+
+    refreshCases = () => {
+        console.log("in refresh cases");
         var id = this.props.match.params.id;
 
         // this grabs all the cases to check which are linked to our client
@@ -32,33 +49,38 @@ class ClientDashboard extends Component {
         .then(function(response) {
           return response.json();
         })
-        .then(cases => {
-            console.log(cases);
+        .then(newCases => {
+            console.log(newCases);
             this.setState({
-                clientCaseInfo: cases,
-                clientView: [<CasesView key="info" client={this.client} cases={cases}/>]
+                clientCaseInfo: newCases,
+                clientView: <CasesView key="info" client={this.client} cases={newCases} deleteCase={this.deleteCase}/>
             })
         })
         .catch(error => {
             console.log(error);
         })
     }
+
+    componentWillMount() {
+        this.refreshCases()
+    }
     
       ribbonChange = (e) => {
           console.log(e);
           if (e === "Cases") {
               this.setState({
-                  clientView: [<CasesView key="timeline" client={this.client} cases={this.state.clientCaseInfo}/>]
+                  clientView: <CasesView key="timeline" client={this.client} cases={this.state.clientCaseInfo}/>
               });
           } else if (e === "Information") {
             this.setState({
-                clientView: [<InformationView key="info" client={this.client} cases={this.state.clientCaseInfo}/>]
+                clientView: <InformationView key="info" client={this.client} cases={this.state.clientCaseInfo}/>
             });
           }
       };
 
     render() {
         var client = this.client;
+        console.log(this.state);
         return (
             <div>
                 <NavMenu/>
