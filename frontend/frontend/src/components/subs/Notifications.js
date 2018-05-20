@@ -60,7 +60,7 @@ class Notifications extends Component {
         })
         // don't need to do failure to appears since they are in the past
     });
-    duiDates.push("2019-03-25")
+    // duiDates.push("2019-03-25")
     duiDates.sort();
     if (duiDates.length > 1) {
         // check if the two most recent dates (last two) are within 7 years of each other

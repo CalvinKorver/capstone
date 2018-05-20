@@ -28,7 +28,7 @@ class DashboardTable extends Component {
         var clientRows = [];
         if (searchResults) {
             var dateToday = utils.getDate();
-            for (var i = 0; i < Object.keys(searchResults).length; i++) {
+            for (var i = 0; i <= Object.keys(searchResults).length; i++) {
                 if (searchResults[i]){
                     let nextCourtDate = "";
                     var openCaseCount = 0;
