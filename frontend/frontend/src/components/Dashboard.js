@@ -30,52 +30,56 @@ class Dashboard extends Component {
         }
     }
 
-    componentWillMount() {
+    fetchCases = () => {
         fetch(utils.globalURL + 'clients/', {mode: 'cors'})
-            .then(function(response) { return response.json(); })
-            .then(function(listClients) {
-                var clients = {};
-                listClients.forEach(function(client){
-                    client.title = client.first_name + " " + client.last_name;
-                })
-                listClients.map(client => {
-                    clients[client.id] = { 
-                        clientInfo: client,
-                        openCases: 0
-                    }
-                });
-                return clients;
+        .then(function(response) { return response.json(); })
+        .then(function(listClients) {
+            var clients = {};
+            listClients.forEach(function(client){
+                client.title = client.first_name + " " + client.last_name;
             })
-            .then(clients => {
-                fetch(utils.globalURL + 'cases/', {mode: 'cors'})
-                    .then(function(response) { return response.json(); })
-                    .then(function(cases) {
-                        cases.forEach(function(singleCase) {
-                            var clientID = singleCase.clientID;
-                            if (clients[clientID]) {
-                                !clients[clientID].cases ? clients[clientID].cases = [] : null;
-                                if (!singleCase.caseClosed) {
-                                    clients[clientID].openCases++;
-                                }
-                                clients[clientID].cases.push(singleCase);
+            listClients.map(client => {
+                clients[client.id] = { 
+                    clientInfo: client,
+                    openCases: 0
+                }
+            });
+            return clients;
+        })
+        .then(clients => {
+            fetch(utils.globalURL + 'cases/', {mode: 'cors'})
+                .then(function(response) { return response.json(); })
+                .then(function(cases) {
+                    cases.forEach(function(singleCase) {
+                        var clientID = singleCase.clientID;
+                        if (clients[clientID]) {
+                            !clients[clientID].cases ? clients[clientID].cases = [] : null;
+                            if (!singleCase.caseClosed) {
+                                clients[clientID].openCases++;
                             }
-                        });
-                        return clients;
-                    })
-                    .then(clients => this.setState({
-                        clientCases: clients,
-                        results: clients,
-                        searchResults: clients
-                    }))
+                            clients[clientID].cases.push(singleCase);
+                        }
+                    });
+                    return clients;
+                })
+                .then(clients => this.setState({
+                    clientCases: clients,
+                    results: clients,
+                    searchResults: clients
+                }))
 
-                fetch(utils.globalURL + 'trials/', {mode: 'cors'})
-                    .then(function(response){ return response.json();})
-                    .then(trials => 
-                        this.setState({
-                            trials: trials
-                        })
-                    )
-            })
+            fetch(utils.globalURL + 'trials/', {mode: 'cors'})
+                .then(function(response){ return response.json();})
+                .then(trials => 
+                    this.setState({
+                        trials: trials
+                    })
+                )
+        })
+    }
+
+    componentWillMount() {
+        this.fetchCases();
     }
     
     resetComponent = () => this.setState({ isLoading: false, searchResults: this.state.results, value: '' })

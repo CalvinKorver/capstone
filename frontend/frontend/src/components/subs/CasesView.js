@@ -24,48 +24,9 @@ class CasesView extends Component {
 
     constructor(props) {
         super(props);
-        console.log("rendering casesview");
-        this.state = {
-            caseTable: []
-        }
     }
 
-    componentWillReceiveProps() {
-        console.log("component recieved new props");
-        console.log(this.props.cases);
-        var caseTable = []
-        this.props.cases.forEach(singleCase => {
-            var _case = singleCase.caseInfo;
-            const forms = [
-                <PreTrial caseNumber={_case.caseNumber} isPreTrial={true}/>,
-                <PreTrial caseNumber={_case.caseNumber} isPreTrial={false}/>,
-                <SentencingCompliance caseNumer={_case.caseNumber}/>
-            ];
-            caseTable.push(
-                <Table.Row key={_case.caseNumber}>
-                    <Table.Cell>{_case.caseNumber}</Table.Cell>
-                    <Table.Cell>{
-                        _case.sentenceStart ? moment(_case.sentenceStart).format('MMM. Do YYYY'): "none"}</Table.Cell>
-                    <Table.Cell>{
-                        _case.sentenceEnd ? moment(_case.sentenceEnd).format('MMM. Do YYYY') : "-"}</Table.Cell> 
-                    <Table.Cell >
-                        <Dropdown placeholder='Edit' fluid selection options={forms} />
-                    </Table.Cell>   
-                    <Table.Cell >
-                        <a onClick={() => this.props.deleteCase(_case.caseNumber)} >
-                            <Icon color="red" name='trash'/>
-                        </a>
-                    </Table.Cell>
-                </Table.Row>
-            )
-        });
-        console.log(caseTable);
-        this.setState({
-            caseTable: caseTable
-        })
-    }
-
-    componentWillMount() {
+    render() {
         var caseTable = []
         this.props.cases.forEach(singleCase => {
             var _case = singleCase.caseInfo;
@@ -92,14 +53,6 @@ class CasesView extends Component {
                 </Table.Row>
             )
         });
-
-        this.setState({
-            caseTable: caseTable
-        })
-    }
-
-    render() {
-        
         return (
             <Grid>
                 <Grid.Column width={12}>
@@ -134,12 +87,9 @@ class CasesView extends Component {
                                 </Table.Row>
                             </Table.Header>
                             <Table.Body>
-                                {this.state.caseTable}
+                                {caseTable}
                             </Table.Body>
                         </Table>
-
-
-
                     </Segment>
                 </Grid.Column>
 

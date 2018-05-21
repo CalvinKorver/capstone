@@ -40,29 +40,26 @@ class ClientDashboard extends Component {
     }
 
     refresh() {
-        console.log('refreshing');
+        this.refreshCases();
     }
 
 
     refreshCases = () => {
-        console.log("in refresh cases");
         var id = this.props.match.params.id;
-
-        // this grabs all the cases to check which are linked to our client
         fetch(utils.globalURL + 'case-info/?id=' + id, {mode: 'cors'})
-        .then(function(response) {
-          return response.json();
-        })
-        .then(newCases => {
-            console.log(newCases);
-            this.setState({
-                clientCaseInfo: newCases,
-                clientView: <CasesView key="info" client={this.client} cases={newCases} deleteCase={this.deleteCase}/>
+            .then(function(response) {
+                return response.json();
             })
-        })
-        .catch(error => {
-            console.log(error);
-        })
+            .then(newCases => {
+                console.log(newCases);
+                this.setState({
+                    clientCaseInfo: newCases,
+                    clientView: <CasesView key="info" client={this.client} cases={newCases} deleteCase={this.deleteCase} refresh={() => this.refresh()}/>
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     componentWillMount() {
@@ -73,7 +70,7 @@ class ClientDashboard extends Component {
           console.log(e);
           if (e === "Cases") {
               this.setState({
-                  clientView: <CasesView key="timeline" client={this.client} cases={this.state.clientCaseInfo}/>
+                  clientView: <CasesView key="timeline" client={this.client} cases={this.state.clientCaseInfo} refresh={this.refreshCases}/>
               });
           } else if (e === "Information") {
             this.setState({
@@ -84,7 +81,6 @@ class ClientDashboard extends Component {
 
     render() {
         var client = this.client;
-        console.log(this.state);
         return (
             <div>
                 <NavMenu/>
