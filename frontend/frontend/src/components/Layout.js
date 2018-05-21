@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import NavMenu from './subs/NavMenu'
+import NavMenu from './subs/NavMenu';
+import Footer from './subs/Footer';
 import Dashboard from './Dashboard';
 
 class Layout extends Component {
@@ -11,7 +12,7 @@ class Layout extends Component {
         return (
             <div>
                 <NavMenu/>
-                <Dashboard/>
+                <Dashboard handleLogout={this.props.handleLogout}/>
             </div>
         )
     }

@@ -9,6 +9,7 @@ import NavMenu from './subs/NavMenu';
 import RibbonMenu from './subs/RibbonMenu';
 import CasesView from './subs/CasesView';
 import InformationView from './subs/InformationView';
+import Footer from './subs/Footer';
 import '../react_styles/ClientDashboard.css';
 import * as utils from '../util/Functions';
 import axios from 'axios';
@@ -98,9 +99,8 @@ class ClientDashboard extends Component {
                 <Container className = "wide">
                     {this.state.clientView}
                 </Container>
-
-                    
                 </Grid>
+                <Footer/>
             </div>
         )
     }

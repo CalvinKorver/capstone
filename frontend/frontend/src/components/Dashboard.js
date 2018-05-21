@@ -105,8 +105,7 @@ class Dashboard extends Component {
         const { isLoading, value, clients, results, trials, searchResults } = this.state;
         return (
             <Grid padded>
-            
-                    <Grid.Column width={14}>
+                    <Grid.Column width={11}>
                             <Header as="h4"  floated="left" style={{marginTop: "8px", marginRight: "2em"}}> Client Search </Header>
                             <Search
                                 className= "main-search"
@@ -122,12 +121,17 @@ class Dashboard extends Component {
                             /> 
                         </Grid.Column>
 
-                        <Grid.Column width={2}>
-                            <NewClient/>
+                        <Grid.Column width={5}>
+                            <div>
+                                <Button floated="right" onClick={this.props.handleLogout} style={{width: '120px', marginLeft: '1em', backgroundColor: "#ea1455", color: 'white'}}type="button" className="form-submit" >Logout</Button>
+                                <NewClient/>
+                            </div>
                         </Grid.Column>
-                    <Grid.Column width={16}>
+                        <Container>
+                    <Grid.Column width={16} >
                         <DashboardTable searchResults={searchResults} trials = {trials}/>
                     </Grid.Column>
+                    </Container>
                 </Grid>
         )
     }

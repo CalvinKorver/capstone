@@ -47,7 +47,6 @@ class DateTimeInput extends Component {
                 name: this.props.timeName,
                 value: utils.minTwoDigits(hour) + ":" + this.state.minute
             }
-            console.log(time);
             this.props.handleChange(e, time);
         })
     }

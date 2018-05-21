@@ -82,7 +82,7 @@ class CasesView extends Component {
                     <Table.Cell>{
                         _case.sentenceEnd ? moment(_case.sentenceEnd).format('MMM. Do YYYY') : "-"}</Table.Cell> 
                     <Table.Cell >
-                        <Dropdown placeholder='Edit' fluid selection options={forms} />
+                        <Dropdown upward placeholder='Edit' fluid selection options={forms} />
                     </Table.Cell>   
                     <Table.Cell >
                         <a onClick={() => this.props.deleteCase(_case.caseNumber)} >
