@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import Timeline from 'react-visjs-timeline'
+import '../react_styles/TimelineShell.css';
 import moment from 'moment';
 import {
     Header,
+    Label
   } from 'semantic-ui-react'
 
 
@@ -60,7 +62,13 @@ class TimelineShell extends Component {
       checkDate(sentenceStart);
       checkDate(sentenceEnd);
       if (sentenceStart) {
-        var sentence = {id: i++, content: 'Sentence', start: sentenceStart, end: sentenceEnd};
+        var sentence = {
+          id: i++, 
+          content: "Sentence (Case " + singleCase.caseInfo.caseNumber + ")",
+          start: sentenceStart,
+          end: sentenceEnd,
+          className: "sentence"
+        };
         items.push(sentence);
       }
       singleCase.trialInfo.forEach(singleTrial => {
@@ -81,7 +89,10 @@ class TimelineShell extends Component {
       })
       singleCase.failToAppearInfo.forEach(singleFailToAppear => {
         checkDate(singleFailToAppear.failToAppearDate);
-        var failToAppear = {id: i++, content: 'Failed to Appear', start: singleFailToAppear.failToAppearDate, type: 'point'};
+        var failToAppear = {
+          id: i++, 
+          className: "fail-to-appear",
+          content: 'Failed to Appear', start: singleFailToAppear.failToAppearDate, type: 'point'};
         items.push(failToAppear);
       })
     });
@@ -99,6 +110,10 @@ class TimelineShell extends Component {
         <Header as="h2" textAlign="center">
             Client Timeline
         </Header>
+        <Label 
+          className="timeline-helper"
+          style={{marginTop: '1em'}} 
+          floating>Try zooming!</Label>
         <Timeline {...basicExample} />
       </div>
     )
