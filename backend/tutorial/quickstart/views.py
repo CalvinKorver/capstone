@@ -321,6 +321,20 @@ class CaseViewSet(APIView):
                 caseID = case
             )
             offense.save()
+        
+        jailStart = request.data.get('startTimeCustody')
+        jailTime = None
+        if jailStart:
+            punishmentType, created = PunishmentType.objects.get_or_create(
+                punishmentTypeName = 'Jail Time'
+            )
+
+            communityService= Punishment.objects.create(
+                caseID = case,
+                punishmentTypeID = punishmentType,
+                startDate = jailStart,
+                dueDate = request.data.get('endTimeCustody')
+            )
         case.save()
 
         failToAppearDate = request.data.get('failToAppearDate')
