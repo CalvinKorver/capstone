@@ -26,6 +26,22 @@ const chargeOptions = [
 class NewCase extends Component {
     constructor(props) {
         super(props);
+        // this.state = {
+        //     court: "King County Federal Court",
+        //     dateOfOffense: "2018-02-13",
+        //     caseNumber: "123456",
+        //     chargeTypeName: "Homicide",
+        //     startTimeCustody: "",
+        //     endTimeCustody: "",
+        //     failtoAppearDate: "", 
+        //     benchWarrant: 0.00,
+        //     isDomesticViolence: false,
+        //     isCaseClosed: false,
+        //     isDisplayError: false,
+        //     errorMessage: "",
+        //     isError: false
+        // }
+
         this.state = {
             court: "",
             dateOfOffense: "",
@@ -44,7 +60,7 @@ class NewCase extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
      }
 
-    handleSubmit(event) {
+    handleSubmit = (event) => {
         event.preventDefault();
         var endpoint = "cases/"
         let payload = this.state;
@@ -62,7 +78,8 @@ class NewCase extends Component {
                 this.setState({isError: false,
                     errorMessage: "Submitted a new case!",
                     isDisplayError: true
-                })
+                });
+                this.props.refresh();
             })
             .catch(err => {
                 this.setState({
@@ -78,7 +95,6 @@ class NewCase extends Component {
     }
 
     handleChange = (e, { name, value }) => { 
-        console.log(name, value);
         this.setState({ [name]: value })
     }
 
@@ -97,7 +113,7 @@ class NewCase extends Component {
 
         return (
             <Modal 
-                trigger={<Button color="blue"floated="right" style={{width: '180px'}}>New Offense / Case</Button>}
+                trigger={<Button color="blue"floated="right" style={{width: '190px'}}>New Offense / Case</Button>}
                 closeIcon>
             <Modal.Header>Create New Offense </Modal.Header>
                 <Modal.Content scrolling>

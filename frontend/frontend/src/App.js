@@ -14,7 +14,7 @@ class App extends Component {
     this.Auth = new AuthService();
   }
 
-  handleLogout(){
+  handleLogout = () => {
     this.Auth.logout()
     this.props.history.replace('/login');
  }
@@ -22,9 +22,7 @@ class App extends Component {
   render() {
     return (
       <div className = "App" >
-        <Layout/>
-        <hr/>
-          <Button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Logout</Button>
+        <Layout handleLogout={this.handleLogout}/>
       </div>
     );
   }

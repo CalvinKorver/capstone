@@ -30,52 +30,56 @@ class Dashboard extends Component {
         }
     }
 
-    componentWillMount() {
+    fetchCases = () => {
         fetch(utils.globalURL + 'clients/', {mode: 'cors'})
-            .then(function(response) { return response.json(); })
-            .then(function(listClients) {
-                var clients = {};
-                listClients.forEach(function(client){
-                    client.title = client.first_name + " " + client.last_name;
-                })
-                listClients.map(client => {
-                    clients[client.id] = { 
-                        clientInfo: client,
-                        openCases: 0
-                    }
-                });
-                return clients;
+        .then(function(response) { return response.json(); })
+        .then(function(listClients) {
+            var clients = {};
+            listClients.forEach(function(client){
+                client.title = client.first_name + " " + client.last_name;
             })
-            .then(clients => {
-                fetch(utils.globalURL + 'cases/', {mode: 'cors'})
-                    .then(function(response) { return response.json(); })
-                    .then(function(cases) {
-                        cases.forEach(function(singleCase) {
-                            var clientID = singleCase.clientID;
-                            if (clients[clientID]) {
-                                !clients[clientID].cases ? clients[clientID].cases = [] : null;
-                                if (!singleCase.caseClosed) {
-                                    clients[clientID].openCases++;
-                                }
-                                clients[clientID].cases.push(singleCase);
+            listClients.map(client => {
+                clients[client.id] = { 
+                    clientInfo: client,
+                    openCases: 0
+                }
+            });
+            return clients;
+        })
+        .then(clients => {
+            fetch(utils.globalURL + 'cases/', {mode: 'cors'})
+                .then(function(response) { return response.json(); })
+                .then(function(cases) {
+                    cases.forEach(function(singleCase) {
+                        var clientID = singleCase.clientID;
+                        if (clients[clientID]) {
+                            !clients[clientID].cases ? clients[clientID].cases = [] : null;
+                            if (!singleCase.caseClosed) {
+                                clients[clientID].openCases++;
                             }
-                        });
-                        return clients;
-                    })
-                    .then(clients => this.setState({
-                        clientCases: clients,
-                        results: clients,
-                        searchResults: clients
-                    }))
+                            clients[clientID].cases.push(singleCase);
+                        }
+                    });
+                    return clients;
+                })
+                .then(clients => this.setState({
+                    clientCases: clients,
+                    results: clients,
+                    searchResults: clients
+                }))
 
-                fetch(utils.globalURL + 'trials/', {mode: 'cors'})
-                    .then(function(response){ return response.json();})
-                    .then(trials => 
-                        this.setState({
-                            trials: trials
-                        })
-                    )
-            })
+            fetch(utils.globalURL + 'trials/', {mode: 'cors'})
+                .then(function(response){ return response.json();})
+                .then(trials => 
+                    this.setState({
+                        trials: trials
+                    })
+                )
+        })
+    }
+
+    componentWillMount() {
+        this.fetchCases();
     }
     
     resetComponent = () => this.setState({ isLoading: false, searchResults: this.state.results, value: '' })
@@ -105,8 +109,7 @@ class Dashboard extends Component {
         const { isLoading, value, clients, results, trials, searchResults } = this.state;
         return (
             <Grid padded>
-            
-                    <Grid.Column width={14}>
+                    <Grid.Column width={11}>
                             <Header as="h4"  floated="left" style={{marginTop: "8px", marginRight: "2em"}}> Client Search </Header>
                             <Search
                                 className= "main-search"
@@ -122,12 +125,17 @@ class Dashboard extends Component {
                             /> 
                         </Grid.Column>
 
-                        <Grid.Column width={2}>
-                            <NewClient/>
+                        <Grid.Column width={5}>
+                            <div>
+                                <Button floated="right" onClick={this.props.handleLogout} style={{width: '120px', marginLeft: '1em', backgroundColor: "#ea1455", color: 'white'}}type="button" className="form-submit" >Logout</Button>
+                                <NewClient/>
+                            </div>
                         </Grid.Column>
-                    <Grid.Column width={16}>
+                        <Container>
+                    <Grid.Column width={16} >
                         <DashboardTable searchResults={searchResults} trials = {trials}/>
                     </Grid.Column>
+                    </Container>
                 </Grid>
         )
     }
