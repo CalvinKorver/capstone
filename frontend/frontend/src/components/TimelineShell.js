@@ -61,6 +61,7 @@ class TimelineShell extends Component {
       let sentenceEnd = singleCase.caseInfo.sentenceEnd;
       checkDate(sentenceStart);
       checkDate(sentenceEnd);
+      console.log(singleCase);
       if (sentenceStart) {
         var sentence = {
           id: i++, 
@@ -76,6 +77,16 @@ class TimelineShell extends Component {
         var trial = {id: i++, content: 'Trial', start: singleTrial.trialDate, type: 'point'};
         items.push(trial);
       })
+
+      let offense = singleCase.offense;
+      checkDate(offense.offenseDate);
+      items.push({
+        id: i++, 
+        className: "offense", 
+        content: offense.offenseTypeName + ' Offense', 
+        start: offense.offenseDate, 
+        type: 'point'})
+
       singleCase.punishmentInfo.forEach(singlePunishment => {
         checkDate(singlePunishment.dueDate);
         var punishment;

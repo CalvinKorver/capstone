@@ -14,6 +14,7 @@ import Client from '../Client';
 import '../../react_styles/App.css';
 import * as utils from '../../util/Functions';
 
+
 class DashboardTable extends Component {
     constructor(props) {
         super(props);
@@ -28,7 +29,7 @@ class DashboardTable extends Component {
         var clientRows = [];
         if (searchResults) {
             var dateToday = utils.getDate();
-            for (var i = 0; i <= Object.keys(searchResults).length; i++) {
+            for (var i = 0; i < Object.keys(searchResults).length; i++) {
                 if (searchResults[i]){
                     let nextCourtDate = "";
                     var openCaseCount = 0;

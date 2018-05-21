@@ -2,6 +2,10 @@
     background-color: #FEB692
 }
 
+.vis-item.offense > .vis-dot {
+    border-color: black
+}
+
 .vis-item.fail-to-appear > .vis-dot {
     border-color: #EA5455
 }

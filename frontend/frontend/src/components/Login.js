@@ -58,6 +58,7 @@ class Login extends Component {
       this.Auth.login(payload)
         .then(res =>{
           this.props.history.replace('/');
+          this.setState({loading: false});
         })
         .catch(err => {
           if (err.response != undefined) {
