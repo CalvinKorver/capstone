@@ -54,6 +54,7 @@ class NewClient extends Component {
             .post(utils.globalURL + endpoint, data)
             .then(function (response) {
                 alert("Submitted");
+                // this.setState(this.state);
             // window.localStorage.setItem('token', response);
             // store.dispatch(setToken(response.data.token));
             });

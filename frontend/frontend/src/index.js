@@ -15,9 +15,8 @@ const render = (Component) => {
     <BrowserRouter>
       <div>
         <Route exact path='/' component={App}/>
-       <Route exact path='/login' component={Login}/>
-        <Route path='/register' component={Register}/>
-        
+        <Route exact path='/login' component={Login}/>
+        <Route exact path='/register' component={Register}/>
         <Route path='/new-case' component={NewCase}/>
         <Route path='/new-client' component={NewClient}/>
         <Route path="/client/:id" component={ClientDashboard}/>

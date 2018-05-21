@@ -28,7 +28,7 @@ class DashboardTable extends Component {
         var clientRows = [];
         if (searchResults) {
             var dateToday = utils.getDate();
-            for (var i = 0; i < Object.keys(searchResults).length; i++) {
+            for (var i = 0; i <= Object.keys(searchResults).length; i++) {
                 if (searchResults[i]){
                     let nextCourtDate = "";
                     var openCaseCount = 0;
@@ -55,17 +55,17 @@ class DashboardTable extends Component {
                     var client = searchResults[i].clientInfo;
                     clientRows.push(
                     <tr key={client.id}>
-                        <td>
+                        <td key='clientLink'>
                             <Link to={{pathname: '/client/'+client.id, state: {client: client} }}>
                                 {client.first_name + " " + client.last_name}
                             </Link>
                         </td>
-                        <td>
+                        <td key='dob'>
                             {client.date_of_birth ? moment(client.date_of_birth).format('MMM DD, YYYY') : "-"}
                         </td>
-                        <td>{nextCourtDate ? moment(nextCourtDate).format('MMM DD, YYYY'): "-"}</td>
-                        <td>{openCaseCount}</td>
-                        <td>{caseCount}</td>
+                        <td key='nextCourtDate'>{nextCourtDate ? moment(nextCourtDate).format('MMM DD, YYYY'): "-"}</td>
+                        <td key='openCaseCount'>{openCaseCount}</td>
+                        <td key='caseCount'>{caseCount}</td>
                     </tr>
                     )
                 }

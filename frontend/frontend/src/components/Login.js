@@ -24,8 +24,9 @@ class Login extends Component {
     this.state = {
       username: '',
       password: '',
-      isInError: false,
-      errorMessage: ""
+      isError: false,
+      isDisplayError: false,
+      errorMessage: ''
     }
     this.Auth = new AuthService();
   }
@@ -44,7 +45,8 @@ class Login extends Component {
     console.log("pressed submit");
     if (utils.isEmpty(this.state.username) || utils.isEmpty(this.state.password)) {
       this.setState({
-        isInError: true,
+        isError: true,
+        isDisplayError: true,
         errorMessage: "Sorry, please fill out all form fields prior to logging in."
       });
     } else {
@@ -60,12 +62,14 @@ class Login extends Component {
           if (err.response != undefined) {
             this.setState({
               errorMessage: err.response.status + ": " + err.response.statusText,
-              isInError: true
+              isDisplayError: true,
+              isError: true
             });
           } else {
             this.setState({
               errorMessage: "Unknown Error!",
-              isInError: true
+              isDisplayError: true,
+              isError: true
             });
           }
         })
@@ -105,8 +109,9 @@ class Login extends Component {
                   size='large'
                   onClick={(event) => this.handleClick(event)}>Sign in</Button>
                   <ErrorMessage
-                    display={this.state.isInError} 
+                    display={this.state.isDisplayError} 
                     message={this.state.errorMessage}
+                    isError={this.state.isError}
                     dismissed={this.handleErrorClose.bind(this)}/>
               </Segment>
             </Form>

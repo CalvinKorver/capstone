@@ -3,13 +3,10 @@ import { Button, Checkbox, Dropdown, Form, Modal } from 'semantic-ui-react'
 import axios from 'axios';
 import $ from 'jquery'; 
 import * as utils from '../../util/Functions';
+import ErrorMessage from '../subs/ErrorMessage';
 
+const centered={marginLeft: '40%', marginRight: '40%', width: '20%'}
 
-// import 'semantic-ui-css/semantic.min.css';
-// import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
-// onTouchTap http://stackoverflow.com/a/34015469/988941 injectTapEventPlugin();
-// import './App.css';
-// import Loginscreen from './loginScreen'
 
 class SentencingCompliance extends Component {
     constructor(props) {
@@ -19,50 +16,44 @@ class SentencingCompliance extends Component {
             sentencingComplianceStatus: "",
             isAdmit: false,
             isReserve: false,
-            isCaseClosed: false
+            isCaseClosed: false,
+            isDisplayError: false,
+            errorMessage: "",
+            isError: false
         }
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
      }
-//   componentWillMount() {
-//     // var gameScreen = [];
-//     // gameScreen.push(<Game appContext={this}/>);
-//     // this.setState({   gameScreen: gameScreen });
-//     var loginPage = [];
-//     loginPage.push(<Loginscreen appContext={this} key={"loginScreen"}/>);
-//     this.setState({loginPage: loginPage})
-//   }
+
+    checkForEmptyFormElements = (payload) => {
+        if (utils.isEmpty(payload.sentencingComplianceStatus) || utils.isEmpty(payload.isAdmit)|| utils.isEmpty(payload.isReserve)) {
+            this.setState({isError: true,
+                isDisplayError: true,
+                errorMessage: "Sorry, please fill out all form fields prior to trying to update the sentence compliance."});
+            return false;
+        }
+        return true;
+    }
 
     handleSubmit(event) {
         event.preventDefault();
         var endpoint = "sentence-compliance/"
-        // console.log(event.target);
-        // const data = new FormData(event.target);
-        // console.log(data);
-        // if (this.state.caseClosed) {
-             // post request to case to set closed to true
-        // }
-        var data = {
-            violationName: this.state.sentencingComplianceStatus,
-            isAdmit: this.state.isAdmit,
-            isReserve: this.state.isReserve,
-            isCaseClosed: this.state.isCaseClosed,
-            caseNumber: this.state.caseNumber
+        let payload = this.state;
+        if (this.checkForEmptyFormElements(payload)) {
+            return axios
+                .post(utils.globalURL + endpoint, payload)
+                .then(response => {
+                    this.setState({isError: false,
+                        errorMessage: "Submitted a new case!",
+                        isDisplayError: true
+                    })
+                })
+                .catch(err => {
+                    let errorUpdate = utils.processError(err);
+                    this.setState(errorUpdate);
+                    throw err;
+                });
         }
-        return axios
-            .post(utils.globalURL + endpoint, data)
-            .then(function (response) {
-                console.log(response);
-            // window.localStorage.setItem('token', response);
-            // store.dispatch(setToken(response.data.token));
-            }).then(alert("Submitted!"));
-            // .catch(function (error) {
-            //   // raise different exception if due to invalid credentials
-            //   if (_.get(error, 'response.status') === 400) {
-            //     throw new InvalidCredentialsException(error);
-            //   }
-            //   throw error;
-            // });
     }
 
     handleChange = (e, { name, value, text }) => { 
@@ -79,6 +70,10 @@ class SentencingCompliance extends Component {
                 $("#nclv-form").addClass("hidden");
             }
         }
+    }
+
+    handleErrorClose() {
+        this.setState({isDisplayError: false});
     }
 
     render() {
@@ -107,7 +102,6 @@ class SentencingCompliance extends Component {
                         <Form.Checkbox
                             label="Has the case been closed?"
                             name="isCaseClosed"
-                            value={isCaseClosed}
                             onChange={this.handleChange}/>
 
                         <Form.Select fluid label="Alleged Violation" name="sentencingComplianceStatus" options={violationOptions} placeholder='Select an option' onChange={this.handleChange}/>
@@ -120,9 +114,15 @@ class SentencingCompliance extends Component {
 
                         <Form.Select fluid label="Reserve or Impose?" name="isReserve" options={reserveOptions} placeholder='Select an option' onChange={this.handleChange}/>
 
-                        <Button type="submit">Save and Continue</Button>
+<                       Button type="submit"  color='blue' 
+                            style={centered}>Submit</Button>
+                        <br/>
+                        <ErrorMessage
+                            isError={this.state.isError}
+                            display={this.state.isDisplayError} 
+                            message={this.state.errorMessage}
+                            dismissed={this.handleErrorClose.bind(this)}/>
                         
-
                     </Form>
                 </Modal.Content>
             </Modal>

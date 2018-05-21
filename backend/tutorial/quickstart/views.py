@@ -191,6 +191,7 @@ class CaseOutcomeViewSet(viewsets.ModelViewSet):
     queryset = CaseOutcome.objects.all()
     serializer_class = CaseOutcomeSerializer
 
+
 class CaseInfoViewSet(APIView):
 
     def get(self, request, *args, **kwargs):
@@ -253,8 +254,14 @@ class CaseViewSet(APIView):
 
     def post(self, request, *args, **kwargs):
         clientID = Client.objects.get(first_name=request.data.get('clientFirstName'), last_name=request.data.get('clientLastName'))
-        
 
+        # Lets check if there already exists a case with the case number
+        existingCase = Case.objects.filter(caseNumber = request.data.get('caseNumber'))
+        if existingCase.count() != 0:
+            return Response({
+                'statusText': "Error: Sorry, the case already exists"
+            }, status=400)
+        
         preTrialStatusName = request.data.get('preTrialStatusName')
         preTrialStatus = None
         if preTrialStatusName:
@@ -282,9 +289,6 @@ class CaseViewSet(APIView):
             court, created = court.objects.get_or_create(
                 courtName = courtName
             )
-
-
-        
 
         # Save the case
         case = Case.objects.create(
@@ -317,6 +321,20 @@ class CaseViewSet(APIView):
                 caseID = case
             )
             offense.save()
+        
+        jailStart = request.data.get('startTimeCustody')
+        jailTime = None
+        if jailStart:
+            punishmentType, created = PunishmentType.objects.get_or_create(
+                punishmentTypeName = 'Jail Time'
+            )
+
+            communityService= Punishment.objects.create(
+                caseID = case,
+                punishmentTypeID = punishmentType,
+                startDate = jailStart,
+                dueDate = request.data.get('endTimeCustody')
+            )
         case.save()
 
         failToAppearDate = request.data.get('failToAppearDate')
@@ -326,18 +344,13 @@ class CaseViewSet(APIView):
                 caseID = case
             )
 
-        # @Calvin Korver what is this hack?
-        # if(request.data.get('charge1') != None):
-        #     print("Here")
-        #     chargeID = Charge.objects.get(name=request.data.get('charge1'))
-        #     print(chargeID)
-        #     print(case)
-        return Response({'status': 'Case created'})
+        return Response({'statusText': 'Case created'})
 
     def delete(self, request):
-        case = Case.objects.get(id = request.data.get('id'))
+        id = request.query_params.get('caseID', None)
+        case = Case.objects.get(caseNumber = id)
         case.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({'statusText': 'Successfully deleted a case'})
 
     # def patch(self, request):
     #     case = Case.objects.filter(name = request.data.get('name'))

@@ -91,6 +91,7 @@ class Punishment(models.Model):
     punishmentTypeID = models.ForeignKey(PunishmentType, on_delete=models.CASCADE)
     caseID = models.ForeignKey(Case, on_delete=models.CASCADE)
     credit = models.IntegerField(default=0)
+    startDate = models.DateField(default="2000-10-10", null=True, blank=True)
     dueDate = models.DateField(default="2000-10-10")
     jurisdiction = models.CharField(max_length=100, null=True, blank=True)
 
