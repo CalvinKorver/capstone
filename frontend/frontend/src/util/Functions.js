@@ -49,8 +49,8 @@ export function minTwoDigits(n) {
     return (n < 10 ? '0' : '') + n;
 }
 
-export const globalURL = "shield-app.tk/"
-export const globalURLFrontend = "shield-site.tk/"
+export const globalURL = "http://shield-app.tk/"
+export const globalURLFrontend = "http://shield-site.tk/"
 
 // export const globalURL = "http://localhost:8000/"
 // export const globalURLFrontend = "http://localhost:3000/"
