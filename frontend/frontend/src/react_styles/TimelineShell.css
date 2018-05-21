@@ -1,0 +1,12 @@
+.vis-item.sentence {
+    background-color: #FEB692
+}
+
+.vis-item.fail-to-appear > .vis-dot {
+    border-color: #EA5455
+}
+
+.ui.label.timeline-helper {
+    background-color: #81Fbb8;
+    opacity: .9
+}

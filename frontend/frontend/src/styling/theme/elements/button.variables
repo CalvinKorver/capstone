@@ -4,3 +4,6 @@
 
 @borderRadius      : 2px;
 @basicBorderRadius : 2px;
+
+
+@blue: #12AEF4;

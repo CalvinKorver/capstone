@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Form, Input } from 'semantic-ui-react';
+import * as utils from '../../util/Functions';
 
 
 class DateTimeInput extends Component {
@@ -26,17 +27,27 @@ class DateTimeInput extends Component {
         });
     }
 
+    
+
     handleTimeChange = (e, {name, value}) => {
         this.setState({ [name]: value }, () => {
             var hour = this.state.hour;
-            if (this.state.meri == "PM") { 
-                hour = (parseInt(hour) + 12).toString(); 
+            if (this.state.meri == "PM") {
+                if (parseInt(hour) <= 12) {
+                    hour = parseInt(hour) + 12; 
+                }
                 this.setState({hour: hour});
+            } else {
+                if (parseInt(hour) > 12) {
+                    hour = (parseInt(hour) - 12); 
+                }
             }
+            
             var time = {
                 name: this.props.timeName,
-                value: hour + ":" + this.state.minute
+                value: utils.minTwoDigits(hour) + ":" + this.state.minute
             }
+            console.log(time);
             this.props.handleChange(e, time);
         })
     }
@@ -62,10 +73,11 @@ class DateTimeInput extends Component {
             {text: "PM", value: "PM"}
         ]
 
-        let hours = ['01','02','03','04','05','06','07','08','09','10','11','12',];
+        let hours = ['1','2','3','4','5','6','7','8','9','10','11','12'];
         let hourOptions = hours.map((elem) => {
             return ({text: elem, value: elem});
         })
+
 
         const {day, month, year, minute, hour, meri} = this.state;
         let timeField = null;
@@ -73,7 +85,10 @@ class DateTimeInput extends Component {
         if(this.props.time) {
             timeField = (
                 <Form.Group widths="equal">
-                    <Form.Select fluid name="hour" placeholder="Hour"  value={hour} onChange={this.handleTimeChange} options={hourOptions}/>
+                    <Form.Select fluid name="hour" placeholder="Hour"  
+                    value={this.state.hour <= 12 ? this.state.hour : (parseInt(this.state.hour) - 12).toString()} 
+                    onChange={this.handleTimeChange} 
+                    options={hourOptions}/>
 
                     <Form.Input fluid  name="minute" placeholder="Minutes"  value={this.state.minute} onChange={this.handleTimeChange} />
 

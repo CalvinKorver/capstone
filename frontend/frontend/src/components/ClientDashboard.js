@@ -9,7 +9,6 @@ import NavMenu from './subs/NavMenu';
 import RibbonMenu from './subs/RibbonMenu';
 import CasesView from './subs/CasesView';
 import InformationView from './subs/InformationView';
-import NewCase from './forms/NewCase';
 import '../react_styles/ClientDashboard.css';
 import * as utils from '../util/Functions';
 import axios from 'axios';
@@ -37,6 +36,10 @@ class ClientDashboard extends Component {
             .catch(err => {
                 throw err
             })
+    }
+
+    refresh() {
+        console.log('refreshing');
     }
 
 
