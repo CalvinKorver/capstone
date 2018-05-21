@@ -5,6 +5,8 @@ import DateTimeInput from '../subs/DateTimeInput';
 import * as utils from '../../util/Functions';
 import ErrorMessage from '../subs/ErrorMessage';
 
+import '../../react_styles/NewClient.css';
+
 // import 'semantic-ui-css/semantic.min.css';
 // import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
 // onTouchTap http://stackoverflow.com/a/34015469/988941 injectTapEventPlugin();
@@ -81,7 +83,7 @@ class NewClient extends Component {
         var stateOptions = [{text: "CA", value:"CA"}, {text: "WA", value:"WA"}]
         return (
             <Modal 
-                trigger={<Button color="blue" floated="right">New Client</Button>}
+                trigger={<Button color="blue" floated="right" style={{width: '180px'}}>New Client</Button>}
                 closeIcon
                 scroll>
                 <Modal.Header> New Client</Modal.Header>

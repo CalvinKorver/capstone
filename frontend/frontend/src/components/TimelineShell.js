@@ -71,6 +71,7 @@ class TimelineShell extends Component {
         };
         items.push(sentence);
       }
+      console.log(singleCase);
       singleCase.trialInfo.forEach(singleTrial => {
         checkDate(singleTrial.trialDate);
         var trial = {id: i++, content: 'Trial', start: singleTrial.trialDate, type: 'point'};

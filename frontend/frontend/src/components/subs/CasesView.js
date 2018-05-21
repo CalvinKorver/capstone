@@ -107,7 +107,7 @@ class CasesView extends Component {
                         <Search className="main-search" size="small"/>
                 </Grid.Column>
                 <Grid.Column width={4}>
-                    <NewCase firstName={this.props.client.first_name} lastName={this.props.client.last_name}/>
+                    <NewCase firstName={this.props.client.first_name} lastName={this.props.client.last_name} refresh={this.props.refresh}/>
                 </Grid.Column>
                 
 
