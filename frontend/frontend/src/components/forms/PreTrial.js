@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+    import React, {Component} from 'react';
 import { Button, Checkbox, Form, Modal } from 'semantic-ui-react'
 import axios from 'axios';
 import $ from 'jquery'; 
@@ -40,8 +40,8 @@ class PreTrial extends Component {
             treatmentOrdered: "",
             caseOutcome: "",
             isPreTrial: this.props.isPreTrial,
-            preTrialStatusName: null,
-            sentencingStatusName: null,
+            preTrialStatusName: "",
+            sentencingStatusName: "",
             isCaseClosed: false,
             isMotion36: false,
             isMotion35: false,
@@ -57,6 +57,7 @@ class PreTrial extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const payload = this.state;
+        console.log("State: " + payload.sentencingStatusName + " " + payload.preTrialStatusName);
         var endpoint = "cases/"
         var editType;
         if(payload.isPreTrial){
