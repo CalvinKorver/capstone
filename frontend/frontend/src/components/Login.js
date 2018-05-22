@@ -26,7 +26,8 @@ class Login extends Component {
       password: '',
       isError: false,
       isDisplayError: false,
-      errorMessage: ''
+      errorMessage: '',
+      loading: false
     }
     this.Auth = new AuthService();
   }
@@ -42,7 +43,6 @@ class Login extends Component {
 
   handleClick(event) {
     event.preventDefault();
-    console.log("pressed submit");
     if (utils.isEmpty(this.state.username) || utils.isEmpty(this.state.password)) {
       this.setState({
         isError: true,
@@ -54,22 +54,26 @@ class Login extends Component {
         "username": this.state.username,
         "password": this.state.password
       }
+      this.setState({loading: true});
       this.Auth.login(payload)
         .then(res =>{
           this.props.history.replace('/');
+          this.setState({loading: false});
         })
         .catch(err => {
           if (err.response != undefined) {
             this.setState({
               errorMessage: err.response.status + ": " + err.response.statusText,
               isDisplayError: true,
-              isError: true
+              isError: true,
+              loading: false
             });
           } else {
             this.setState({
               errorMessage: "Unknown Error!",
               isDisplayError: true,
-              isError: true
+              isError: true,
+              loading: false
             });
           }
         })
@@ -105,6 +109,7 @@ class Login extends Component {
                   {(event,newValue) => this.setState({password:newValue.value})}/>
                 <Button
                   color="blue"
+                  loading={this.state.loading}
                   fluid
                   size='large'
                   onClick={(event) => this.handleClick(event)}>Sign in</Button>

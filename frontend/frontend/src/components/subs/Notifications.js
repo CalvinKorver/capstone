@@ -40,8 +40,8 @@ class Notifications extends Component {
     this.props.cases.forEach(singleCase => {
         checkDateComingUp(singleCase.caseInfo.sentenceEnd, "Sentence ending soon");
 
-        if(singleCase.dateDUI){
-            duiDates.push(singleCase.dateDUI);
+        if(singleCase.offense.isDUI){
+            duiDates.push(singleCase.offense.offenseDate);
         }
 
         singleCase.trialInfo.forEach(singleTrial => {
@@ -62,12 +62,13 @@ class Notifications extends Component {
     });
     // duiDates.push("2019-03-25")
     duiDates.sort();
+    console.log(duiDates);
     if (duiDates.length > 1) {
         // check if the two most recent dates (last two) are within 7 years of each other
         var earlierDate = new Date(duiDates[duiDates.length - 2]);
         var laterDate = new Date(duiDates[duiDates.length - 1]);
         var sevenYears = 220898482000;
-        if(laterDate.getTime() - earlierDate.getTime() < sevenYears && laterDate > new Date()){
+        if(laterDate.getTime() - earlierDate.getTime() < sevenYears){ //&& laterDate > new Date()){
             notifications.push("Two DUI offenses within seven years");
         }
     }

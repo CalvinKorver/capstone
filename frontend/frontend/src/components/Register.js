@@ -20,7 +20,8 @@ class Register extends Component {
       password2: 'password',
       isError: false,
       isDisplayError: false,
-      errorMessage: ""
+      errorMessage: "",
+      loading: false
     }
     this.AuthService = new AuthService();
   }
@@ -35,10 +36,11 @@ class Register extends Component {
         errorMessage: "Sorry, please fill out all form fields prior to logging in."
       });
     } else {
-      console.log(payload);
+      this.setState({loading: true});
       this.AuthService.createNewUser(payload)
         .then(res =>{
           this.props.history.replace('/');
+          this.setState({loading: false});
         })
         .catch(err => {
             if (err.response != undefined) {
@@ -52,12 +54,14 @@ class Register extends Component {
                   errorMessage: message,
                   isError: true,
                   isDisplayError: true,
+                  loading: false
                 })
               } else {
                   this.setState({
                     errorMessage: err.response.status + ": " + err.response.statusText,
                     isError: true,
                     isDisplayError: true,
+                    loading: false
                   });
               }
             } else {
@@ -65,6 +69,7 @@ class Register extends Component {
                 errorMessage: "Unknown Error!",
                 isError: true,
                 isDisplayError: true,
+                loading: false
               });
             }
         })
@@ -149,7 +154,9 @@ class Register extends Component {
                     message={this.state.errorMessage}
                     dismissed={this.handleErrorClose.bind(this)}/>
                 <br />
-                <Button color="blue" fluid size='large' onClick={(event) => this.handleClick(event)}>Register</Button>
+                <Button 
+                  loading={this.state.loading}
+                  color="blue" fluid size='large' onClick={(event) => this.handleClick(event)}>Register</Button>
               </Segment>
             </Form>
           </Grid.Column>

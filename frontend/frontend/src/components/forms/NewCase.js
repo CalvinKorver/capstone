@@ -28,7 +28,7 @@ class NewCase extends Component {
         super(props);
         // this.state = {
         //     court: "King County Federal Court",
-        //     dateOfOffense: "2018-02-13",
+        //     offenseDate: "2018-02-13",
         //     caseNumber: "123456",
         //     chargeTypeName: "Homicide",
         //     startTimeCustody: "",
@@ -44,7 +44,7 @@ class NewCase extends Component {
 
         this.state = {
             court: "",
-            dateOfOffense: "",
+            offenseDate: "",
             caseNumber: "",
             chargeTypeName: "",
             startTimeCustody: "",
@@ -67,7 +67,7 @@ class NewCase extends Component {
         payload["clientFirstName"] = this.props.firstName;
         payload["clientLastName"] = this.props.lastName;
         
-        if (utils.isEmpty(payload.caseNumber) || utils.isEmpty(payload.dateOfOffense) || utils.isEmpty(payload.chargeTypeName)) {
+        if (utils.isEmpty(payload.caseNumber) || utils.isEmpty(payload.offenseDate) || utils.isEmpty(payload.chargeTypeName)) {
             this.setState({isError: true,
                 isDisplayError: true,
                 errorMessage: "Sorry, please fill out all form fields prior to submitting a new case."});
@@ -108,7 +108,7 @@ class NewCase extends Component {
 
     render() {
 
-        const { court, dateOfOffense, caseNumber, chargeTypeName,
+        const { court, offenseDate, caseNumber, chargeTypeName,
             startTimeCustody, endTimeCustody, failtoAppearDate, benchWarrant } = this.state
 
         return (
@@ -120,7 +120,7 @@ class NewCase extends Component {
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Select fluid label="Court" name="court" options={courtOptions} placeholder='Select an option'  value={court} onChange={this.handleChange} />
                         
-                        <DateTimeInput time={false} name="dateOfOffense" label="Date of offense" handleChange={this.handleChange}/>
+                        <DateTimeInput time={false} name="offenseDate" label="Date of offense" handleChange={this.handleChange}/>
 
                         <Form.Input fluid label="Case Number" name="caseNumber"  placeholder=""  value={caseNumber} onChange={this.handleChange} />
 

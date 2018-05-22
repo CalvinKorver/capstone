@@ -206,14 +206,13 @@ class CaseInfoViewSet(APIView):
                 results.append({})
                 # check if the case is a DUI
                 offenses = Offense.objects.filter(caseID = case.id)
-                print(offenses)
-                # if offenses:
                 for offenseInstance in offenses:
-                    # print(offenseInstance.chargeTypeID.id)
                     chargeType = ChargeType.objects.get(id = offenseInstance.chargeTypeID.id)
-                    print(chargeType.chargeTypeName)
+                    results[i]['offense'] = OffenseSerializer(offenseInstance).data
+                    results[i]['offense']['isDUI'] = False
+                    results[i]['offense']['offenseTypeName'] = chargeType.chargeTypeName
                     if chargeType.chargeTypeName == "DUI":
-                        results[i]["dateDUI"] = offenseInstance.offenseDate
+                        results[i]['offense']['isDUI'] = True
 
                 results[i]["caseInfo"] = CaseSerializer(case).data
                 fta = FailToAppear.objects.filter(caseID=case.id)
@@ -310,7 +309,6 @@ class CaseViewSet(APIView):
 
         offenseDate = request.data.get('offenseDate')
         if (offenseDate):
-            # first make the charge type
             chargeType, created = ChargeType.objects.get_or_create(
                 chargeTypeName = request.data.get('chargeTypeName')
             )
