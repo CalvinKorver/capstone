@@ -34,7 +34,7 @@ class CasesView extends Component {
                 const forms = [
                     <PreTrial caseNumber={_case.caseNumber} isPreTrial={true}/>,
                     <PreTrial caseNumber={_case.caseNumber} isPreTrial={false}/>,
-                    <SentencingCompliance caseNumer={_case.caseNumber}/>
+                    <SentencingCompliance caseNumber={_case.caseNumber}/>
                 ];
                 caseTable.push(
                     <Table.Row key={_case.caseNumber}>
