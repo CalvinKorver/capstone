@@ -44,7 +44,7 @@ class SentencingCompliance extends Component {
                 .post(utils.globalURL + endpoint, payload)
                 .then(response => {
                     this.setState({isError: false,
-                        errorMessage: "Submitted a new case!",
+                        errorMessage: "Submitted new sentence compliance info!",
                         isDisplayError: true
                     })
                 })
