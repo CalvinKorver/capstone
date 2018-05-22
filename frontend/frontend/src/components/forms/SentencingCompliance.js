@@ -12,7 +12,6 @@ class SentencingCompliance extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            caseNumber: this.props.caseNumber,
             sentencingComplianceStatus: "",
             isAdmit: false,
             isReserve: false,
@@ -39,6 +38,7 @@ class SentencingCompliance extends Component {
         event.preventDefault();
         var endpoint = "sentence-compliance/"
         let payload = this.state;
+        payload.caseNumber = this.props.caseNumber;
         if (this.checkForEmptyFormElements(payload)) {
             return axios
                 .post(utils.globalURL + endpoint, payload)
