@@ -29,15 +29,18 @@ class DashboardTable extends Component {
         var clientRows = [];
         if (searchResults) {
             var dateToday = utils.getDate();
-            for (var i = 0; i < Object.keys(searchResults).length; i++) {
-                if (searchResults[i]){
+            var keys = Object.keys(searchResults);
+            for (var i = 0; i < keys.length; i++) {
+                var index = keys[i];
+                if (searchResults[index]){
+                    console.log(searchResults[i]);
                     let nextCourtDate = "";
                     var openCaseCount = 0;
                     var caseCount;
-                    if (searchResults[i].cases) {
+                    if (searchResults[index].cases) {
                         caseCount = searchResults[i].cases.length;
                         // this is ugly as fuck. Matches trials to cases and determines which is the most recent
-                        searchResults[i].cases.forEach(function(singleCase){
+                        searchResults[index].cases.forEach(function(singleCase){
                             if (!singleCase.isCaseClosed){
                                 openCaseCount += 1;
                             }
@@ -52,8 +55,7 @@ class DashboardTable extends Component {
                     } else {
                         caseCount = 0;
                     }
-                    
-                    var client = searchResults[i].clientInfo;
+                    var client = searchResults[index].clientInfo;
                     clientRows.push(
                     <tr key={client.id}>
                         <td key='clientLink'>
