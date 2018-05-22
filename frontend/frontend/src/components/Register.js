@@ -42,7 +42,7 @@ class Register extends Component {
         })
         .catch(err => {
             if (err.response != undefined) {
-              console.log(err.response.data);
+              console.log("Error: " + err.response.data);
               if (err.response.status == 400) {
                 let message = ""
                 for(let e in err.response.data) {
