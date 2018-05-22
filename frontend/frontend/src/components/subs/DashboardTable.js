@@ -33,12 +33,12 @@ class DashboardTable extends Component {
             for (var i = 0; i < keys.length; i++) {
                 var index = keys[i];
                 if (searchResults[index]){
-                    console.log(searchResults[i]);
+                    console.log(searchResults[index]);
                     let nextCourtDate = "";
                     var openCaseCount = 0;
                     var caseCount;
                     if (searchResults[index].cases) {
-                        caseCount = searchResults[i].cases.length;
+                        caseCount = searchResults[index].cases.length;
                         // this is ugly as fuck. Matches trials to cases and determines which is the most recent
                         searchResults[index].cases.forEach(function(singleCase){
                             if (!singleCase.isCaseClosed){
