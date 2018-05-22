@@ -6,6 +6,8 @@ import * as utils from '../../util/Functions';
 import ErrorMessage from '../subs/ErrorMessage';
 
 import '../../react_styles/NewClient.css';
+const centered={marginLeft: '40%', marginRight: '40%', width: '20%'}
+
 
 // import 'semantic-ui-css/semantic.min.css';
 // import injectTapEventPlugin from 'react-tap-event-plugin'; Needed for
@@ -25,8 +27,9 @@ class NewClient extends Component {
             state: "",
             zipcode: "",
             country: "",
-            isInError: false,
-            errorMessage: ""
+            isDisplayError: false,
+            errorMessage: "",
+            isError: false
         }
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,38 +37,46 @@ class NewClient extends Component {
      }
 
     handleSubmit(event) {
-        event.preventDefault();
-        if (utils.isEmpty(this.state.first_name) || utils.isEmpty(this.state.last_name)) {
+        event.preventDefault();        
+        if (utils.isEmpty(this.state.first_name) || utils.isEmpty(this.state.last_name) ||
+            utils.isEmpty(this.state.date_of_birth) || utils.isEmpty(this.state.street_address) ||
+            utils.isEmpty(this.state.city) || utils.isEmpty(this.state.state) ||
+            utils.isEmpty(this.state.zipcode) || utils.isEmpty(this.state.country)) {
             this.setState({
-              isInError: true,
-              errorMessage: "Sorry, clients must have a first and last name."
+              isError: true,
+              isDisplayError: true,
+              errorMessage: "Sorry, please fill out all form fields prior to submitting a new client."
             });
         } else {
-        var endpoint = "clients/"
-        const data = {
-            first_name: this.state.first_name,
-            last_name: this.state.last_name,
-            date_of_birth: this.state.date_of_birth,
-            street_address: this.state.street_address,
-            city: this.state.city,
-            state: this.state.state,
-            zipcode: this.state.zipcode,
-            country: this.state.country
-        }
-        return axios
-            .post(utils.globalURL + endpoint, data)
-            .then(function (response) {
-                alert("Submitted");
-                // this.setState(this.state);
-            // window.localStorage.setItem('token', response);
-            // store.dispatch(setToken(response.data.token));
-            });
-            // .catch(function (error) {
-            //   // raise different exception if due to invalid credentials
-            //   if (_.get(error, 'response.status') === 400) {
-            //     throw new InvalidCredentialsException(error);
-            //   }
-            //   throw error;
+            var endpoint = "clients/"
+            const payload = {
+                first_name: this.state.first_name,
+                last_name: this.state.last_name,
+                date_of_birth: this.state.date_of_birth,
+                street_address: this.state.street_address,
+                city: this.state.city,
+                state: this.state.state,
+                zipcode: this.state.zipcode,
+                country: this.state.country
+            }
+            return axios
+                .post(utils.globalURL + endpoint, payload)
+                .then(response => {
+                    this.setState({isError: false,
+                        errorMessage: "Submitted a new client!",
+                        isDisplayError: true
+                    });
+                    this.props.refresh();
+                })
+                // .catch(err => {
+                //     this.setState({
+                //         isError: true,
+                //         errorMessage: err,
+                //         isDisplayError: true
+                //     })
+                //     errorUpdate = utils.processError(err);
+                //     this.setState(errorUpdate);
+                //     throw err;
             // });
         }
     }
@@ -75,8 +86,8 @@ class NewClient extends Component {
     }
 
     handleErrorClose() {
-        this.setState({isInError: false });
-      }
+        this.setState({isDisplayError: false });
+    }
 
     render() {
         const {first_name, last_name, date_of_birth, street_address, city, state, zipcode, country} = this.state
@@ -141,10 +152,13 @@ class NewClient extends Component {
                             value={country} onChange={this.handleChange}/>
                         </Form.Field>
                         <ErrorMessage
-                            display={this.state.isInError} 
+                            isError={this.state.isError}
+                            display={this.state.isDisplayError} 
                             message={this.state.errorMessage}
                             dismissed={this.handleErrorClose.bind(this)}/>
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit"  color='blue' 
+                                style={centered}>Submit</Button>
+                        <br/>
                     </Form> 
                 </Modal.Content>
             </Modal>
