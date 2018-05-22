@@ -12,12 +12,12 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      first_name: 'Joseph',
-      last_name: 'Reimer',
-      username: 'jremis',
-      email: 'j@gmail.com',
-      password1: 'password1',
-      password2: 'password',
+      first_name: '',
+      last_name: '',
+      username: '',
+      email: '',
+      password1: '',
+      password2: '',
       isError: false,
       isDisplayError: false,
       errorMessage: "",
