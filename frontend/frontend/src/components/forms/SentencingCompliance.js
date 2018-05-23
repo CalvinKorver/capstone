@@ -12,8 +12,7 @@ class SentencingCompliance extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            caseNumber: this.props.caseNumber,
-            sentencingComplianceStatus: "",
+            violationName: "",
             isAdmit: false,
             isReserve: false,
             isCaseClosed: false,
@@ -26,7 +25,7 @@ class SentencingCompliance extends Component {
      }
 
     checkForEmptyFormElements = (payload) => {
-        if (utils.isEmpty(payload.sentencingComplianceStatus) || utils.isEmpty(payload.isAdmit)|| utils.isEmpty(payload.isReserve)) {
+        if (utils.isEmpty(payload.violationName) || utils.isEmpty(payload.isAdmit)|| utils.isEmpty(payload.isReserve)) {
             this.setState({isError: true,
                 isDisplayError: true,
                 errorMessage: "Sorry, please fill out all form fields prior to trying to update the sentence compliance."});
@@ -61,9 +60,9 @@ class SentencingCompliance extends Component {
         //     this.setState()
         // }
         this.setState({ [name]: value })
-        // console.log("State: " + this.state.sentencingComplianceStatus);
+        // console.log("State: " + this.state.violationName);
         // console.log(this.state.preTrialStatus);
-        if (name == "sentencingComplianceStatus") {
+        if (name == "violationName") {
             if (value == "New Criminal Law Violation") {
                 $("#nclv-form").removeClass("hidden");
             } else {
@@ -104,7 +103,7 @@ class SentencingCompliance extends Component {
                             name="isCaseClosed"
                             onChange={this.handleChange}/>
 
-                        <Form.Select fluid label="Alleged Violation" name="sentencingComplianceStatus" options={violationOptions} placeholder='Select an option' onChange={this.handleChange}/>
+                        <Form.Select fluid label="Alleged Violation" name="violationName" options={violationOptions} placeholder='Select an option' onChange={this.handleChange}/>
 
                         <div  id="nclv-form" className="hidden">
                             <Form.Input fluid label="Case Number" name="caseNumber" placeholder=""  value={caseNumber} onChange={this.handleChange}/>    
