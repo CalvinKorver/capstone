@@ -40,8 +40,12 @@ class Notifications extends Component {
     this.props.cases.forEach(singleCase => {
         checkDateComingUp(singleCase.caseInfo.sentenceEnd, "Sentence ending soon");
 
-        if(singleCase.offense.isDUI){
-            duiDates.push(singleCase.offense.offenseDate);
+        
+        if (singleCase.offense) {
+            if(singleCase.offense.isDUI){
+                duiDates.push(singleCase.offense.offenseDate);
+            }
+
         }
 
         singleCase.trialInfo.forEach(singleTrial => {

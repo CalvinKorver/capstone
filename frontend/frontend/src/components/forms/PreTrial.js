@@ -77,6 +77,7 @@ class PreTrial extends Component {
                     errorMessage: "Edited the case " + editType + " information!",
                     isDisplayError: true
                 })
+                
             })
             .catch(err => {
                 errorUpdate = utils.processError(err);
@@ -222,7 +223,7 @@ class PreTrial extends Component {
         }
         
         return (
-        <Modal trigger={<Button style={{width: '100%', backgroundColor: 'Aliceblue'}}>{title}</Button>}>
+        <Modal closeIcon trigger={<Button style={{width: '100%', backgroundColor: 'Aliceblue'}}>{title}</Button>}>
             <Modal.Header> {title} </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>

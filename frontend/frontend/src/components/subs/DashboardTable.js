@@ -8,7 +8,8 @@ import {
     Divider,
     Grid,
     Container,
-    Header
+    Header,
+    Icon
   } from 'semantic-ui-react'
 import Client from '../Client';
 import '../../react_styles/App.css';
@@ -56,6 +57,7 @@ class DashboardTable extends Component {
                         caseCount = 0;
                     }
                     var client = searchResults[index].clientInfo;
+                    console.log(client);
                     clientRows.push(
                     <tr key={client.id}>
                         <td key='clientLink'>
@@ -69,6 +71,11 @@ class DashboardTable extends Component {
                         <td key='nextCourtDate'>{nextCourtDate ? moment(nextCourtDate).format('MMM DD, YYYY'): "-"}</td>
                         <td key='openCaseCount'>{openCaseCount}</td>
                         <td key='caseCount'>{caseCount}</td>
+                        <td key='delete'>
+                            <a onClick={() => this.props.deleteClient(client)} >
+                                <Icon color="red" name='trash'/>
+                            </a>
+                        </td>
                     </tr>
                     )
                 }
@@ -83,6 +90,7 @@ class DashboardTable extends Component {
                     <th>Next Court Date</th>
                     <th>Open Cases</th>
                     <th>Total Cases</th>
+                    <th width={1}>Del</th>
                     {/* <th>Status</th> */}
                 </tr></thead>
                 <tbody>

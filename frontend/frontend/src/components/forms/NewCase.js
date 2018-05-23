@@ -55,10 +55,14 @@ class NewCase extends Component {
             isCaseClosed: false,
             isDisplayError: false,
             errorMessage: "",
-            isError: false
+            isError: false,
+            open: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
      }
+
+    open = () => this.setState({ open: true })
+    close = () => this.setState({ open: false })
 
     handleSubmit = (event) => {
         event.preventDefault();
@@ -79,6 +83,9 @@ class NewCase extends Component {
                     errorMessage: "Submitted a new case!",
                     isDisplayError: true
                 });
+                setTimeout(() => {
+                    this.setState({open: false})
+                }, 1500);
                 this.props.refresh();
             })
             .catch(err => {
@@ -113,7 +120,9 @@ class NewCase extends Component {
 
         return (
             <Modal 
-                trigger={<Button color="blue"floated="right" style={{width: '190px'}}>New Offense / Case</Button>}
+            id="new-case-modal"
+            open={this.state.open}
+            trigger={<Button color="blue"floated="right" onClick={this.open} style={{width: '190px'}}>New Offense / Case</Button>}
                 closeIcon>
             <Modal.Header>Create New Offense </Modal.Header>
                 <Modal.Content scrolling>
