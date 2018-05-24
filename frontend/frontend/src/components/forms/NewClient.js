@@ -22,19 +22,23 @@ class NewClient extends Component {
             first_name: '',
             last_name: '',
             date_of_birth: "",
-            street_address: "",
-            city: "",
-            state: "",
-            zipcode: "",
-            country: "",
+            street_address: "1800 Fakestreet Ave NE",
+            city: "Seattle",
+            state: "WA",
+            zipcode: "98115",
+            country: "USA",
             isDisplayError: false,
             errorMessage: "",
-            isError: false
+            isError: false,
+            open: false
         }
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-     }
+    }
+
+    open = () => this.setState({ open: true })
+    close = () => this.setState({ open: false })
 
     handleSubmit(event) {
         event.preventDefault();        
@@ -66,6 +70,7 @@ class NewClient extends Component {
                         errorMessage: "Submitted a new client!",
                         isDisplayError: true
                     });
+                    setTimeout(() => { this.setState({open: false}) }, 2000);
                     this.props.refresh();
                 })
                 // .catch(err => {
@@ -94,7 +99,10 @@ class NewClient extends Component {
         var stateOptions = [{text: "CA", value:"CA"}, {text: "WA", value:"WA"}]
         return (
             <Modal 
-                trigger={<Button color="blue" floated="right" style={{width: '180px'}}>New Client</Button>}
+                trigger={<Button color="blue" floated="right" 
+                onClick={this.open}
+                open={this.state.open}
+                style={{width: '180px'}}>New Client</Button>}
                 closeIcon
                 scroll>
                 <Modal.Header> New Client</Modal.Header>

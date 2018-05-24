@@ -89,8 +89,8 @@ class SentenceComplianceViewSet(APIView):
         )
 
         sentenceCompliance = SentenceCompliance.objects.create(
-            admit = request.data.get('admit'),
-            reserve = request.data.get('reserve'),
+            isAdmit = request.data.get('isAdmit'),
+            isReserve = request.data.get('isReserve'),
             violationID = violation,
             caseID = case
         )

@@ -79,13 +79,15 @@ class TimelineShell extends Component {
       })
 
       let offense = singleCase.offense;
-      checkDate(offense.offenseDate);
-      items.push({
-        id: i++, 
-        className: "offense", 
-        content: offense.offenseTypeName + ' Offense', 
-        start: offense.offenseDate, 
-        type: 'point'})
+      if (offense) {
+        checkDate(offense.offenseDate);
+        items.push({
+          id: i++, 
+          className: "offense", 
+          content: offense.offenseTypeName + ' Offense', 
+          start: offense.offenseDate, 
+          type: 'point'})
+      }
 
       singleCase.punishmentInfo.forEach(singlePunishment => {
         checkDate(singlePunishment.dueDate);

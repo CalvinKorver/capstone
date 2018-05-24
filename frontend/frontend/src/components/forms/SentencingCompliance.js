@@ -12,7 +12,7 @@ class SentencingCompliance extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sentencingComplianceStatus: "",
+            violationName: "",
             isAdmit: false,
             isReserve: false,
             isCaseClosed: false,
@@ -39,13 +39,13 @@ class SentencingCompliance extends Component {
         event.preventDefault();
         var endpoint = "sentence-compliance/"
         let payload = this.state;
-        payload.caseNumber = this.props.caseNumber;
+        payload['caseNumber'] = this.props.caseNumber;
         if (this.checkForEmptyFormElements(payload)) {
             return axios
                 .post(utils.globalURL + endpoint, payload)
                 .then(response => {
                     this.setState({isError: false,
-                        errorMessage: "Submitted new sentence compliance info!",
+                        errorMessage: "Successfully updated sentence compliance!",
                         isDisplayError: true
                     })
                 })
@@ -96,7 +96,7 @@ class SentencingCompliance extends Component {
             {text: "Impose", value:false}];
 
         return (
-            <Modal trigger={<Button style={{width: '100%', backgroundColor: 'Aliceblue'}}>Sentencing Compliance Modal</Button>}>
+            <Modal trigger={<Button style={{width: '100%', backgroundColor: 'Aliceblue'}} closeIcon>Sentencing Compliance Modal</Button>}>
             <Modal.Header> Sentence Compliance </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>

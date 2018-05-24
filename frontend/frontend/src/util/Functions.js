@@ -52,7 +52,8 @@ export function minTwoDigits(n) {
 export const globalURL = "http://shield-app.tk:8000/"
 export const globalURLFrontend = "http://shield-site.tk/"
 
-// export const globalURL = "http://localhost:8000/"
-// export const globalURLFrontend = "http://localhost:3000/"
+export const globalURL = "http://localhost:8000/"
+export const globalURLFrontend = "http://localhost:3000/"
+export const MODAL_EXIT_TIME = 2000;
 
 
