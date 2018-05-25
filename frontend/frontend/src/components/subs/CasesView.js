@@ -32,9 +32,10 @@ class CasesView extends Component {
             this.props.cases.forEach(singleCase => {
                 var _case = singleCase.caseInfo;
                 const forms = [
-                    <PreTrial caseNumber={_case.caseNumber} isPreTrial={true}/>,
-                    <PreTrial caseNumber={_case.caseNumber} isPreTrial={false}/>,
-                    <SentencingCompliance caseNumber={_case.caseNumber}/>
+                    <PreTrial refresh={this.props.refresh} caseNumber={_case.caseNumber} isPreTrial={true}/>,
+                    <PreTrial refresh={this.props.refresh} caseNumber={_case.caseNumber} isPreTrial={false}/>,
+                    <SentencingCompliance caseNumber={_case.caseNumber}
+                    refresh = {this.props.refresh}/>
                 ];
                 caseTable.push(
                     <Table.Row key={_case.caseNumber}>
@@ -47,9 +48,7 @@ class CasesView extends Component {
                             <Dropdown upward placeholder='Edit' fluid selection options={forms} />
                         </Table.Cell>   
                         <Table.Cell >
-                            <a onClick={() => this.props.deleteCase(_case.caseNumber)} >
-                                <Icon color="red" name='trash'/>
-                            </a>
+                            <Icon link color="red" name='trash' onClick={() => this.props.deleteCase(_case.caseNumber)} />
                         </Table.Cell>
                     </Table.Row>
                 )

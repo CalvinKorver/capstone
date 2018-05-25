@@ -83,9 +83,7 @@ class NewCase extends Component {
                     errorMessage: "Submitted a new case!",
                     isDisplayError: true
                 });
-                setTimeout(() => {
-                    this.setState({open: false})
-                }, 1500);
+                setTimeout(() => { this.setState({open: false}) }, utils.MODAL_EXIT_TIME);
                 this.props.refresh();
             })
             .catch(err => {
@@ -123,7 +121,8 @@ class NewCase extends Component {
             id="new-case-modal"
             open={this.state.open}
             trigger={<Button color="blue"floated="right" onClick={this.open} style={{width: '190px'}}>New Offense / Case</Button>}
-                closeIcon>
+            >
+            <Icon name="delete" link={true} size="large" onClick={this.close}/>
             <Modal.Header>Create New Offense </Modal.Header>
                 <Modal.Content scrolling>
                     <Form onSubmit={this.handleSubmit}>

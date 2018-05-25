@@ -1,5 +1,5 @@
     import React, {Component} from 'react';
-import { Button, Checkbox, Form, Modal } from 'semantic-ui-react'
+import { Button, Checkbox, Form, Modal, Icon } from 'semantic-ui-react'
 import axios from 'axios';
 import $ from 'jquery'; 
 import DateTimeInput from '../subs/DateTimeInput';
@@ -47,12 +47,14 @@ class PreTrial extends Component {
             isMotion35: false,
             isDisplayError: false,
             errorMessage: "",
-            isError: false
+            isError: false,
+            open: false
         }
-        // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-     }
+    }
 
+    open = () => this.setState({ open: true })
+    close = () => this.setState({ open: false })
 
     handleSubmit(event) {
         event.preventDefault();
@@ -65,18 +67,20 @@ class PreTrial extends Component {
         } else {
             editType = "sentencing"
         }
-        if ((utils.isEmpty(payload.sentencingStatusName) && utils.isEmpty(payload.preTrialStatusName))) {
-            this.setState({isError: true,
-                isDisplayError: true,
-                errorMessage: "Sorry, please fill out all appropriate fields before modifying the " + editType + " information."});
-        } else {
+        // if ((utils.isEmpty(payload.sentencingStatusName) && utils.isEmpty(payload.preTrialStatusName))) {
+        //     this.setState({isError: true,
+        //         isDisplayError: true,
+        //         errorMessage: "Sorry, please fill out all appropriate fields before modifying the " + editType + " information."});
+        // } else {
             return axios
             .put(utils.globalURL + endpoint, payload)
             .then(response => {
                 this.setState({isError: false,
                     errorMessage: "Edited the case " + editType + " information!",
                     isDisplayError: true
-                })
+                });
+                setTimeout(() => { this.close() }, utils.MODAL_EXIT_TIME);
+                this.props.refresh();
                 
             })
             .catch(err => {
@@ -84,7 +88,7 @@ class PreTrial extends Component {
                 this.setState(errorUpdate);
                 throw err;
             });
-        }
+        // }
     }
 
     handleChange = (e, { name, value }) => { 
@@ -221,9 +225,22 @@ class PreTrial extends Component {
                     value={isCaseClosed}
                     onChange={this.handleChange}/>;
         }
+
+        let trigger = (
+            <Button 
+                onClick={this.open}
+                style={{width: '100%', backgroundColor: 'Aliceblue'}}>
+                {title}
+            </Button>
+        )
         
         return (
-        <Modal closeIcon trigger={<Button style={{width: '100%', backgroundColor: 'Aliceblue'}}>{title}</Button>}>
+        <Modal
+            id="pre-trial-modal"
+            open={this.state.open}
+            trigger= {trigger}
+            scroll>
+            <Icon name="delete" link={true} size="large" onClick={this.close}/>
             <Modal.Header> {title} </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>

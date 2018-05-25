@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Checkbox, Dropdown, Form, Modal } from 'semantic-ui-react'
+import { Button, Checkbox, Dropdown, Form, Modal, Icon } from 'semantic-ui-react'
 import axios from 'axios';
 import $ from 'jquery'; 
 import * as utils from '../../util/Functions';
@@ -18,12 +18,15 @@ class SentencingCompliance extends Component {
             isCaseClosed: false,
             isDisplayError: false,
             errorMessage: "",
-            isError: false
+            isError: false,
+            open: false
         }
-        console.log(this.props.caseNumber);
-        // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
      }
+
+     open = () => this.setState({ open: true })
+     close = () => this.setState({ open: false })
+ 
 
     checkForEmptyFormElements = (payload) => {
         if (utils.isEmpty(payload.violationName) || utils.isEmpty(payload.isAdmit)|| utils.isEmpty(payload.isReserve)) {
@@ -45,9 +48,11 @@ class SentencingCompliance extends Component {
                 .post(utils.globalURL + endpoint, payload)
                 .then(response => {
                     this.setState({isError: false,
-                        errorMessage: "Successfully updated sentence compliance!",
+                        errorMessage:   "Successfully updated sentence compliance!",
                         isDisplayError: true
                     })
+                    setTimeout(() => { this.close() }, utils.MODAL_EXIT_TIME);
+                    this.props.refresh();
                 })
                 .catch(err => {
                     let errorUpdate = utils.processError(err);
@@ -96,7 +101,10 @@ class SentencingCompliance extends Component {
             {text: "Impose", value:false}];
 
         return (
-            <Modal trigger={<Button style={{width: '100%', backgroundColor: 'Aliceblue'}} closeIcon>Sentencing Compliance Modal</Button>}>
+            <Modal trigger={<Button style={{width: '100%', backgroundColor: 'Aliceblue'}}
+            onClick={this.open}>Sentencing Compliance Modal</Button>}
+            open={this.state.open}>
+            <Icon name="delete" link={true} size="large" onClick={this.close}/>
             <Modal.Header> Sentence Compliance </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.handleSubmit}>
