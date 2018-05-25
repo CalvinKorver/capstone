@@ -16,6 +16,7 @@ import NewCase from './forms/NewCase';
 import '../react_styles/App.css';
 import * as utils from '../util/Functions';
 import DashboardTable from './subs/DashboardTable';
+import axios from 'axios';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -28,6 +29,20 @@ class Dashboard extends Component {
             searchResults: [],
             trials: []
         }
+    }
+
+    deleteClient = (id) => {
+        return axios
+            .delete(utils.globalURL + 'client-detail?clientID=' + id)
+            .then(response => {
+                console.log('deleted');
+                // this.setState({isError: false,
+                    // errorMessage: "Deleted a new client!",
+                    // isDisplayError: true
+                // });
+                // setTimeout(() => { this.setState({open: false}) }, 2000);
+                this.fetchCases();
+            })
     }
 
     fetchCases = () => {
@@ -105,20 +120,7 @@ class Dashboard extends Component {
         }, 300)
     }
 
-    deleteClient = (id) => {
-        console.log("trying to delete client");
-        console.log(id);
-        // let endpoint = 'cases?caseID=' + caseNumber;
-        // return axios
-        //     .delete(utils.globalURL + endpoint)
-        //     .then(response => {
-        //         console.log(response.status + response.statusText);
-        //         this.refreshCases();
-        //     })
-        //     .catch(err => {
-        //         throw err
-        //     })
-    }
+    
 
     render() {            
         const { isLoading, value, clients, results, trials, searchResults } = this.state;
@@ -148,7 +150,8 @@ class Dashboard extends Component {
                         </Grid.Column>
                         <Container>
                     <Grid.Column width={16} >
-                        <DashboardTable searchResults={searchResults} trials = {trials} deleteClient = {this.deleteClient}/>
+                        <DashboardTable searchResults={searchResults}deleteClient={this.deleteClient}
+                        trials = {trials} deleteClient = {this.deleteClient}/>
                     </Grid.Column>
                     </Container>
                 </Grid>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Dropdown, Form, Modal } from 'semantic-ui-react'
+import { Button, Dropdown, Form, Modal, Icon } from 'semantic-ui-react'
 import axios from 'axios';
 import DateTimeInput from '../subs/DateTimeInput';
 import * as utils from '../../util/Functions';
@@ -41,7 +41,7 @@ class NewClient extends Component {
     close = () => this.setState({ open: false })
 
     handleSubmit(event) {
-        event.preventDefault();        
+        event.preventDefault();
         if (utils.isEmpty(this.state.first_name) || utils.isEmpty(this.state.last_name) ||
             utils.isEmpty(this.state.date_of_birth) || utils.isEmpty(this.state.street_address) ||
             utils.isEmpty(this.state.city) || utils.isEmpty(this.state.state) ||
@@ -70,19 +70,19 @@ class NewClient extends Component {
                         errorMessage: "Submitted a new client!",
                         isDisplayError: true
                     });
-                    setTimeout(() => { this.setState({open: false}) }, 2000);
+                    setTimeout(() => { this.close() }, utils.MODAL_EXIT_TIME);
                     this.props.refresh();
                 })
-                // .catch(err => {
-                //     this.setState({
-                //         isError: true,
-                //         errorMessage: err,
-                //         isDisplayError: true
-                //     })
-                //     errorUpdate = utils.processError(err);
-                //     this.setState(errorUpdate);
-                //     throw err;
-            // });
+                .catch(err => {
+                    this.setState({
+                        isError: true,
+                        errorMessage: err,
+                        isDisplayError: true
+                    })
+                    errorUpdate = utils.processError(err);
+                    this.setState(errorUpdate);
+                    throw err;
+            });
         }
     }
 
@@ -95,17 +95,18 @@ class NewClient extends Component {
     }
 
     render() {
-        const {first_name, last_name, date_of_birth, street_address, city, state, zipcode, country} = this.state
-        var stateOptions = [{text: "CA", value:"CA"}, {text: "WA", value:"WA"}]
+        const {first_name, last_name, date_of_birth, street_address, city, state, zipcode, country, open} = this.state
+        var stateOptions = utils.STATE_OPTIONS;
         return (
             <Modal 
+                id="new-client-modal"
+                open={open}
                 trigger={<Button color="blue" floated="right" 
                 onClick={this.open}
-                open={this.state.open}
                 style={{width: '180px'}}>New Client</Button>}
-                closeIcon
                 scroll>
-                <Modal.Header> New Client</Modal.Header>
+                <Icon name="delete" link={true} size="large" onClick={this.close}/>
+                <Modal.Header> New Client </Modal.Header>
                     <Modal.Content scrolling>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Field>

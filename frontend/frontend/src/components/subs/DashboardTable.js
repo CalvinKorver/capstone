@@ -9,9 +9,11 @@ import {
     Grid,
     Container,
     Header,
-    Icon
+    Icon,
+    Table
   } from 'semantic-ui-react'
 import Client from '../Client';
+import DeleteButton from './DeleteButton';
 import '../../react_styles/App.css';
 import * as utils from '../../util/Functions';
 
@@ -19,9 +21,10 @@ import * as utils from '../../util/Functions';
 class DashboardTable extends Component {
     constructor(props) {
         super(props);
-        this.state = {
+    }
 
-        }
+    deleteClient = (id) => {
+        this.props.deleteClient(id);
     }
 
     render() {      
@@ -34,7 +37,6 @@ class DashboardTable extends Component {
             for (var i = 0; i < keys.length; i++) {
                 var index = keys[i];
                 if (searchResults[index]){
-                    console.log(searchResults[index]);
                     let nextCourtDate = "";
                     var openCaseCount = 0;
                     var caseCount;
@@ -57,26 +59,25 @@ class DashboardTable extends Component {
                         caseCount = 0;
                     }
                     var client = searchResults[index].clientInfo;
-                    console.log(client);
                     clientRows.push(
-                    <tr key={client.id}>
-                        <td key='clientLink'>
-                            <Link to={{pathname: '/client/'+client.id, state: {client: client} }}>
-                                {client.first_name + " " + client.last_name}
-                            </Link>
-                        </td>
-                        <td key='dob'>
-                            {client.date_of_birth ? moment(client.date_of_birth).format('MMM DD, YYYY') : "-"}
-                        </td>
-                        <td key='nextCourtDate'>{nextCourtDate ? moment(nextCourtDate).format('MMM DD, YYYY'): "-"}</td>
-                        <td key='openCaseCount'>{openCaseCount}</td>
-                        <td key='caseCount'>{caseCount}</td>
-                        <td key='delete'>
-                            <a onClick={() => this.props.deleteClient(client)} >
-                                <Icon color="red" name='trash'/>
-                            </a>
-                        </td>
-                    </tr>
+                        <Table.Row key={client.id}>
+                            <Table.Cell>
+                                <Link to={{pathname: '/client/'+client.id, state: {client: client} }}>
+                                    {client.first_name + " " + client.last_name}
+                                </Link>
+                            </Table.Cell>
+                            <Table.Cell>
+                                {client.date_of_birth ? moment(client.date_of_birth).format('MMM DD, YYYY') : "-"}
+                            </Table.Cell>
+                            <Table.Cell >{nextCourtDate ? moment(nextCourtDate).format('MMM DD, YYYY'): "-"}</Table.Cell>
+                            <Table.Cell>{openCaseCount}</Table.Cell>
+                            <Table.Cell>{caseCount}</Table.Cell>
+                            <Table.Cell>
+                                <DeleteButton 
+                                    id = {client.id} 
+                                    delete={this.props.deleteClient}/>
+                            </Table.Cell>
+                        </Table.Row>
                     )
                 }
             }
@@ -85,14 +86,16 @@ class DashboardTable extends Component {
         return (
             <table className="ui celled table">
                 <thead>
-                    <tr><th>Name</th>
-                    <th>Birth Date</th>
-                    <th>Next Court Date</th>
-                    <th>Open Cases</th>
-                    <th>Total Cases</th>
-                    <th width={1}>Del</th>
+                <Table.Row>
+                    <Table.HeaderCell width={4}>Name</Table.HeaderCell>
+                    <Table.HeaderCell width={4}>Birth Date</Table.HeaderCell>
+                    <Table.HeaderCell width={2}>Next Court Date</Table.HeaderCell>
+                    <Table.HeaderCell width={2}>Open Cases</Table.HeaderCell>
+                    <Table.HeaderCell width={2}>Total Cases</Table.HeaderCell>
+                    <Table.HeaderCell width={1}>Del</Table.HeaderCell>
                     {/* <th>Status</th> */}
-                </tr></thead>
+                    </Table.Row>
+                </thead>
                 <tbody>
                     {clientRows}
                 </tbody>

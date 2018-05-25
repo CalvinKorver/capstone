@@ -39,7 +39,6 @@ class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
 
-
 class AuthUserTypeViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows clients to be viewed or edited.
@@ -237,6 +236,13 @@ class CaseInfoViewSet(APIView):
         # return Response(serializer_class.data)
 
 
+class ClientDetailViewSet(APIView):
+    def delete(self, request):
+        id = request.query_params.get('clientID', None)
+        client = Client.objects.get(id = id)
+        client.delete()
+        return Response({'statusText': 'Successfully deleted a client'})
+        
 
 class CaseViewSet(APIView):
     """
