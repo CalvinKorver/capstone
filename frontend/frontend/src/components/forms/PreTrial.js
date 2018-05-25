@@ -67,11 +67,11 @@ class PreTrial extends Component {
         } else {
             editType = "sentencing"
         }
-        if ((utils.isEmpty(payload.sentencingStatusName) && utils.isEmpty(payload.preTrialStatusName))) {
-            this.setState({isError: true,
-                isDisplayError: true,
-                errorMessage: "Sorry, please fill out all appropriate fields before modifying the " + editType + " information."});
-        } else {
+        // if ((utils.isEmpty(payload.sentencingStatusName) && utils.isEmpty(payload.preTrialStatusName))) {
+        //     this.setState({isError: true,
+        //         isDisplayError: true,
+        //         errorMessage: "Sorry, please fill out all appropriate fields before modifying the " + editType + " information."});
+        // } else {
             return axios
             .put(utils.globalURL + endpoint, payload)
             .then(response => {
@@ -88,7 +88,7 @@ class PreTrial extends Component {
                 this.setState(errorUpdate);
                 throw err;
             });
-        }
+        // }
     }
 
     handleChange = (e, { name, value }) => { 
