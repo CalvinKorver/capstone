@@ -102,7 +102,7 @@ class SentencingCompliance extends Component {
 
         return (
             <Modal trigger={<Button style={{width: '100%', backgroundColor: 'Aliceblue'}}
-            onClick={this.open}>Sentencing Compliance Modal</Button>}
+            onClick={this.open}>Sentencing Compliance</Button>}
             open={this.state.open}>
             <Icon name="delete" link={true} size="large" onClick={this.close}/>
             <Modal.Header> Sentence Compliance </Modal.Header>
