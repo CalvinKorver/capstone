@@ -9,6 +9,10 @@ import {
       backgroundColor: '#333A4E'
   }
 
+  const menuDiv = {
+      height: '50px'
+  }
+
   class NavMenu extends Component {
     constructor(props) {
         super(props);
@@ -18,13 +22,13 @@ import {
 
     render() {
         return(
-        <div>
+        <div style={menuDiv} >
             <Menu style={menuStyle} inverted secondary>
-                <Menu.Menu position='left'>
-                <Menu.Item as='a'>
+                {/*<Menu.Menu position='left'>
+                 <Menu.Item as='a'>
                         <Icon name="bars"/>
                     </Menu.Item>
-                </Menu.Menu>
+                </Menu.Menu> */}
 
                 <Menu.Menu>
                 <a href="/">
@@ -33,11 +37,11 @@ import {
                     </Menu.Item>
                 </a>
                 </Menu.Menu>
-                <Menu.Menu position='right'>
+                {/* <Menu.Menu position='right'>
                     <Menu.Item as='a'>
                         <Icon name="user"/>
                     </Menu.Item>
-                </Menu.Menu>
+                </Menu.Menu> */}
             </Menu>
         </div>
         )
