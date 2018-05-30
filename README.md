@@ -1,61 +1,24 @@
-# Capstone Project
-
-Follow these guidelines for good commit messages when you push.
-https://chris.beams.io/posts/git-commit/
+## Overview:
+    Shield is a web application for public defenders designed to streamline the case management process. Shield consists of intuitive form entry combined with data visualization and display in order to maximize the value gained when a defender is working on a case. Our app is split up into two basic pieces: the frontend React web site and the backend Django rest framework for serving up our SQL database. 
 
 
-####
+## Frontend:
+    We built our frontend trying to follow as many React principles as possible. We have a number of different ‘components’ each split up into their own files under the “src/” folder.  Index.js renders our application into index.html which then allows us to navigate through the application. We used React styling with Semantic style sheets to maintain a consistent design. We tried to limit API calls to the main dashboard component and then pass that information through ‘props’ to the rest of the application. As a result of our design, forceful browsing to URLs such as ‘clients/4/’ will not work, and instead you should follow the links and buttons present in the application.
+For more on React: https://reactjs.org/
 
-To deploy the backend.
-For now there is a bug, so there are two steps.
+## Backend:
+    We built our backend from a Django tutorial that included default viewsets and basic user models. We designed an ERD for our SQL schema, then implemented that through our models with foreign key relationships where appropriate. We then wrote custom view handlers for some of the specific routes where a default viewset was not robust enough. Additionally, we wrote a custom view specifically for querying info about all the cases for a specific client dubbed ‘case-info’. 
+For more on Django Rest Framework: http://www.django-rest-framework.org/
 
-1. `cd` into the backend, execute `./deploy.sh`
-2. (Temporary) `ssh -i /users/calvinkorver/.aws/gemini_vm.pem ec2-user@ec2-52-40-241-18.us-west-2.compute.amazonaws.com`
-3. Execute `docker-compose build && docker-compose up`
+## Security:
+    We implemented secure login and session tracking; however, due to the scope and timeline of our project we were unable to implement perfect security procedures. The site is currently unencrypted in that it operates on http rather than https. Additionally, there is no restriction of the clients to be viewed, so with multiple users every user would be able to view the others’ clients and case information. 
 
-This guide was followed to create dev environment (still need to couple with Docker later)
-
-#### Pre Setup:
-Make sure that mysql is installed and configured properly. You want a root user account with 'admin' and 'password' for your system or whatever. Follow part of the guide below for that.
-
-https://www.digitalocean.com/community/tutorials/how-to-use-mysql-or-mariadb-with-your-django-application-on-ubuntu-14-04
-
-#### Setting up Dev Server Env for UNIX:
-1. `cd` into main capstone root dir
-(note: requirements is currently in the `backend` folder)
-2. `virtualenv env --python=python3.6`
-3. `source env/bin/activate`
-4. `pip install -r requirements.txt`
-5. Log into root mysql with `mysql -u root -p` and password you set
-6. `python manage.py runserver` (note: psycopg2 should be added to requirements.txt)
-8. Navigate to http://127.0.0.1:8000/
-9. Append /admin to the end of the URL and 	you should be able to access the login screen to the admin interface
-10. Username is `admin` and Password is `password123`
-
-#### Client Dev Setup
-1. `cd` into client folder
-2. `sudo npm install` if 1st time
-3. `npm start` to start the react local server
-
-#### Other resources:
-1. For setting up Postgres with typical Django installation: https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04
-2. Basic Postgres: https://www.codementor.io/engineerapart/getting-started-with-postgresql-on-mac-osx-are8jcopb
-
-# Technical Requirements
-Client:
-  React
-	LESS and SASS
-Server:
-	Django REST Framework 
-	Helpful link: https://hackernoon.com/creating-websites-using-react-and-django-rest-framework-b14c066087c7
-  “We serve the backend API with gunicorn, and the React app with a node.js express server.”
-	Docker
-
-Authentication:
-	(Save for later) maybe just use Django built in?
+## Deployment:
+    For our deployment, we leaned on the tools of AWS. For the backend, we are using an EC2 instance coupled with Docker to serve up the Rest Framework as a web server. For the frontend, we used an S3 bucket with AWS elastic IPs, and Freenom for our domain names. 
 
 
-Database:
-	Postgres (psql)
+### Contact Us
+Kyle McNulty: kjmcnult@uw.edu
+Calvin Korver: cjkorver@uw.edu
 
-Example query for events in current state: http POST http://localhost:8000/events/ name=jurisdiction1 start_date=2013-03-05 due_date=2014-03-05 sentencing_status=guilty event_type_name=Pre-trial case_number=0000000000
+Feel free to reach out if you run into any critical issues!
