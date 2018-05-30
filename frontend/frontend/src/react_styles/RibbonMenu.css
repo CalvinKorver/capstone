@@ -1,0 +1,4 @@
+ribbon-menu > a.item {
+    text-transform: uppercase;
+    padding-bottom: 2em;
+}

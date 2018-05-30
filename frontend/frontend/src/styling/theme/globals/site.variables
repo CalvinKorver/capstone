@@ -10,5 +10,9 @@
 @grey: #FAFAFA;
 @blue: #12AEF4;
 
-@borderRadius: 4px;
+@borderRadius: 3px;
 @pageBackground: @grey;
+
+@h1: 20px;
+
+@computerWidth: 1337px;
