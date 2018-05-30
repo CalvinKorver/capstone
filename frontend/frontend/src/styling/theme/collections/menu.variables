@@ -1,3 +1,10 @@
 /*******************************
     User Variable Overrides
 *******************************/
+
+
+
+
+@itemTextColor: #9D9D9D;
+
+@itemVerticalPadding: 2em;

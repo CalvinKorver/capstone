@@ -3,4 +3,4 @@
 *******************************/
 
 
-@borderRadius: 0px;
+@borderRadius: 3px;

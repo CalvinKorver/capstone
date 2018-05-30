@@ -5,6 +5,10 @@ import {
     Icon
   } from 'semantic-ui-react';
 
+  const menuStyle = {
+      backgroundColor: '#333A4E'
+  }
+
   class NavMenu extends Component {
     constructor(props) {
         super(props);
@@ -15,7 +19,7 @@ import {
     render() {
         return(
         <div>
-            <Menu color='blue' inverted secondary>
+            <Menu style={menuStyle} inverted secondary>
                 <Menu.Menu position='left'>
                 <Menu.Item as='a'>
                         <Icon name="bars"/>
@@ -25,7 +29,7 @@ import {
                 <Menu.Menu>
                 <a href="/">
                     <Menu.Item>
-                        Shield
+                        <h1>Shield</h1>
                     </Menu.Item>
                 </a>
                 </Menu.Menu>

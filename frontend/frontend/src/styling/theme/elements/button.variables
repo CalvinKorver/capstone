@@ -2,8 +2,8 @@
     User Variable Overrides
 *******************************/
 
-@borderRadius      : 2px;
-@basicBorderRadius : 2px;
+@borderRadius      : 3px;
+@basicBorderRadius : 3px;
 
 
 @blue: #12AEF4;

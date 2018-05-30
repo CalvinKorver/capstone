@@ -84,15 +84,20 @@ class ClientDashboard extends Component {
         return (
             <div>
                 <NavMenu/>
+                    <div style={{backgroundColor: 'white'}}>
+                        <Container className="ribbon-container" >
+                            <Header as='h1' 
+                            style={{marginTop: '1em'}}
+                            >{client.first_name + " " + client.last_name}</Header>
+                        </Container>
+                        <RibbonMenu onChange={this.ribbonChange}/>
+                    </div>
                 <Grid padded>
                     <Grid.Row>
-                        <Container className="ribbon-container">
-                            <Header as='h1' >{client.first_name + " " + client.last_name}</Header>
-                            <RibbonMenu onChange={this.ribbonChange}/>
-                        </Container>
+                            
                     </Grid.Row>
 
-                <Container className = "wide">
+                <Container >
                     {this.state.clientView}
                 </Container>
                 </Grid>
