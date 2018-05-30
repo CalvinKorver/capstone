@@ -92,7 +92,7 @@ class PreTrial extends Component {
     }
 
     handleChange = (e, { name, value }) => { 
-        var checkboxes = ["motion35", "motion36", "caseClosed", "reset", "benchWarrant", 
+        var checkboxes = ["motion35", "motion36", "isCaseClosed", "reset", "benchWarrant", 
             "jailTimeImposed", "workCrewInLieu", "payWorkCrew", "payCommunityService"]
         if (checkboxes.includes(name)){
             value = !value;
