@@ -20,5 +20,7 @@ For more on Django Rest Framework: http://www.django-rest-framework.org/
 ### Contact Us
 Kyle McNulty: kjmcnult@uw.edu
 Calvin Korver: cjkorver@uw.edu
+Xingyue Yang: xy42@uw.edu
+Daniel Hoang: dthoang@uw.edu
 
 Feel free to reach out if you run into any critical issues!
